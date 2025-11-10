@@ -1,0 +1,184 @@
+@use '../../assets/scss/variables' as *;
+
+// Form Input, Select, Textarea, DatePicker
+.form-input,
+.form-select,
+.form-textarea,
+.form-datepicker {
+  margin-bottom: $spacing-lg;
+}
+
+.form-input__label,
+.form-select__label,
+.form-textarea__label,
+.form-datepicker__label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $text-secondary;
+  margin-bottom: $spacing-xs;
+}
+
+.form-input__required,
+.form-select__required,
+.form-textarea__required,
+.form-datepicker__required {
+  color: $error-color;
+}
+
+.form-input__wrapper,
+.form-select__wrapper,
+.form-textarea__wrapper,
+.form-datepicker__wrapper {
+  position: relative;
+}
+
+.form-input__field,
+.form-select__field,
+.form-textarea__field,
+.form-datepicker__field {
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  font-size: 0.875rem;
+  color: $text-primary;
+  background-color: $bg-primary;
+  transition: all $transition-base;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+}
+
+.form-input__field--error,
+.form-select__field--error,
+.form-textarea__field--error,
+.form-datepicker__field--error {
+  border-color: $error-color;
+
+  &:focus {
+    border-color: $error-color;
+    box-shadow: 0 0 0 3px rgba($error-color, 0.1);
+  }
+}
+
+.form-input__field--disabled,
+.form-select__field--disabled,
+.form-textarea__field--disabled,
+.form-datepicker__field--disabled {
+  background-color: $bg-secondary;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-input__error,
+.form-select__error,
+.form-textarea__error,
+.form-datepicker__error {
+  margin-top: $spacing-xs;
+  font-size: 0.75rem;
+  color: $error-color;
+}
+
+.form-input__hint,
+.form-select__hint,
+.form-textarea__hint,
+.form-datepicker__hint {
+  margin-top: $spacing-xs;
+  font-size: 0.75rem;
+  color: $text-light;
+}
+
+.form-textarea__field {
+  resize: vertical;
+  min-height: 100px;
+}
+
+// Checkbox & Radio
+.form-checkbox,
+.form-radio {
+  margin-bottom: $spacing-lg;
+}
+
+.form-checkbox__wrapper,
+.form-radio__wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.form-checkbox__field,
+.form-radio__field {
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid $border-dark;
+  cursor: pointer;
+  transition: all $transition-base;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+  }
+}
+
+.form-checkbox__field--disabled,
+.form-radio__field--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.form-checkbox__label,
+.form-radio__label {
+  margin-left: $spacing-sm;
+  font-size: 0.875rem;
+  color: $text-secondary;
+  cursor: pointer;
+}
+
+.form-checkbox__required,
+.form-radio__required {
+  color: $error-color;
+}
+
+.form-checkbox__error,
+.form-radio__error {
+  margin-top: $spacing-xs;
+  font-size: 0.75rem;
+  color: $error-color;
+}
+
+.form-checkbox__hint,
+.form-radio__hint {
+  margin-top: $spacing-xs;
+  font-size: 0.75rem;
+  color: $text-light;
+}
+
+.form-checkbox__field {
+  border-radius: $radius-sm;
+}
+
+.form-radio__group-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $text-secondary;
+  margin-bottom: $spacing-sm;
+}
+
+.form-radio__options {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.form-radio__option {
+  display: flex;
+  align-items: center;
+}
+
+.form-radio__field {
+  border-radius: 50%;
+}

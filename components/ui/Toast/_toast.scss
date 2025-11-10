@@ -1,0 +1,123 @@
+@use '../../../assets/scss/variables' as *;
+
+// Стили для Toast.vue
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  background-color: $bg-primary;
+  border-left: 4px solid;
+  max-width: 400px;
+  min-width: 320px;
+}
+
+.toast--success {
+  border-left-color: $success-color;
+}
+
+.toast--error {
+  border-left-color: $error-color;
+}
+
+.toast--warning {
+  border-left-color: $warning-color;
+}
+
+.toast--info {
+  border-left-color: $info-color;
+}
+
+.toast__icon {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.toast--success .toast__icon {
+  background-color: $success-color;
+}
+
+.toast--error .toast__icon {
+  background-color: $error-color;
+}
+
+.toast--warning .toast__icon {
+  background-color: $warning-color;
+}
+
+.toast--info .toast__icon {
+  background-color: $info-color;
+}
+
+.toast__content {
+  flex: 1;
+}
+
+.toast__title {
+  font-weight: 600;
+  color: $text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.toast__message {
+  font-size: 0.875rem;
+  color: $text-secondary;
+}
+
+.toast__action {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $primary-color;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 $spacing-sm;
+  transition: color $transition-base;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+  }
+}
+
+.toast__close {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $text-light;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $text-secondary;
+  }
+}
+
+.toast-enter-active,
+.toast-leave-active {
+  transition: all $transition-slow;
+}
+
+.toast-enter-from {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.toast-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}

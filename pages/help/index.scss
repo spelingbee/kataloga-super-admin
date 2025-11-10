@@ -1,0 +1,227 @@
+@use '../../assets/scss/variables' as *;
+
+.help-center {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-xl;
+}
+
+.help-center__header {
+  text-align: center;
+  margin-bottom: $spacing-xl;
+}
+
+.help-center__title {
+  margin: 0 0 $spacing-md 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.help-center__subtitle {
+  margin: 0;
+  font-size: 1.25rem;
+  color: $text-secondary;
+}
+
+.help-center__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $spacing-lg;
+  margin-bottom: $spacing-xl;
+}
+
+.help-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: $spacing-xl;
+  background: $bg-primary;
+  border: 2px solid $border-color;
+  border-radius: $radius-lg;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all $transition-fast;
+  
+  &:hover {
+    border-color: $primary-color;
+    box-shadow: $shadow-md;
+    transform: translateY(-4px);
+  }
+}
+
+.help-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: $spacing-md;
+  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 15%) 100%);
+  border-radius: $radius-lg;
+  color: #ffffff;
+}
+
+.help-card__title {
+  margin: 0 0 $spacing-sm 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.help-card__description {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: $text-secondary;
+  line-height: 1.5;
+}
+
+.help-center__tours {
+  margin-bottom: $spacing-xl;
+  padding: $spacing-xl;
+  background: $bg-secondary;
+  border-radius: $radius-lg;
+}
+
+.help-center__section-title {
+  margin: 0 0 $spacing-lg 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.tours-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: $spacing-md;
+}
+
+.tour-card {
+  padding: $spacing-lg;
+  background: $bg-primary;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+}
+
+.tour-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+  margin-bottom: $spacing-md;
+}
+
+.tour-card__title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.tour-card__badge {
+  display: flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-xs $spacing-sm;
+  background: $success-color;
+  color: #ffffff;
+  border-radius: $radius-sm;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.tour-card__actions {
+  display: flex;
+  gap: $spacing-sm;
+}
+
+.tour-card__button {
+  flex: 1;
+  padding: $spacing-sm $spacing-md;
+  border: none;
+  border-radius: $radius-md;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition-fast;
+}
+
+.tour-card__button--primary {
+  background: $primary-color;
+  color: #ffffff;
+  
+  &:hover {
+    background: darken($primary-color, 10%);
+  }
+}
+
+.tour-card__button--secondary {
+  background: transparent;
+  color: $text-secondary;
+  border: 1px solid $border-color;
+  
+  &:hover {
+    background: $bg-secondary;
+    color: $text-primary;
+  }
+}
+
+.help-center__shortcuts {
+  text-align: center;
+  padding: $spacing-xl;
+  background: $bg-primary;
+  border: 2px dashed $border-color;
+  border-radius: $radius-lg;
+}
+
+.help-center__text {
+  margin: $spacing-md 0;
+  font-size: 1rem;
+  color: $text-secondary;
+  
+  kbd {
+    padding: 4px 8px;
+    background: $bg-secondary;
+    border: 1px solid $border-color;
+    border-radius: $radius-sm;
+    font-family: monospace;
+    font-size: 0.875em;
+    font-weight: 600;
+  }
+}
+
+.help-center__button {
+  padding: $spacing-sm $spacing-xl;
+  background: $primary-color;
+  color: #ffffff;
+  border: none;
+  border-radius: $radius-md;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $transition-fast;
+  
+  &:hover {
+    background: darken($primary-color, 10%);
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .help-center {
+    padding: $spacing-lg;
+  }
+  
+  .help-center__title {
+    font-size: 2rem;
+  }
+  
+  .help-center__grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tours-grid {
+    grid-template-columns: 1fr;
+  }
+}

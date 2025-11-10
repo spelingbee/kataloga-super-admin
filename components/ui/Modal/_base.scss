@@ -1,0 +1,106 @@
+@use '../../../assets/scss/variables' as *;
+
+// Базовые стили модального окна (используются всеми компонентами)
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+  padding: $spacing-lg;
+}
+
+.modal {
+  background-color: $bg-primary;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-xl;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal--sm {
+  width: 100%;
+  max-width: 400px;
+}
+
+.modal--md {
+  width: 100%;
+  max-width: 600px;
+}
+
+.modal--lg {
+  width: 100%;
+  max-width: 800px;
+}
+
+.modal--xl {
+  width: 100%;
+  max-width: 1200px;
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-lg;
+  border-bottom: 1px solid $border-color;
+}
+
+.modal__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.modal__close {
+  color: $text-light;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $text-secondary;
+  }
+}
+
+.modal__body {
+  padding: $spacing-lg;
+  overflow-y: auto;
+}
+
+.modal__footer {
+  padding: $spacing-lg;
+  border-top: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $spacing-md;
+}
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity $transition-slow;
+
+  .modal {
+    transition: transform $transition-slow;
+  }
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+
+  .modal {
+    transform: scale(0.9);
+  }
+}
