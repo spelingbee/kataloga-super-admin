@@ -272,8 +272,7 @@ const filteredFaqs = computed(() => {
 const toggleFaq = (id: string) => {
   openFaqId.value = openFaqId.value === id ? null : id
 }
-
-
+</script>
 
 <style scoped lang="scss">
 @use './faq';

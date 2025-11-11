@@ -122,8 +122,7 @@ const startTour = (tourId?: string) => {
 const showShortcuts = () => {
   showModal()
 }
-
-
+</script>
 
 <style scoped lang="scss">
 @use './index';
