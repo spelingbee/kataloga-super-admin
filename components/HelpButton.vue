@@ -40,8 +40,7 @@ const handleClick = () => {
   }
   emit('click')
 }
-
-
+</script>
 
 <style scoped lang="scss">
 @use '../assets/scss/variables' as *;
