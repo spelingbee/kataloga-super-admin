@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+import { useOnboarding } from '~/composables/useOnboarding'
+
 interface Props {
   tooltip?: string
   ariaLabel?: string

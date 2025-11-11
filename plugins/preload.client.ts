@@ -3,7 +3,7 @@
  * Preloads components when hovering over navigation links
  */
 
-import { preloadRouteComponents } from '~/utils/lazy-components'
+import { preloadRouteModules } from '~/utils/lazy-components'
 
 export default defineNuxtPlugin(() => {
   const router = useRouter()
@@ -11,7 +11,7 @@ export default defineNuxtPlugin(() => {
   // Preload components on route change
   router.beforeEach((to) => {
     if (to.name && typeof to.name === 'string') {
-      preloadRouteComponents(to.name)
+      preloadRouteModules(to.name)
     }
   })
 
@@ -28,7 +28,7 @@ export default defineNuxtPlugin(() => {
         // Extract route name from path
         const routeName = path.split('/')[1]
         if (routeName) {
-          preloadRouteComponents(routeName)
+          preloadRouteModules(routeName)
         }
       }
     }
