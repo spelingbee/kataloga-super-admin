@@ -6,13 +6,13 @@
     </div>
 
     <div v-if="loading" class="settings-page__loading">
-      <div class="spinner"></div>
+      <div class="spinner"/>
       <p>Loading settings...</p>
     </div>
 
     <div v-else-if="error" class="settings-page__error">
       <p>{{ error }}</p>
-      <button @click="loadSettings" class="btn btn--primary">
+      <button class="btn btn--primary" @click="loadSettings">
         Retry
       </button>
     </div>

@@ -14,7 +14,7 @@
           },
         ]"
         @change="handleChange"
-      />
+      >
       <label :for="checkboxId" class="form-checkbox__label">
         {{ label }}
         <span v-if="required" class="form-checkbox__required">*</span>

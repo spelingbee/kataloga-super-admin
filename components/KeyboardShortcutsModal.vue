@@ -2,10 +2,10 @@
   <div 
     v-if="isOpen" 
     class="shortcuts-modal" 
-    @click.self="close"
     role="dialog"
     aria-modal="true"
     aria-labelledby="shortcuts-modal-title"
+    @click.self="close"
   >
     <div 
       v-focus-trap="{ active: isOpen }"
@@ -14,9 +14,9 @@
       <div class="shortcuts-modal__header">
         <h2 id="shortcuts-modal-title" class="shortcuts-modal__title">Keyboard Shortcuts</h2>
         <button 
-          @click="close" 
           class="shortcuts-modal__close"
           aria-label="Close keyboard shortcuts dialog"
+          @click="close"
         >
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />

@@ -45,15 +45,15 @@
 
           <!-- Body -->
           <div 
-            class="modal__body"
             :id="description ? `${modalId}-description` : undefined"
+            class="modal__body"
           >
-            <slot></slot>
+            <slot/>
           </div>
 
           <!-- Footer -->
           <div v-if="$slots.footer" class="modal__footer">
-            <slot name="footer"></slot>
+            <slot name="footer"/>
           </div>
         </div>
       </div>

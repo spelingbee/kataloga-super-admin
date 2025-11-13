@@ -125,7 +125,7 @@ export const useErrorReporting = () => {
    * Set up global error handlers
    */
   const setupGlobalHandlers = () => {
-    if (!process.client) return
+    if (!import.meta.client) return
 
     // Handle unhandled errors
     window.addEventListener('error', (event) => {

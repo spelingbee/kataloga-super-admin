@@ -55,7 +55,7 @@ export class ApiService {
       } catch (refreshError) {
         // Refresh failed, clear auth and redirect to login
         this.clearAuth()
-        if (process.client) {
+        if (import.meta.client) {
           window.location.href = '/login'
         }
         return Promise.reject(refreshError)
@@ -106,33 +106,33 @@ export class ApiService {
 
   // Token management
   private getToken(): string | null {
-    if (process.client) {
+    if (import.meta.client) {
       return localStorage.getItem('admin_token')
     }
     return null
   }
 
   private setToken(token: string): void {
-    if (process.client) {
+    if (import.meta.client) {
       localStorage.setItem('admin_token', token)
     }
   }
 
   private getRefreshToken(): string | null {
-    if (process.client) {
+    if (import.meta.client) {
       return localStorage.getItem('admin_refresh_token')
     }
     return null
   }
 
   private setRefreshToken(token: string): void {
-    if (process.client) {
+    if (import.meta.client) {
       localStorage.setItem('admin_refresh_token', token)
     }
   }
 
   private clearAuth(): void {
-    if (process.client) {
+    if (import.meta.client) {
       localStorage.removeItem('admin_token')
       localStorage.removeItem('admin_refresh_token')
       localStorage.removeItem('admin_user')

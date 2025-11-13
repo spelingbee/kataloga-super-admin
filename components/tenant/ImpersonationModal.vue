@@ -37,7 +37,7 @@
           class="impersonation-modal__textarea"
           placeholder="e.g., Troubleshooting reported issue with order processing..."
           rows="3"
-        ></textarea>
+        />
         <span class="impersonation-modal__hint">
           This will be recorded in the audit log
         </span>
@@ -47,15 +47,15 @@
     <template #footer>
       <button
         class="impersonation-modal__btn impersonation-modal__btn--cancel"
-        @click="handleCancel"
         :disabled="loading"
+        @click="handleCancel"
       >
         Cancel
       </button>
       <button
         class="impersonation-modal__btn impersonation-modal__btn--confirm"
-        @click="handleConfirm"
         :disabled="loading"
+        @click="handleConfirm"
       >
         {{ loading ? 'Starting Session...' : 'Start Impersonation' }}
       </button>

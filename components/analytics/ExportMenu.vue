@@ -2,8 +2,8 @@
   <div class="export-menu">
     <button
       class="export-menu__trigger"
-      @click="toggleMenu"
       :disabled="exporting"
+      @click="toggleMenu"
     >
       <AppIcon name="download" />
       <span>Export</span>
@@ -13,8 +13,8 @@
     <div v-if="isOpen" class="export-menu__dropdown">
       <button
         class="export-menu__item"
-        @click="handleExportCSV"
         :disabled="exporting"
+        @click="handleExportCSV"
       >
         <AppIcon name="file-text" />
         <span>Export as CSV</span>
@@ -23,8 +23,8 @@
       <button
         v-if="showChartExport"
         class="export-menu__item"
-        @click="handleExportChart"
         :disabled="exporting"
+        @click="handleExportChart"
       >
         <AppIcon name="image" />
         <span>Export Chart (PNG)</span>
@@ -32,8 +32,8 @@
 
       <button
         class="export-menu__item"
-        @click="handleExportPDF"
         :disabled="exporting"
+        @click="handleExportPDF"
       >
         <AppIcon name="file" />
         <span>Export as PDF</span>
@@ -41,8 +41,8 @@
 
       <button
         class="export-menu__item"
-        @click="handleEmailReport"
         :disabled="exporting"
+        @click="handleEmailReport"
       >
         <AppIcon name="mail" />
         <span>Email Report</span>
@@ -68,7 +68,7 @@
               type="email"
               placeholder="admin@example.com"
               required
-            />
+            >
           </div>
 
           <div class="export-menu__form-group">
@@ -91,8 +91,8 @@
           </button>
           <button
             class="export-menu__button export-menu__button--primary"
-            @click="sendEmailReport"
             :disabled="!emailRecipient || exporting"
+            @click="sendEmailReport"
           >
             {{ exporting ? 'Sending...' : 'Send Report' }}
           </button>

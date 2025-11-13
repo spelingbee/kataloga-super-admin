@@ -12,7 +12,7 @@
             type="date"
             class="billing-history__filter-input"
             @change="handleFilterChange"
-          />
+          >
         </div>
         
         <div class="billing-history__filter-group">
@@ -22,7 +22,7 @@
             type="date"
             class="billing-history__filter-input"
             @change="handleFilterChange"
-          />
+          >
         </div>
         
         <div class="billing-history__filter-group">
@@ -52,7 +52,7 @@
 
     <!-- Loading State -->
     <div v-if="loading" class="billing-history__loading">
-      <div class="billing-history__spinner"></div>
+      <div class="billing-history__spinner"/>
       <p>Loading billing history...</p>
     </div>
 

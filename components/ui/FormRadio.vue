@@ -24,7 +24,7 @@
             },
           ]"
           @change="handleChange"
-        />
+        >
         <label
           :for="`${radioId}-${getOptionValue(option)}`"
           class="form-radio__label"

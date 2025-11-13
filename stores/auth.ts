@@ -35,7 +35,7 @@ export const useAuthStore = defineStore('auth', {
         this.isAuthenticated = true
 
         // Persist to localStorage
-        if (process.client) {
+        if (import.meta.client) {
           localStorage.setItem('admin_token', accessToken)
           localStorage.setItem('admin_refresh_token', refreshToken)
           localStorage.setItem('admin_user', JSON.stringify(user))
@@ -56,7 +56,7 @@ export const useAuthStore = defineStore('auth', {
         console.error('Logout error:', error)
       } finally {
         this.clearAuth()
-        if (process.client) {
+        if (import.meta.client) {
           window.location.href = '/login'
         }
       }
@@ -76,7 +76,7 @@ export const useAuthStore = defineStore('auth', {
         this.user = user
         this.isAuthenticated = true
 
-        if (process.client) {
+        if (import.meta.client) {
           localStorage.setItem('admin_token', accessToken)
           localStorage.setItem('admin_refresh_token', refreshToken)
           localStorage.setItem('admin_user', JSON.stringify(user))
@@ -100,7 +100,7 @@ export const useAuthStore = defineStore('auth', {
     },
 
     initializeAuth(): void {
-      if (process.client) {
+      if (import.meta.client) {
         const token = localStorage.getItem('admin_token')
         const refreshToken = localStorage.getItem('admin_refresh_token')
         const userStr = localStorage.getItem('admin_user')
@@ -125,7 +125,7 @@ export const useAuthStore = defineStore('auth', {
       this.refreshToken = null
       this.isAuthenticated = false
 
-      if (process.client) {
+      if (import.meta.client) {
         localStorage.removeItem('admin_token')
         localStorage.removeItem('admin_refresh_token')
         localStorage.removeItem('admin_user')
