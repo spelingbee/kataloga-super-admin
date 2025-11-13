@@ -27,7 +27,7 @@
             class="template-editor-modal__input"
             placeholder="e.g., Welcome Email"
             required
-          />
+          >
         </div>
 
         <div class="template-editor-modal__form-group">
@@ -55,7 +55,7 @@
             class="template-editor-modal__input"
             placeholder="e.g., Welcome to {{platform_name}}"
             required
-          />
+          >
           <p class="template-editor-modal__hint">
             Use {{variable_name}} for dynamic content
           </p>
@@ -91,7 +91,7 @@
               v-model="form.isActive"
               type="checkbox"
               class="template-editor-modal__checkbox"
-            />
+            >
             <span>Active (template will be used for sending emails)</span>
           </label>
         </div>

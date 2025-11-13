@@ -5,7 +5,7 @@
       :key="i"
       :class="['loading-skeleton__item', `loading-skeleton__item--${type}`]"
       :style="itemStyle"
-    ></div>
+    />
   </div>
 </template>
 

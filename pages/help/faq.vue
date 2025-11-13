@@ -44,8 +44,8 @@
         >
           <button
             :class="['faq-item__question', { 'faq-item__question--open': openFaqId === faq.id }]"
-            @click="toggleFaq(faq.id)"
             :aria-expanded="openFaqId === faq.id"
+            @click="toggleFaq(faq.id)"
           >
             <span>{{ faq.question }}</span>
             <AppIcon
@@ -57,7 +57,7 @@
 
           <Transition name="faq-answer">
             <div v-if="openFaqId === faq.id" class="faq-item__answer">
-              <div v-html="faq.answer"></div>
+              <div v-html="faq.answer"/>
               <div v-if="faq.relatedLinks" class="faq-item__links">
                 <h4>Related Resources:</h4>
                 <ul>

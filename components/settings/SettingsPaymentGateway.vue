@@ -7,7 +7,7 @@
           Configure payment gateways for processing subscription payments
         </p>
       </div>
-      <button @click="openAddModal" class="btn btn--primary">
+      <button class="btn btn--primary" @click="openAddModal">
         <AppIcon name="plus" class="btn__icon" />
         Add Gateway
       </button>
@@ -16,7 +16,7 @@
     <div v-if="gateways.length === 0" class="settings-payment__empty">
       <AppIcon name="credit-card" class="settings-payment__empty-icon" />
       <p class="settings-payment__empty-text">No payment gateways configured</p>
-      <button @click="openAddModal" class="btn btn--primary">
+      <button class="btn btn--primary" @click="openAddModal">
         Add Your First Gateway
       </button>
     </div>
@@ -41,24 +41,24 @@
           </div>
           <div class="payment-gateway-card__actions">
             <button
-              @click="testGateway(gateway.id!)"
               class="btn btn--sm btn--secondary"
               :disabled="testing"
+              @click="testGateway(gateway.id!)"
             >
               <AppIcon name="check-circle" class="btn__icon" />
               Test
             </button>
             <button
-              @click="openEditModal(gateway)"
               class="btn btn--sm btn--secondary"
+              @click="openEditModal(gateway)"
             >
               <AppIcon name="edit" class="btn__icon" />
               Edit
             </button>
             <button
-              @click="handleDelete(gateway.id!)"
               class="btn btn--sm btn--danger"
               :disabled="gateway.isPrimary"
+              @click="handleDelete(gateway.id!)"
             >
               <AppIcon name="trash" class="btn__icon" />
               Delete

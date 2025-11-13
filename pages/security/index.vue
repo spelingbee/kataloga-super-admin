@@ -9,9 +9,9 @@
       </div>
       <div class="security-dashboard__actions">
         <button 
-          @click="refreshData" 
           class="btn btn--secondary"
           :disabled="securityStore.loading"
+          @click="refreshData"
         >
           <AppIcon name="refresh" :class="{ 'animate-spin': securityStore.loading }" />
           Refresh
@@ -22,7 +22,7 @@
     <div v-if="securityStore.error" class="alert alert--error">
       <AppIcon name="alert-circle" />
       <span>{{ securityStore.error }}</span>
-      <button @click="securityStore.clearError" class="alert__close">
+      <button class="alert__close" @click="securityStore.clearError">
         <AppIcon name="x" />
       </button>
     </div>
@@ -80,7 +80,7 @@
             <AppIcon name="arrow-right" />
           </NuxtLink>
         </div>
-        <div v-if="securityStore.loading && !securityStore.dashboardMetrics" class="skeleton-pulse" style="height: 250px; border-radius: 8px;"></div>
+        <div v-if="securityStore.loading && !securityStore.dashboardMetrics" class="skeleton-pulse" style="height: 250px; border-radius: 8px;"/>
         <SecurityFailedLoginsChart 
           v-else-if="securityStore.dashboardMetrics" 
           :data="securityStore.dashboardMetrics.failedLoginAttempts.trend" 
@@ -95,7 +95,7 @@
             <AppIcon name="arrow-right" />
           </NuxtLink>
         </div>
-        <div v-if="securityStore.loading && !securityStore.dashboardMetrics" class="skeleton-pulse" style="height: 250px; border-radius: 8px;"></div>
+        <div v-if="securityStore.loading && !securityStore.dashboardMetrics" class="skeleton-pulse" style="height: 250px; border-radius: 8px;"/>
         <SecurityAlertsList 
           v-else-if="securityStore.dashboardMetrics" 
           :alerts="securityStore.dashboardMetrics.recentAlerts" 

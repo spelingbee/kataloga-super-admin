@@ -16,7 +16,7 @@
 
     <!-- Loading State -->
     <div v-if="loading && !subscription" class="subscription-details__loading">
-      <div class="subscription-details__spinner"></div>
+      <div class="subscription-details__spinner"/>
       <p>Loading subscription details...</p>
     </div>
 

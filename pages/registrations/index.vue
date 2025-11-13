@@ -198,7 +198,7 @@
 
     <!-- Loading Overlay -->
     <div v-if="loading" class="registrations-page__loading">
-      <div class="registrations-page__spinner"></div>
+      <div class="registrations-page__spinner"/>
     </div>
 
     <!-- Approval Modal -->
@@ -349,7 +349,7 @@ const visiblePages = computed(() => {
   const pages: number[] = []
   const maxVisible = 5
   let start = Math.max(1, currentPage.value - Math.floor(maxVisible / 2))
-  let end = Math.min(totalPages.value, start + maxVisible - 1)
+  const end = Math.min(totalPages.value, start + maxVisible - 1)
 
   if (end - start < maxVisible - 1) {
     start = Math.max(1, end - maxVisible + 1)

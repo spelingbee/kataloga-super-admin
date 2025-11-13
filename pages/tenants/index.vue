@@ -161,7 +161,7 @@
 
     <!-- Loading Overlay -->
     <div v-if="loading" class="tenants-page__loading">
-      <div class="tenants-page__spinner"></div>
+      <div class="tenants-page__spinner"/>
     </div>
   </div>
 </template>
@@ -254,7 +254,7 @@ const visiblePages = computed(() => {
   const pages: number[] = []
   const maxVisible = 5
   let start = Math.max(1, currentPage.value - Math.floor(maxVisible / 2))
-  let end = Math.min(totalPages.value, start + maxVisible - 1)
+  const end = Math.min(totalPages.value, start + maxVisible - 1)
 
   if (end - start < maxVisible - 1) {
     start = Math.max(1, end - maxVisible + 1)

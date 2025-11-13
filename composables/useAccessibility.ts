@@ -90,7 +90,7 @@ export const useAccessibility = () => {
    * Announce message to screen readers
    */
   const announce = (message: string, priority: 'polite' | 'assertive' = 'polite') => {
-    if (!process.client) return
+    if (!import.meta.client) return
 
     const announcement = document.createElement('div')
     announcement.setAttribute('role', 'status')
@@ -153,7 +153,7 @@ export const useAccessibility = () => {
    * Add skip link for keyboard navigation
    */
   const addSkipLink = (targetId: string, label: string = 'Skip to main content') => {
-    if (!process.client) return
+    if (!import.meta.client) return
 
     const skipLink = document.createElement('a')
     skipLink.href = `#${targetId}`
@@ -235,7 +235,7 @@ export const useAccessibility = () => {
    * Set page title for screen readers
    */
   const setPageTitle = (title: string) => {
-    if (!process.client) return
+    if (!import.meta.client) return
     
     document.title = `${title} - Super Admin`
     announce(`Navigated to ${title}`, 'polite')
@@ -259,7 +259,7 @@ export const useAccessibility = () => {
    * Check if reduced motion is preferred
    */
   const prefersReducedMotion = (): boolean => {
-    if (!process.client) return false
+    if (!import.meta.client) return false
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches
   }
 
@@ -267,7 +267,7 @@ export const useAccessibility = () => {
    * Check if high contrast is preferred
    */
   const prefersHighContrast = (): boolean => {
-    if (!process.client) return false
+    if (!import.meta.client) return false
     return window.matchMedia('(prefers-contrast: high)').matches
   }
 

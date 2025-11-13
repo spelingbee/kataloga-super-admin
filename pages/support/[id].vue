@@ -136,7 +136,7 @@
                 <input
                   v-model="isInternalNote"
                   type="checkbox"
-                />
+                >
                 <span>Internal note (not visible to tenant)</span>
               </label>
 

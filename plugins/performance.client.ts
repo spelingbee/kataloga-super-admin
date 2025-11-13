@@ -23,7 +23,7 @@ export default defineNuxtPlugin(() => {
   })
 
   // Log performance report in development
-  if (process.dev) {
+  if (import.meta.dev) {
     setTimeout(() => {
       performanceMonitor.logReport()
       console.log('Bundle Info:', getBundleInfo())

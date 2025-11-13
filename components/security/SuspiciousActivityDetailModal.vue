@@ -1,19 +1,19 @@
 <template>
-  <Modal :show="show" @close="handleClose" size="large">
+  <Modal :show="show" size="large" @close="handleClose">
     <template #header>
       <h2 class="activity-detail-modal__title">Suspicious Activity Details</h2>
     </template>
 
     <template #body>
       <div v-if="loading" class="activity-detail-modal__loading">
-        <div class="activity-detail-modal__spinner"></div>
+        <div class="activity-detail-modal__spinner"/>
         <p>Loading activity details...</p>
       </div>
 
       <div v-else-if="error" class="activity-detail-modal__error">
         <AppIcon name="alert-circle" />
         <p>{{ error }}</p>
-        <button @click="retryFetch" class="activity-detail-modal__retry-btn">
+        <button class="activity-detail-modal__retry-btn" @click="retryFetch">
           Retry
         </button>
       </div>
@@ -54,7 +54,7 @@
               <span class="activity-detail-modal__value">{{ activity.ipAddress }}</span>
             </div>
 
-            <div class="activity-detail-modal__field" v-if="activity.userName">
+            <div v-if="activity.userName" class="activity-detail-modal__field">
               <label>User</label>
               <span class="activity-detail-modal__value">{{ activity.userName }}</span>
             </div>
@@ -66,19 +66,19 @@
           <p class="activity-detail-modal__description">{{ activity.description }}</p>
         </div>
 
-        <div class="activity-detail-modal__section" v-if="activity.userAgent">
+        <div v-if="activity.userAgent" class="activity-detail-modal__section">
           <h3 class="activity-detail-modal__section-title">User Agent</h3>
           <p class="activity-detail-modal__user-agent">{{ activity.userAgent }}</p>
         </div>
 
-        <div class="activity-detail-modal__section" v-if="activity.metadata && Object.keys(activity.metadata).length > 0">
+        <div v-if="activity.metadata && Object.keys(activity.metadata).length > 0" class="activity-detail-modal__section">
           <h3 class="activity-detail-modal__section-title">Additional Details</h3>
           <div class="activity-detail-modal__metadata">
             <pre>{{ JSON.stringify(activity.metadata, null, 2) }}</pre>
           </div>
         </div>
 
-        <div class="activity-detail-modal__section" v-if="activity.actions && activity.actions.length > 0">
+        <div v-if="activity.actions && activity.actions.length > 0" class="activity-detail-modal__section">
           <h3 class="activity-detail-modal__section-title">Actions Taken</h3>
           <div class="activity-detail-modal__actions-list">
             <div
@@ -99,7 +99,7 @@
           </div>
         </div>
 
-        <div class="activity-detail-modal__section" v-if="activity.resolved">
+        <div v-if="activity.resolved" class="activity-detail-modal__section">
           <h3 class="activity-detail-modal__section-title">Resolution</h3>
           <div class="activity-detail-modal__grid">
             <div class="activity-detail-modal__field">
@@ -114,7 +114,7 @@
           </div>
         </div>
 
-        <div class="activity-detail-modal__section" v-if="!activity.resolved">
+        <div v-if="!activity.resolved" class="activity-detail-modal__section">
           <h3 class="activity-detail-modal__section-title">Resolve Activity</h3>
           <FormTextarea
             v-model="resolutionNotes"
@@ -122,9 +122,9 @@
             rows="3"
           />
           <button
-            @click="handleResolve"
             class="activity-detail-modal__resolve-btn"
             :disabled="resolving"
+            @click="handleResolve"
           >
             {{ resolving ? 'Resolving...' : 'Mark as Resolved' }}
           </button>
@@ -133,7 +133,7 @@
     </template>
 
     <template #footer>
-      <button @click="handleClose" class="activity-detail-modal__close-btn">
+      <button class="activity-detail-modal__close-btn" @click="handleClose">
         Close
       </button>
     </template>

@@ -145,7 +145,7 @@
     </div>
 
     <div v-if="loading" class="suspicious-activity-page__loading">
-      <div class="suspicious-activity-page__spinner"></div>
+      <div class="suspicious-activity-page__spinner"/>
     </div>
 
     <SuspiciousActivityDetailModal
@@ -236,7 +236,7 @@ const visiblePages = computed(() => {
   const pages: number[] = []
   const maxVisible = 5
   let start = Math.max(1, currentPage.value - Math.floor(maxVisible / 2))
-  let end = Math.min(totalPages.value, start + maxVisible - 1)
+  const end = Math.min(totalPages.value, start + maxVisible - 1)
 
   if (end - start < maxVisible - 1) {
     start = Math.max(1, end - maxVisible + 1)

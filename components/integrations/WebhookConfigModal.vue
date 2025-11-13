@@ -5,7 +5,7 @@
     size="large"
     @close="$emit('close')"
   >
-    <form @submit.prevent="handleSubmit" class="webhook-config-form">
+    <form class="webhook-config-form" @submit.prevent="handleSubmit">
       <div v-if="error" class="webhook-config-form__error">
         <AppIcon name="alert-circle" />
         <span>{{ error }}</span>
@@ -24,7 +24,7 @@
           class="form-group__input"
           placeholder="My Webhook"
           required
-        />
+        >
       </div>
 
       <!-- Webhook URL -->
@@ -40,7 +40,7 @@
           class="form-group__input"
           placeholder="https://your-domain.com/webhook"
           required
-        />
+        >
         <p class="form-group__hint">
           The endpoint where webhook events will be sent
         </p>
@@ -63,7 +63,7 @@
               type="checkbox"
               :value="event.value"
               class="event-checkbox__input"
-            />
+            >
             <div class="event-checkbox__content">
               <span class="event-checkbox__label">{{ event.label }}</span>
               <span class="event-checkbox__description">{{ event.description }}</span>
@@ -86,7 +86,7 @@
           type="text"
           class="form-group__input"
           placeholder="your-webhook-secret"
-        />
+        >
         <p class="form-group__hint">
           Used to verify webhook authenticity via signature
         </p>
@@ -107,17 +107,17 @@
               class="header-item__input"
               placeholder="Header Name"
               @blur="updateHeaderKey(index, key)"
-            />
+            >
             <input
               v-model="formData.headers[key]"
               type="text"
               class="header-item__input"
               placeholder="Header Value"
-            />
+            >
             <button
               type="button"
-              @click="removeHeader(key)"
               class="header-item__remove"
+              @click="removeHeader(key)"
             >
               <AppIcon name="x" />
             </button>
@@ -125,8 +125,8 @@
         </div>
         <button
           type="button"
-          @click="addHeader"
           class="btn btn--secondary btn--sm"
+          @click="addHeader"
         >
           <AppIcon name="plus" />
           Add Header
@@ -146,7 +146,7 @@
               min="0"
               max="10"
               class="retry-policy__input"
-            />
+            >
           </div>
           <div class="retry-policy__field">
             <label for="retryDelay" class="retry-policy__label">Retry Delay (seconds)</label>
@@ -157,7 +157,7 @@
               min="1"
               max="3600"
               class="retry-policy__input"
-            />
+            >
           </div>
         </div>
       </div>
@@ -169,7 +169,7 @@
             v-model="formData.isActive"
             type="checkbox"
             class="checkbox-item__input"
-          />
+          >
           <span class="checkbox-item__label">Enable Webhook</span>
         </label>
       </div>
@@ -178,9 +178,9 @@
       <div class="webhook-config-form__actions">
         <button
           type="button"
-          @click="$emit('close')"
           class="btn btn--secondary"
           :disabled="saving"
+          @click="$emit('close')"
         >
           Cancel
         </button>
@@ -189,7 +189,7 @@
           class="btn btn--primary"
           :disabled="saving || formData.events.length === 0"
         >
-          <div v-if="saving" class="btn-spinner"></div>
+          <div v-if="saving" class="btn-spinner"/>
           {{ saving ? 'Saving...' : isEdit ? 'Update Webhook' : 'Create Webhook' }}
         </button>
       </div>

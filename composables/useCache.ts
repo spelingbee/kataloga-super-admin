@@ -95,7 +95,7 @@ class CacheManager {
 const cacheManager = new CacheManager()
 
 // Run cleanup every 5 minutes
-if (process.client) {
+if (import.meta.client) {
   setInterval(() => {
     cacheManager.cleanup()
   }, 5 * 60 * 1000)

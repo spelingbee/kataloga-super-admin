@@ -7,7 +7,7 @@
       </p>
     </div>
 
-    <form @submit.prevent="handleSubmit" class="settings-general__form">
+    <form class="settings-general__form" @submit.prevent="handleSubmit">
       <!-- Platform Information -->
       <div class="form-section">
         <h3 class="form-section__title">Platform Information</h3>
@@ -22,7 +22,7 @@
             type="text"
             class="form-group__input"
             required
-          />
+          >
         </div>
 
         <div class="form-group">
@@ -48,7 +48,7 @@
               type="email"
               class="form-group__input"
               required
-            />
+            >
           </div>
 
           <div class="form-group">
@@ -60,7 +60,7 @@
               v-model="formData.supportPhone"
               type="tel"
               class="form-group__input"
-            />
+            >
           </div>
         </div>
       </div>
@@ -133,7 +133,7 @@
               v-model="formData.maintenanceMode"
               type="checkbox"
               class="form-group__checkbox-input"
-            />
+            >
             <span class="form-group__checkbox-label">
               <strong>Maintenance Mode</strong>
               <span class="form-group__checkbox-description">
@@ -149,7 +149,7 @@
               v-model="formData.registrationEnabled"
               type="checkbox"
               class="form-group__checkbox-input"
-            />
+            >
             <span class="form-group__checkbox-label">
               <strong>Registration Enabled</strong>
               <span class="form-group__checkbox-description">
@@ -178,7 +178,7 @@
                 v-model="formData.featureFlags[key]"
                 type="checkbox"
                 class="form-group__checkbox-input"
-              />
+              >
               <span class="form-group__checkbox-label">
                 <strong>{{ formatFeatureName(key) }}</strong>
               </span>
@@ -191,9 +191,9 @@
       <div class="form-actions">
         <button
           type="button"
-          @click="handleCancel"
           class="btn btn--secondary"
           :disabled="saving"
+          @click="handleCancel"
         >
           Cancel
         </button>

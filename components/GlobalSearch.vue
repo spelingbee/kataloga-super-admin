@@ -2,10 +2,10 @@
   <div 
     v-if="isOpen" 
     class="global-search" 
-    @click.self="close"
     role="dialog"
     aria-modal="true"
     aria-labelledby="global-search-label"
+    @click.self="close"
   >
     <div 
       v-focus-trap="{ active: isOpen }"
@@ -27,8 +27,8 @@
           @keydown.up.prevent="selectPrevious"
           @keydown.enter.prevent="selectCurrent"
           @keydown.esc="close"
-        />
-        <button v-if="query" @click="clearQuery" class="global-search__clear">
+        >
+        <button v-if="query" class="global-search__clear" @click="clearQuery">
           <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -36,7 +36,7 @@
       </div>
 
       <div v-if="loading" class="global-search__loading">
-        <div class="global-search__spinner"></div>
+        <div class="global-search__spinner"/>
         <span>Searching...</span>
       </div>
 

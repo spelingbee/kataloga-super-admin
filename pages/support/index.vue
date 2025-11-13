@@ -85,7 +85,7 @@
           <input
             v-model="hasUnreadFilter"
             type="checkbox"
-          />
+          >
           <span>Unread only</span>
         </label>
 

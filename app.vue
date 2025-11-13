@@ -7,7 +7,7 @@
       aria-live="polite"
       aria-atomic="true"
       class="sr-only"
-    ></div>
+    />
     
     <NuxtLayout>
       <NuxtPage />
@@ -26,7 +26,7 @@ useHead({
 })
 
 // Add accessibility testing in development
-if (process.dev && process.client) {
+if (import.meta.dev && import.meta.client) {
   onMounted(() => {
     // Log accessibility report on Ctrl+Shift+A
     document.addEventListener('keydown', (e) => {

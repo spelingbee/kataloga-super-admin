@@ -36,7 +36,7 @@
               class="provider-config-modal__input"
               placeholder="smtp.example.com"
               required
-            />
+            >
           </div>
 
           <div class="provider-config-modal__form-row">
@@ -48,7 +48,7 @@
                 class="provider-config-modal__input"
                 placeholder="587"
                 required
-              />
+              >
             </div>
 
             <div class="provider-config-modal__form-group">
@@ -72,7 +72,7 @@
               class="provider-config-modal__input"
               placeholder="your-email@example.com"
               required
-            />
+            >
           </div>
 
           <div class="provider-config-modal__form-group">
@@ -83,7 +83,7 @@
               class="provider-config-modal__input"
               placeholder="••••••••"
               required
-            />
+            >
           </div>
         </template>
 
@@ -97,7 +97,7 @@
               class="provider-config-modal__input"
               placeholder="SG.xxxxxxxxxxxxxxxxxxxxxxxx"
               required
-            />
+            >
             <p class="provider-config-modal__hint">
               Get your API key from SendGrid dashboard
             </p>
@@ -130,7 +130,7 @@
               class="provider-config-modal__input"
               placeholder="AKIAIOSFODNN7EXAMPLE"
               required
-            />
+            >
           </div>
 
           <div class="provider-config-modal__form-group">
@@ -141,7 +141,7 @@
               class="provider-config-modal__input"
               placeholder="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
               required
-            />
+            >
           </div>
         </template>
 
@@ -155,7 +155,7 @@
               class="provider-config-modal__input"
               placeholder="mg.example.com"
               required
-            />
+            >
           </div>
 
           <div class="provider-config-modal__form-group">
@@ -166,7 +166,7 @@
               class="provider-config-modal__input"
               placeholder="key-xxxxxxxxxxxxxxxxxxxxxxxx"
               required
-            />
+            >
           </div>
         </template>
 
@@ -180,7 +180,7 @@
               class="provider-config-modal__input"
               placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
               required
-            />
+            >
             <p class="provider-config-modal__hint">
               Get your server token from Postmark dashboard
             </p>
@@ -196,7 +196,7 @@
             class="provider-config-modal__input"
             placeholder="noreply@example.com"
             required
-          />
+          >
         </div>
 
         <div class="provider-config-modal__form-group">
@@ -207,7 +207,7 @@
             class="provider-config-modal__input"
             placeholder="Your Platform"
             required
-          />
+          >
         </div>
 
         <div class="provider-config-modal__form-group">
@@ -216,7 +216,7 @@
               v-model="form.isActive"
               type="checkbox"
               class="provider-config-modal__checkbox"
-            />
+            >
             <span>Enable this provider</span>
           </label>
         </div>
@@ -227,7 +227,7 @@
               v-model="form.isPrimary"
               type="checkbox"
               class="provider-config-modal__checkbox"
-            />
+            >
             <span>Set as primary provider</span>
           </label>
           <p class="provider-config-modal__hint">

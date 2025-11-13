@@ -1,19 +1,19 @@
 <template>
-  <Modal :show="show" @close="handleClose" size="large">
+  <Modal :show="show" size="large" @close="handleClose">
     <template #header>
       <h2 class="event-detail-modal__title">Security Event Details</h2>
     </template>
 
     <template #body>
       <div v-if="loading" class="event-detail-modal__loading">
-        <div class="event-detail-modal__spinner"></div>
+        <div class="event-detail-modal__spinner"/>
         <p>Loading event details...</p>
       </div>
 
       <div v-else-if="error" class="event-detail-modal__error">
         <AppIcon name="alert-circle" />
         <p>{{ error }}</p>
-        <button @click="retryFetch" class="event-detail-modal__retry-btn">
+        <button class="event-detail-modal__retry-btn" @click="retryFetch">
           Retry
         </button>
       </div>
@@ -51,7 +51,7 @@
               <span class="event-detail-modal__value">{{ event.ipAddress }}</span>
             </div>
 
-            <div class="event-detail-modal__field" v-if="event.userName">
+            <div v-if="event.userName" class="event-detail-modal__field">
               <label>User</label>
               <span class="event-detail-modal__value">{{ event.userName }}</span>
             </div>
@@ -63,19 +63,19 @@
           <p class="event-detail-modal__description">{{ event.description }}</p>
         </div>
 
-        <div class="event-detail-modal__section" v-if="event.userAgent">
+        <div v-if="event.userAgent" class="event-detail-modal__section">
           <h3 class="event-detail-modal__section-title">User Agent</h3>
           <p class="event-detail-modal__user-agent">{{ event.userAgent }}</p>
         </div>
 
-        <div class="event-detail-modal__section" v-if="event.metadata && Object.keys(event.metadata).length > 0">
+        <div v-if="event.metadata && Object.keys(event.metadata).length > 0" class="event-detail-modal__section">
           <h3 class="event-detail-modal__section-title">Additional Details</h3>
           <div class="event-detail-modal__metadata">
             <pre>{{ JSON.stringify(event.metadata, null, 2) }}</pre>
           </div>
         </div>
 
-        <div class="event-detail-modal__section" v-if="event.resolved">
+        <div v-if="event.resolved" class="event-detail-modal__section">
           <h3 class="event-detail-modal__section-title">Resolution</h3>
           <div class="event-detail-modal__grid">
             <div class="event-detail-modal__field">
@@ -95,7 +95,7 @@
           </div>
         </div>
 
-        <div class="event-detail-modal__section" v-if="!event.resolved">
+        <div v-if="!event.resolved" class="event-detail-modal__section">
           <h3 class="event-detail-modal__section-title">Resolve Event</h3>
           <FormTextarea
             v-model="resolutionNotes"
@@ -103,9 +103,9 @@
             rows="3"
           />
           <button
-            @click="handleResolve"
             class="event-detail-modal__resolve-btn"
             :disabled="resolving"
+            @click="handleResolve"
           >
             {{ resolving ? 'Resolving...' : 'Mark as Resolved' }}
           </button>
@@ -114,7 +114,7 @@
     </template>
 
     <template #footer>
-      <button @click="handleClose" class="event-detail-modal__close-btn">
+      <button class="event-detail-modal__close-btn" @click="handleClose">
         Close
       </button>
     </template>

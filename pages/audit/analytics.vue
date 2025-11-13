@@ -37,7 +37,7 @@
 
     <!-- Loading State -->
     <div v-if="loading" class="audit-analytics-page__loading">
-      <div class="audit-analytics-page__spinner"></div>
+      <div class="audit-analytics-page__spinner"/>
     </div>
 
     <!-- Analytics Content -->

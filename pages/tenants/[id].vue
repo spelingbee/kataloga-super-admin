@@ -2,7 +2,7 @@
   <div class="tenant-details">
     <!-- Loading State -->
     <div v-if="loading && !tenant" class="tenant-details__loading">
-      <div class="tenant-details__spinner"></div>
+      <div class="tenant-details__spinner"/>
       <p>Loading tenant details...</p>
     </div>
 

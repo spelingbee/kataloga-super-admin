@@ -5,7 +5,7 @@ export default defineNuxtPlugin(() => {
   authStore.initializeAuth()
 
   // Set up session expiry check interval (every 5 minutes)
-  if (process.client) {
+  if (import.meta.client) {
     setInterval(() => {
       authStore.checkSessionExpiry()
     }, 5 * 60 * 1000)

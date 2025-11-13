@@ -5,12 +5,12 @@
         <h3 class="modal__title">
           {{ gateway ? 'Edit Payment Gateway' : 'Add Payment Gateway' }}
         </h3>
-        <button @click="$emit('close')" class="modal__close">
+        <button class="modal__close" @click="$emit('close')">
           <AppIcon name="x" />
         </button>
       </div>
 
-      <form @submit.prevent="handleSubmit" class="modal__body">
+      <form class="modal__body" @submit.prevent="handleSubmit">
         <!-- Gateway Type -->
         <div class="form-group">
           <label for="gatewayType" class="form-group__label">
@@ -44,7 +44,7 @@
               class="form-group__input"
               placeholder="pk_live_..."
               required
-            />
+            >
             <p class="form-group__hint">
               Your Stripe publishable key (starts with pk_)
             </p>
@@ -61,7 +61,7 @@
               class="form-group__input"
               placeholder="sk_live_..."
               required
-            />
+            >
             <p class="form-group__hint">
               Your Stripe secret key (starts with sk_)
             </p>
@@ -77,7 +77,7 @@
               type="password"
               class="form-group__input"
               placeholder="whsec_..."
-            />
+            >
             <p class="form-group__hint">
               Your Stripe webhook signing secret (optional but recommended)
             </p>
@@ -114,7 +114,7 @@
               type="text"
               class="form-group__input"
               required
-            />
+            >
             <p class="form-group__hint">
               Your PayPal REST API Client ID
             </p>
@@ -130,7 +130,7 @@
               type="password"
               class="form-group__input"
               required
-            />
+            >
             <p class="form-group__hint">
               Your PayPal REST API Client Secret
             </p>
@@ -145,7 +145,7 @@
                 v-model="formData.isActive"
                 type="checkbox"
                 class="form-group__checkbox-input"
-              />
+              >
               <span class="form-group__checkbox-label">
                 <strong>Active</strong>
                 <span class="form-group__checkbox-description">
@@ -161,7 +161,7 @@
                 v-model="formData.isPrimary"
                 type="checkbox"
                 class="form-group__checkbox-input"
-              />
+              >
               <span class="form-group__checkbox-label">
                 <strong>Primary Gateway</strong>
                 <span class="form-group__checkbox-description">
@@ -187,8 +187,8 @@
         <div class="modal__footer">
           <button
             type="button"
-            @click="$emit('close')"
             class="btn btn--secondary"
+            @click="$emit('close')"
           >
             Cancel
           </button>

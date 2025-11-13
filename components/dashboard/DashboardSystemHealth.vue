@@ -19,7 +19,7 @@
             class="health-metric__progress" 
             :class="getStatusClass(health.apiUptime, 95)"
             :style="{ width: `${health.apiUptime}%` }"
-          ></div>
+          />
         </div>
       </div>
 
@@ -45,7 +45,7 @@
             class="health-metric__progress" 
             :class="getStatusClass(health.emailDeliveryRate, 90)"
             :style="{ width: `${health.emailDeliveryRate}%` }"
-          ></div>
+          />
         </div>
       </div>
 
@@ -59,7 +59,7 @@
             class="health-metric__progress" 
             :class="getStorageStatusClass(health.storageUsed)"
             :style="{ width: `${getStoragePercentage(health.storageUsed)}%` }"
-          ></div>
+          />
         </div>
       </div>
     </div>

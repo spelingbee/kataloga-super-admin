@@ -136,13 +136,13 @@ export const useKeyboardShortcuts = () => {
 
   // Set up event listener
   onMounted(() => {
-    if (process.client) {
+    if (import.meta.client) {
       window.addEventListener('keydown', handleKeyDown)
     }
   })
 
   onUnmounted(() => {
-    if (process.client) {
+    if (import.meta.client) {
       window.removeEventListener('keydown', handleKeyDown)
     }
   })

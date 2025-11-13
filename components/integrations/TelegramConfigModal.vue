@@ -5,7 +5,7 @@
     size="large"
     @close="$emit('close')"
   >
-    <form @submit.prevent="handleSubmit" class="telegram-config-form">
+    <form class="telegram-config-form" @submit.prevent="handleSubmit">
       <div v-if="error" class="telegram-config-form__error">
         <AppIcon name="alert-circle" />
         <span>{{ error }}</span>
@@ -24,7 +24,7 @@
           class="form-group__input"
           placeholder="123456789:ABCdefGHIjklMNOpqrsTUVwxyz"
           required
-        />
+        >
         <p class="form-group__hint">
           Get your bot token from <a href="https://t.me/BotFather" target="_blank">@BotFather</a>
         </p>
@@ -43,7 +43,7 @@
           class="form-group__input"
           placeholder="https://your-domain.com/api/telegram/webhook"
           required
-        />
+        >
         <p class="form-group__hint">
           The URL where Telegram will send updates
         </p>
@@ -58,7 +58,7 @@
               v-model="formData.notificationSettings.newRegistrations"
               type="checkbox"
               class="checkbox-item__input"
-            />
+            >
             <span class="checkbox-item__label">New Registrations</span>
           </label>
 
@@ -67,7 +67,7 @@
               v-model="formData.notificationSettings.approvals"
               type="checkbox"
               class="checkbox-item__input"
-            />
+            >
             <span class="checkbox-item__label">Approvals & Rejections</span>
           </label>
 
@@ -76,7 +76,7 @@
               v-model="formData.notificationSettings.subscriptionChanges"
               type="checkbox"
               class="checkbox-item__input"
-            />
+            >
             <span class="checkbox-item__label">Subscription Changes</span>
           </label>
 
@@ -85,7 +85,7 @@
               v-model="formData.notificationSettings.securityAlerts"
               type="checkbox"
               class="checkbox-item__input"
-            />
+            >
             <span class="checkbox-item__label">Security Alerts</span>
           </label>
 
@@ -94,7 +94,7 @@
               v-model="formData.notificationSettings.systemAlerts"
               type="checkbox"
               class="checkbox-item__input"
-            />
+            >
             <span class="checkbox-item__label">System Alerts</span>
           </label>
         </div>
@@ -107,7 +107,7 @@
             v-model="formData.isActive"
             type="checkbox"
             class="checkbox-item__input"
-          />
+          >
           <span class="checkbox-item__label">Enable Telegram Bot</span>
         </label>
       </div>
@@ -119,7 +119,7 @@
             'connection-status__indicator',
             `connection-status__indicator--${config.status}`,
           ]"
-        ></div>
+        />
         <div class="connection-status__info">
           <span class="connection-status__label">Status:</span>
           <span class="connection-status__value">{{ config.status }}</span>
@@ -134,20 +134,20 @@
       <div class="telegram-config-form__actions">
         <button
           type="button"
-          @click="handleTest"
           :disabled="!formData.botToken || testing"
           class="btn btn--secondary"
+          @click="handleTest"
         >
           <AppIcon v-if="!testing" name="play" />
-          <div v-else class="btn-spinner"></div>
+          <div v-else class="btn-spinner"/>
           {{ testing ? 'Testing...' : 'Test Connection' }}
         </button>
         <div class="telegram-config-form__actions-right">
           <button
             type="button"
-            @click="$emit('close')"
             class="btn btn--secondary"
             :disabled="saving"
+            @click="$emit('close')"
           >
             Cancel
           </button>
@@ -156,7 +156,7 @@
             class="btn btn--primary"
             :disabled="saving || !formData.botToken || !formData.webhookUrl"
           >
-            <div v-if="saving" class="btn-spinner"></div>
+            <div v-if="saving" class="btn-spinner"/>
             {{ saving ? 'Saving...' : 'Save Configuration' }}
           </button>
         </div>

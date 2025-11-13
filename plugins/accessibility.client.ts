@@ -8,7 +8,7 @@ export default defineNuxtPlugin(() => {
   accessibility.manageFocusOnRouteChange()
 
   // Add global styles for accessibility
-  if (process.client) {
+  if (import.meta.client) {
     const style = document.createElement('style')
     style.textContent = `
       /* Screen reader only content */

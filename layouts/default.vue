@@ -3,17 +3,17 @@
     <!-- Sidebar Navigation -->
     <AppSidebar 
       :is-open="isSidebarOpen" 
-      @close="isSidebarOpen = false"
       role="navigation"
       aria-label="Main navigation"
+      @close="isSidebarOpen = false"
     />
 
     <!-- Main Content -->
     <div class="lg:pl-64">
       <!-- Header -->
       <AppHeader 
-        @toggle-sidebar="isSidebarOpen = !isSidebarOpen"
         role="banner"
+        @toggle-sidebar="isSidebarOpen = !isSidebarOpen"
       />
 
       <!-- Breadcrumbs -->
@@ -55,7 +55,7 @@ const shortcutsModalRef = ref()
 
 // Listen for global events
 onMounted(() => {
-  if (process.client) {
+  if (import.meta.client) {
     window.addEventListener('open-global-search', () => {
       globalSearchRef.value?.open()
     })

@@ -20,7 +20,7 @@
               v-model="reportConfig.name"
               type="text"
               placeholder="e.g., Monthly Performance Report"
-            />
+            >
           </div>
 
           <div class="report-builder__form-group">
@@ -58,7 +58,7 @@
               id="dateFrom"
               v-model="reportConfig.dateRange.from"
               type="date"
-            />
+            >
           </div>
           <div class="report-builder__form-group">
             <label for="dateTo">To</label>
@@ -66,7 +66,7 @@
               id="dateTo"
               v-model="reportConfig.dateRange.to"
               type="date"
-            />
+            >
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@
                   v-model="reportConfig.selectedMetrics"
                   type="checkbox"
                   :value="metric.value"
-                />
+                >
                 <span>{{ metric.label }}</span>
               </label>
             </div>
@@ -110,7 +110,7 @@
             <input
               v-model="reportConfig.includeCharts"
               type="checkbox"
-            />
+            >
             <span>Include Charts</span>
           </label>
           
@@ -118,7 +118,7 @@
             <input
               v-model="reportConfig.includeTables"
               type="checkbox"
-            />
+            >
             <span>Include Data Tables</span>
           </label>
           
@@ -126,7 +126,7 @@
             <input
               v-model="reportConfig.includeRawData"
               type="checkbox"
-            />
+            >
             <span>Include Raw Data (CSV)</span>
           </label>
         </div>
@@ -172,16 +172,16 @@
     <div class="report-builder__actions">
       <button
         class="report-builder__button report-builder__button--secondary"
-        @click="saveTemplate"
         :disabled="!canSaveTemplate"
+        @click="saveTemplate"
       >
         Save as Template
       </button>
       
       <button
         class="report-builder__button report-builder__button--primary"
-        @click="generateReport"
         :disabled="!canGenerateReport || generating"
+        @click="generateReport"
       >
         {{ generating ? 'Generating...' : 'Generate Report' }}
       </button>

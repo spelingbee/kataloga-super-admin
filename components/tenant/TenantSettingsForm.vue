@@ -86,8 +86,8 @@
         <button
           type="button"
           class="tenant-settings-form__btn tenant-settings-form__btn--cancel"
-          @click="handleCancel"
           :disabled="loading"
+          @click="handleCancel"
         >
           Cancel
         </button>

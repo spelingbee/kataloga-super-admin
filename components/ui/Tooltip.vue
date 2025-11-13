@@ -14,7 +14,7 @@
           <div class="tooltip__content">
             <slot name="content">{{ content }}</slot>
           </div>
-          <div class="tooltip__arrow" :style="arrowStyle"></div>
+          <div class="tooltip__arrow" :style="arrowStyle"/>
         </div>
       </Transition>
     </Teleport>

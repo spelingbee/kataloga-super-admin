@@ -8,13 +8,13 @@
     </div>
 
     <div v-if="loading && !integrations.length" class="integrations-page__loading">
-      <div class="spinner"></div>
+      <div class="spinner"/>
       <p>Loading integrations...</p>
     </div>
 
     <div v-else-if="error && !integrations.length" class="integrations-page__error">
       <p>{{ error }}</p>
-      <button @click="loadIntegrations" class="btn btn--primary">
+      <button class="btn btn--primary" @click="loadIntegrations">
         Retry
       </button>
     </div>
@@ -38,8 +38,8 @@
                   :checked="integration.isActive"
                   :disabled="!integration.isConfigured || saving"
                   @change="handleToggle(integration.id, !integration.isActive)"
-                />
-                <span class="toggle-switch__slider"></span>
+                >
+                <span class="toggle-switch__slider"/>
               </label>
             </div>
           </div>
@@ -66,15 +66,15 @@
           <div class="integration-card__footer">
             <button
               v-if="!integration.isConfigured"
-              @click="handleConfigure(integration)"
               class="btn btn--primary btn--sm"
+              @click="handleConfigure(integration)"
             >
               Configure
             </button>
             <button
               v-else
-              @click="handleConfigure(integration)"
               class="btn btn--secondary btn--sm"
+              @click="handleConfigure(integration)"
             >
               Settings
             </button>
@@ -86,7 +86,7 @@
       <div class="webhooks-section">
         <div class="webhooks-section__header">
           <h2 class="webhooks-section__title">Webhooks</h2>
-          <button @click="showWebhookModal = true" class="btn btn--primary">
+          <button class="btn btn--primary" @click="showWebhookModal = true">
             <AppIcon name="plus" />
             Add Webhook
           </button>
@@ -95,7 +95,7 @@
         <div v-if="webhooks.length === 0" class="webhooks-section__empty">
           <AppIcon name="webhook" class="webhooks-section__empty-icon" />
           <p>No webhooks configured</p>
-          <button @click="showWebhookModal = true" class="btn btn--primary">
+          <button class="btn btn--primary" @click="showWebhookModal = true">
             Create Your First Webhook
           </button>
         </div>
@@ -131,8 +131,8 @@
                     :checked="webhook.isActive"
                     :disabled="saving"
                     @change="handleWebhookToggle(webhook)"
-                  />
-                  <span class="toggle-switch__slider"></span>
+                  >
+                  <span class="toggle-switch__slider"/>
                 </label>
                 <span
                   v-if="webhook.lastDelivery"
@@ -148,31 +148,31 @@
 
             <div class="webhook-item__actions">
               <button
-                @click="handleTestWebhook(webhook.id!)"
                 :disabled="testing"
                 class="btn btn--secondary btn--sm"
+                @click="handleTestWebhook(webhook.id!)"
               >
                 <AppIcon name="play" />
                 Test
               </button>
               <button
-                @click="handleViewLogs(webhook.id!)"
                 class="btn btn--secondary btn--sm"
+                @click="handleViewLogs(webhook.id!)"
               >
                 <AppIcon name="file-text" />
                 Logs
               </button>
               <button
-                @click="handleEditWebhook(webhook)"
                 class="btn btn--secondary btn--sm"
+                @click="handleEditWebhook(webhook)"
               >
                 <AppIcon name="edit" />
                 Edit
               </button>
               <button
-                @click="handleDeleteWebhook(webhook.id!)"
                 :disabled="saving"
                 class="btn btn--danger btn--sm"
+                @click="handleDeleteWebhook(webhook.id!)"
               >
                 <AppIcon name="trash" />
                 Delete
