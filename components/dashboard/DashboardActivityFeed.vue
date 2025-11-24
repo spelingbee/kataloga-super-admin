@@ -80,6 +80,7 @@ const filters = [
 const activeFilter = ref<string>('all')
 
 const filteredActivities = computed(() => {
+  if (!props.activities || !Array.isArray(props.activities)) return []
   if (activeFilter.value === 'all') {
     return props.activities
   }

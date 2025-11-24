@@ -29,7 +29,7 @@ useHead({
 if (process.dev && process.client) {
   onMounted(() => {
     // Log accessibility report on Ctrl+Shift+A
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', async (e) => {
       if (e.ctrlKey && e.shiftKey && e.key === 'A') {
         const { logAccessibilityReport } = await import('~/utils/accessibility-testing')
         logAccessibilityReport()

@@ -214,7 +214,7 @@
 
 <script setup lang="ts">
 import { useEmailStore } from '~/stores/email'
-import DataTable from '~/components/ui/DataTable.vue'
+import DataTable from '~/components/ui/DataTable/DataTable.vue'
 import FormInput from '~/components/ui/FormInput.vue'
 import FormSelect from '~/components/ui/FormSelect.vue'
 

@@ -205,7 +205,7 @@
 
 <script setup lang="ts">
 import { useAnnouncementStore } from '~/stores/announcement'
-import DataTable from '~/components/ui/DataTable.vue'
+import DataTable from '~/components/ui/DataTable/DataTable.vue'
 
 const route = useRoute()
 const router = useRouter()

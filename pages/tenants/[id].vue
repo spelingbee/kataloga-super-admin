@@ -206,6 +206,37 @@
           </div>
         </div>
 
+        <!-- Quick Actions -->
+        <div class="tenant-details__card tenant-details__card--full">
+          <h2 class="tenant-details__card-title">Quick Actions</h2>
+          <div class="tenant-details__quick-actions">
+            <button
+              class="tenant-details__quick-action-btn"
+              @click="navigateToMenus"
+            >
+              <span class="tenant-details__quick-action-icon">📋</span>
+              <div class="tenant-details__quick-action-content">
+                <span class="tenant-details__quick-action-title">Manage Menus</span>
+                <span class="tenant-details__quick-action-desc">
+                  View and edit tenant's menus and menu items
+                </span>
+              </div>
+            </button>
+            <button
+              class="tenant-details__quick-action-btn"
+              @click="navigateToSubscription"
+            >
+              <span class="tenant-details__quick-action-icon">💳</span>
+              <div class="tenant-details__quick-action-content">
+                <span class="tenant-details__quick-action-title">Manage Subscription</span>
+                <span class="tenant-details__quick-action-desc">
+                  View subscription details and billing history
+                </span>
+              </div>
+            </button>
+          </div>
+        </div>
+
         <!-- Settings -->
         <div class="tenant-details__card tenant-details__card--full">
           <div class="tenant-details__card-header">
@@ -300,6 +331,16 @@ function formatNumber(value: number): string {
 
 function goBack(): void {
   router.push('/tenants')
+}
+
+function navigateToMenus(): void {
+  router.push(`/tenants/${tenantId.value}/menus`)
+}
+
+function navigateToSubscription(): void {
+  if (tenant.value?.subscription?.id) {
+    router.push(`/subscriptions/${tenant.value.subscription.id}`)
+  }
 }
 
 async function handleActivate(): Promise<void> {
@@ -861,3 +902,50 @@ onMounted(() => {
   }
 }
 </style>
+
+
+.tenant-details__quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-md;
+}
+
+.tenant-details__quick-action-btn {
+  display: flex;
+  align-items: center;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  background: white;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  cursor: pointer;
+  transition: $transition-base;
+  text-align: left;
+
+  &:hover {
+    border-color: $primary-color;
+    box-shadow: $shadow-sm;
+  }
+}
+
+.tenant-details__quick-action-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.tenant-details__quick-action-content {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.tenant-details__quick-action-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.tenant-details__quick-action-desc {
+  font-size: 0.875rem;
+  color: $text-secondary;
+}

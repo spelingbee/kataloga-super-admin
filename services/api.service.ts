@@ -43,7 +43,11 @@ export class ApiService {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean }
 
     // Handle 401 Unauthorized - try to refresh token
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Skip refresh for login/register endpoints
+    const isAuthEndpoint = originalRequest.url?.includes('/auth/admin/login') || 
+                          originalRequest.url?.includes('/auth/refresh')
+    
+    if (error.response?.status === 401 && !originalRequest._retry && !isAuthEndpoint) {
       originalRequest._retry = true
 
       try {
@@ -53,23 +57,14 @@ export class ApiService {
           return this.api(originalRequest)
         }
       } catch (refreshError) {
-        // Refresh failed, clear auth and redirect to login
+        // Refresh failed, clear auth but don't redirect automatically
+        // Let the middleware handle the redirect
         this.clearAuth()
-        if (process.client) {
-          window.location.href = '/login'
-        }
         return Promise.reject(refreshError)
       }
     }
 
-    // Handle network errors with retry logic
-    if (!error.response && originalRequest._retry !== true) {
-      originalRequest._retry = true
-      // Wait 1 second before retry
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      return this.api(originalRequest)
-    }
-
+    // Don't retry network errors automatically - just fail
     return Promise.reject(error)
   }
 

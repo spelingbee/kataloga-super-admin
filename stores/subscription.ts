@@ -1,19 +1,22 @@
 import { defineStore } from 'pinia'
+import { useApi } from '~/composables/useApi'
 import type { 
   SubscriptionState, 
   Subscription, 
   SubscriptionFilters,
   BillingHistoryItem,
-  PaginatedResponse 
+  PaginatedResponse,
+  SubscriptionHistory
 } from '~/types'
 
 const DEFAULT_PAGE_SIZE = 50
 
 export const useSubscriptionStore = defineStore('subscription', {
-  state: (): SubscriptionState => ({
+  state: (): SubscriptionState & { subscriptionHistory: SubscriptionHistory | null } => ({
     subscriptions: [],
     currentSubscription: null,
     billingHistory: [],
+    subscriptionHistory: null,
     filters: {
       status: '',
       plan: '',
@@ -32,40 +35,47 @@ export const useSubscriptionStore = defineStore('subscription', {
 
   getters: {
     activeSubscriptions: (state): Subscription[] => {
-      return state.subscriptions.filter(s => s.status === 'active')
+      if (!state.subscriptions || !Array.isArray(state.subscriptions)) return []
+      return state.subscriptions.filter(s => s?.status === 'active')
     },
 
     trialSubscriptions: (state): Subscription[] => {
-      return state.subscriptions.filter(s => s.status === 'trial')
+      if (!state.subscriptions || !Array.isArray(state.subscriptions)) return []
+      return state.subscriptions.filter(s => s?.status === 'trial')
     },
 
     cancelledSubscriptions: (state): Subscription[] => {
-      return state.subscriptions.filter(s => s.status === 'cancelled')
+      if (!state.subscriptions || !Array.isArray(state.subscriptions)) return []
+      return state.subscriptions.filter(s => s?.status === 'cancelled')
     },
 
     expiredSubscriptions: (state): Subscription[] => {
-      return state.subscriptions.filter(s => s.status === 'expired')
+      if (!state.subscriptions || !Array.isArray(state.subscriptions)) return []
+      return state.subscriptions.filter(s => s?.status === 'expired')
     },
 
     hasFilters: (state): boolean => {
       return !!(
-        state.filters.status ||
-        state.filters.plan ||
-        state.filters.billingCycle ||
-        state.filters.search
+        state.filters?.status ||
+        state.filters?.plan ||
+        state.filters?.billingCycle ||
+        state.filters?.search
       )
     },
 
     totalRevenue: (state): number => {
+      if (!state.subscriptions || !Array.isArray(state.subscriptions)) return 0
       return state.subscriptions
-        .filter(s => s.status === 'active' || s.status === 'trial')
-        .reduce((sum, sub) => sum + sub.plan.price, 0)
+        .filter(s => s?.status === 'active' || s?.status === 'trial')
+        .reduce((sum, sub) => sum + (sub?.plan?.price || 0), 0)
     },
 
     monthlyRecurringRevenue: (state): number => {
+      if (!state.subscriptions || !Array.isArray(state.subscriptions)) return 0
       return state.subscriptions
-        .filter(s => s.status === 'active')
+        .filter(s => s?.status === 'active')
         .reduce((sum, sub) => {
+          if (!sub?.plan?.price) return sum
           const monthlyPrice = sub.billingCycle === 'yearly' 
             ? sub.plan.price / 12 
             : sub.plan.price
@@ -74,9 +84,11 @@ export const useSubscriptionStore = defineStore('subscription', {
     },
 
     annualRecurringRevenue: (state): number => {
+      if (!state.subscriptions || !Array.isArray(state.subscriptions)) return 0
       return state.subscriptions
-        .filter(s => s.status === 'active')
+        .filter(s => s?.status === 'active')
         .reduce((sum, sub) => {
+          if (!sub?.plan?.price) return sum
           const annualPrice = sub.billingCycle === 'monthly' 
             ? sub.plan.price * 12 
             : sub.plan.price
@@ -191,10 +203,54 @@ export const useSubscriptionStore = defineStore('subscription', {
       }
     },
 
+    async createSubscription(data: {
+      tenantId: string
+      planId: string
+      billingCycle: string
+      startDate?: string
+      endDate?: string
+      trialDays?: number
+    }): Promise<Subscription> {
+      this.loading = true
+      this.error = null
+
+      try {
+        const { apiService } = useApi()
+        const response = await apiService.post<Subscription>(
+          '/api/admin/subscriptions',
+          data
+        )
+
+        // Add to local state
+        this.subscriptions.unshift(response.data)
+        this.pagination.total += 1
+
+        return response.data
+      } catch (error: any) {
+        this.error = error.response?.data?.message || 'Failed to create subscription'
+        console.error('Subscription creation error:', error)
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async fetchPlans(): Promise<any[]> {
+      try {
+        const { apiService } = useApi()
+        const response = await apiService.get<any[]>('/api/admin/plans')
+        return response.data
+      } catch (error: any) {
+        this.error = error.response?.data?.message || 'Failed to fetch plans'
+        console.error('Plans fetch error:', error)
+        throw error
+      }
+    },
+
     async changePlan(subscriptionId: string, newPlanId: string): Promise<void> {
       try {
         const { apiService } = useApi()
-        const response = await apiService.patch<Subscription>(
+        const response = await apiService.post<Subscription>(
           `/api/admin/subscriptions/${subscriptionId}/change-plan`,
           { planId: newPlanId }
         )
@@ -327,12 +383,34 @@ export const useSubscriptionStore = defineStore('subscription', {
     clearCurrentSubscription(): void {
       this.currentSubscription = null
       this.billingHistory = []
+      this.subscriptionHistory = null
+    },
+
+    async fetchSubscriptionHistory(subscriptionId: string): Promise<void> {
+      this.loading = true
+      this.error = null
+
+      try {
+        const { apiService } = useApi()
+        const response = await apiService.get<SubscriptionHistory>(
+          `/api/admin/subscriptions/${subscriptionId}/history`
+        )
+
+        this.subscriptionHistory = response.data
+      } catch (error: any) {
+        this.error = error.response?.data?.message || 'Failed to fetch subscription history'
+        console.error('Subscription history fetch error:', error)
+        throw error
+      } finally {
+        this.loading = false
+      }
     },
 
     resetState(): void {
       this.subscriptions = []
       this.currentSubscription = null
       this.billingHistory = []
+      this.subscriptionHistory = null
       this.filters = {
         status: '',
         plan: '',

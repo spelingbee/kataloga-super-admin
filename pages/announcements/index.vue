@@ -263,7 +263,7 @@
 
 <script setup lang="ts">
 import { useAnnouncementStore } from '~/stores/announcement'
-import DataTable from '~/components/ui/DataTable.vue'
+import DataTable from '~/components/ui/DataTable/DataTable.vue'
 import FormInput from '~/components/ui/FormInput.vue'
 import FormSelect from '~/components/ui/FormSelect.vue'
 import AnnouncementComposer from '~/components/announcement/AnnouncementComposer.vue'

@@ -11,10 +11,11 @@ export const useAuthStore = defineStore('auth', {
   }),
 
   getters: {
-    currentUser: (state): User | null => state.user,
-    isLoggedIn: (state): boolean => state.isAuthenticated,
+    currentUser: (state): User | null => state.user || null,
+    isLoggedIn: (state): boolean => !!state.isAuthenticated && !!state.token,
     userRole: (state): string | null => state.user?.role || null,
     hasPermission: (state) => (permission: string): boolean => {
+      if (!state.user || !permission) return false
       return state.user?.permissions?.includes(permission) || false
     },
   },
@@ -26,7 +27,8 @@ export const useAuthStore = defineStore('auth', {
         const { apiService } = useApi()
         const response = await apiService.post<LoginResponse>('/api/auth/admin/login', credentials)
 
-        const { accessToken, refreshToken, user } = response.data
+        // Backend returns tokens directly without ApiResponse wrapper
+        const { accessToken, refreshToken, user } = response as any
 
         // Store tokens
         this.token = accessToken
@@ -69,7 +71,12 @@ export const useAuthStore = defineStore('auth', {
           refreshToken: this.refreshToken,
         })
 
-        const { accessToken, refreshToken, user } = response.data
+        const data = response.data || response
+        const { accessToken, refreshToken, user } = data
+
+        if (!accessToken || !user) {
+          throw new Error('Invalid refresh response')
+        }
 
         this.token = accessToken
         this.refreshToken = refreshToken

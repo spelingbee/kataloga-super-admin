@@ -7,7 +7,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:3000',
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:3001',
       appName: process.env.NUXT_PUBLIC_APP_NAME || 'Super Admin Panel',
       enable2FA: process.env.NUXT_PUBLIC_ENABLE_2FA === 'true',
     },
@@ -19,6 +19,10 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/scss/main.scss'],
+
+  devServer: {
+    port: 3002,
+  },
 
   vite: {
     css: {

@@ -47,9 +47,8 @@
               v-for="variable in template.variables"
               :key="variable"
               class="template-preview-modal__variable"
-            >
-              {{ `{{${variable}}}` }}
-            </span>
+              v-text="`{{ ${variable} }}`"
+            ></span>
           </div>
         </div>
 

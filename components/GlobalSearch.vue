@@ -22,7 +22,7 @@
           type="text"
           placeholder="Search tenants, subscriptions, emails..."
           class="global-search__input"
-          aria-label="Search
+          aria-label="Search"
           @keydown.down.prevent="selectNext"
           @keydown.up.prevent="selectPrevious"
           @keydown.enter.prevent="selectCurrent"
@@ -40,7 +40,7 @@
         <span>Searching...</span>
       </div>
 
-      <div v-else-if="results.length > 0" class="global-search__results">
+      <div v-else-if="results && results.length > 0" class="global-search__results">
         <div
           v-for="(result, index) in results"
           :key="result.id"

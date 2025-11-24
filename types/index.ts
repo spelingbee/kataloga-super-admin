@@ -1092,6 +1092,70 @@ export interface AnnouncementState {
   lastFetched: number | null
 }
 
+// Menu types
+export interface MenuListItem {
+  id: string
+  name: string
+  description?: string
+  isActive: boolean
+  itemCount: number
+  activeItemCount: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface MenuCategory {
+  id: string
+  name: string
+}
+
+export interface CategoryWithItemCount {
+  id: string
+  name: string
+  itemCount: number
+}
+
+export interface MenuItem {
+  id: string
+  name: string
+  description?: string
+  price: number
+  imageUrl?: string
+  isActive: boolean
+  category: MenuCategory
+  createdAt: string
+  updatedAt: string
+}
+
+export interface MenuDetails extends MenuListItem {
+  tenantId: string
+  items: MenuItem[]
+}
+
+export interface MenuItemFilters {
+  search?: string
+  categoryId?: string
+  minPrice?: number
+  maxPrice?: number
+  isActive?: boolean
+}
+
+export interface MenuState {
+  menus: MenuListItem[]
+  currentMenu: MenuDetails | null
+  menuItems: MenuItem[]
+  categories: CategoryWithItemCount[]
+  itemFilters: MenuItemFilters
+  pagination: {
+    page: number
+    limit: number
+    total: number
+    totalPages: number
+  }
+  loading: boolean
+  error: string | null
+}
+
 // Support Ticket types
 export interface TicketListItem {
   id: string
@@ -1178,4 +1242,71 @@ export interface TicketState {
   saving: boolean
   error: string | null
   lastFetched: number | null
+}
+
+// Subscription History types
+export interface SubscriptionHistoryItem {
+  id: string
+  changeType: 'upgrade' | 'downgrade' | 'cancel' | 'reactivate' | 'extend' | 'discount' | 'expire'
+  fromPlan: string
+  toPlan: string
+  reason?: string
+  metadata?: Record<string, any>
+  createdAt: string
+}
+
+export interface SubscriptionHistory {
+  subscriptionId: string
+  tenantId: string
+  tenantName: string
+  history: SubscriptionHistoryItem[]
+  total: number
+}
+
+// Menu History types
+export interface MenuHistoryItem {
+  id: string
+  action: string
+  resource: string
+  resourceId: string | null
+  userId: string
+  details: {
+    tenantId: string
+    menuId?: string
+    menuItemId?: string
+    categoryId?: string
+    action: string
+    entityType: string
+    changes?: Record<string, any>
+    metadata?: Record<string, any>
+  }
+  createdAt: string
+}
+
+export interface MenuHistory {
+  tenantId: string
+  history: MenuHistoryItem[]
+  total: number
+}
+
+// Audit Export types
+export interface AuditExportFilters {
+  type: 'subscription' | 'menu'
+  format?: 'json' | 'csv'
+  tenantId?: string
+  subscriptionId?: string
+  changeType?: string
+  startDate?: string
+  endDate?: string
+  page?: number
+  limit?: number
+}
+
+export interface AuditExportResponse {
+  data: any[]
+  total: number
+  page: number
+  limit: number
+  totalPages: number
+  exportedAt: string
 }

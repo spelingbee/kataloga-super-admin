@@ -228,6 +228,7 @@ const currentPage = ref(1)
 
 // Filtered data based on search
 const filteredData = computed(() => {
+  if (!props.data || !Array.isArray(props.data)) return []
   if (!searchQuery.value) return props.data
 
   const query = searchQuery.value.toLowerCase()
