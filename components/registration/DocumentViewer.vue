@@ -1,6 +1,6 @@
 <template>
   <div v-if="modelValue" class="document-viewer">
-    <div class="document-viewer__overlay" @click="handleClose"></div>
+    <div class="document-viewer__overlay" @click="handleClose"/>
     <div class="document-viewer__modal">
       <div class="document-viewer__header">
         <h3 class="document-viewer__title">{{ document.name }}</h3>
@@ -12,7 +12,7 @@
       <div class="document-viewer__content">
         <!-- Image Preview -->
         <div v-if="isImage" class="document-viewer__image-container">
-          <img :src="document.url" :alt="document.name" class="document-viewer__image" />
+          <img :src="document.url" :alt="document.name" class="document-viewer__image" >
         </div>
 
         <!-- PDF Preview -->
@@ -21,7 +21,7 @@
             :src="document.url"
             class="document-viewer__pdf"
             title="PDF Document"
-          ></iframe>
+          />
         </div>
 
         <!-- Other Files -->

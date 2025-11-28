@@ -1,11 +1,11 @@
 <template>
-  <Modal :show="show" @close="handleClose" size="medium">
+  <Modal :show="show" size="medium" @close="handleClose">
     <template #header>
       <h2 class="block-ip-modal__title">Block IP Address</h2>
     </template>
 
     <template #body>
-      <form @submit.prevent="handleSubmit" class="block-ip-modal__form">
+      <form class="block-ip-modal__form" @submit.prevent="handleSubmit">
         <FormInput
           v-model="formData.ipAddress"
           label="IP Address"
@@ -25,10 +25,10 @@
 
         <div class="block-ip-modal__checkbox">
           <input
-            type="checkbox"
             id="isPermanent"
             v-model="formData.isPermanent"
-          />
+            type="checkbox"
+          >
           <label for="isPermanent">Block permanently</label>
         </div>
 
@@ -51,17 +51,17 @@
       <div class="block-ip-modal__footer">
         <button
           type="button"
-          @click="handleClose"
           class="block-ip-modal__cancel-btn"
           :disabled="loading"
+          @click="handleClose"
         >
           Cancel
         </button>
         <button
           type="button"
-          @click="handleSubmit"
           class="block-ip-modal__submit-btn"
           :disabled="loading"
+          @click="handleSubmit"
         >
           {{ loading ? 'Blocking...' : 'Block IP' }}
         </button>

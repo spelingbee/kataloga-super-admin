@@ -6,7 +6,7 @@
     @close="handleClose"
   >
     <div v-if="loading" class="audit-log-detail-modal__loading">
-      <div class="audit-log-detail-modal__spinner"></div>
+      <div class="audit-log-detail-modal__spinner"/>
     </div>
 
     <div v-else-if="log" class="audit-log-detail-modal">

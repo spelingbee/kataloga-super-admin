@@ -125,7 +125,7 @@ const isActive = ref(false)
 const completedTours = ref<string[]>([])
 
 // Load completed tours from localStorage
-if (process.client) {
+if (import.meta.client) {
   const stored = localStorage.getItem('onboarding_completed')
   if (stored) {
     try {
@@ -197,7 +197,7 @@ export const useOnboarding = () => {
     const tourId = currentTour.value.id
     if (!completedTours.value.includes(tourId)) {
       completedTours.value.push(tourId)
-      if (process.client) {
+      if (import.meta.client) {
         localStorage.setItem('onboarding_completed', JSON.stringify(completedTours.value))
       }
     }
@@ -213,14 +213,14 @@ export const useOnboarding = () => {
 
   const resetTour = (tourId: string) => {
     completedTours.value = completedTours.value.filter(id => id !== tourId)
-    if (process.client) {
+    if (import.meta.client) {
       localStorage.setItem('onboarding_completed', JSON.stringify(completedTours.value))
     }
   }
 
   const resetAllTours = () => {
     completedTours.value = []
-    if (process.client) {
+    if (import.meta.client) {
       localStorage.removeItem('onboarding_completed')
     }
   }

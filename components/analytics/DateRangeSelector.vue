@@ -20,7 +20,7 @@
           class="date-range-selector__input"
           :max="localTo"
           @change="onDateChange"
-        />
+        >
       </div>
 
       <div class="date-range-selector__input-group">
@@ -32,7 +32,7 @@
           :min="localFrom"
           :max="today"
           @change="onDateChange"
-        />
+        >
       </div>
 
       <button class="date-range-selector__apply-btn" @click="applyDateRange">

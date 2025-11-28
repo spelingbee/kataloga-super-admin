@@ -32,7 +32,7 @@
             class="w-full py-2 pl-10 pr-4 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             aria-label="Search tenants, subscriptions, and more"
             role="searchbox"
-          />
+          >
         </div>
       </div>
 
@@ -48,7 +48,7 @@
           <span 
             class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"
             aria-hidden="true"
-          ></span>
+          />
           <span class="sr-only">3 unread notifications</span>
         </button>
 
@@ -101,7 +101,7 @@
             >
               Settings
             </NuxtLink>
-            <hr class="my-1 border-gray-200" role="separator" />
+            <hr class="my-1 border-gray-200" role="separator" >
             <button
               type="button"
               class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"

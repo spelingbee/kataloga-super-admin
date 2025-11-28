@@ -5,12 +5,12 @@
         <h3 class="modal__title">
           {{ provider ? 'Edit Email Provider' : 'Add Email Provider' }}
         </h3>
-        <button @click="$emit('close')" class="modal__close">
+        <button class="modal__close" @click="$emit('close')">
           <AppIcon name="x" />
         </button>
       </div>
 
-      <form @submit.prevent="handleSubmit" class="modal__body">
+      <form class="modal__body" @submit.prevent="handleSubmit">
         <!-- Provider Type -->
         <div class="form-group">
           <label for="providerType" class="form-group__label">
@@ -44,7 +44,7 @@
               type="email"
               class="form-group__input"
               required
-            />
+            >
           </div>
 
           <div class="form-group">
@@ -57,7 +57,7 @@
               type="text"
               class="form-group__input"
               required
-            />
+            >
           </div>
         </div>
 
@@ -77,7 +77,7 @@
                 class="form-group__input"
                 placeholder="smtp.example.com"
                 required
-              />
+              >
             </div>
 
             <div class="form-group">
@@ -91,7 +91,7 @@
                 class="form-group__input"
                 placeholder="587"
                 required
-              />
+              >
             </div>
           </div>
 
@@ -106,7 +106,7 @@
                 type="text"
                 class="form-group__input"
                 required
-              />
+              >
             </div>
 
             <div class="form-group">
@@ -119,7 +119,7 @@
                 type="password"
                 class="form-group__input"
                 required
-              />
+              >
             </div>
           </div>
 
@@ -129,7 +129,7 @@
                 v-model="formData.config.secure"
                 type="checkbox"
                 class="form-group__checkbox-input"
-              />
+              >
               <span class="form-group__checkbox-label">
                 Use SSL/TLS
               </span>
@@ -151,7 +151,7 @@
               type="password"
               class="form-group__input"
               required
-            />
+            >
           </div>
         </div>
 
@@ -189,7 +189,7 @@
                 type="text"
                 class="form-group__input"
                 required
-              />
+              >
             </div>
 
             <div class="form-group">
@@ -202,7 +202,7 @@
                 type="password"
                 class="form-group__input"
                 required
-              />
+              >
             </div>
           </div>
         </div>
@@ -222,7 +222,7 @@
               class="form-group__input"
               placeholder="mg.example.com"
               required
-            />
+            >
           </div>
 
           <div class="form-group">
@@ -235,7 +235,7 @@
               type="password"
               class="form-group__input"
               required
-            />
+            >
           </div>
         </div>
 
@@ -253,7 +253,7 @@
               type="password"
               class="form-group__input"
               required
-            />
+            >
           </div>
         </div>
 
@@ -265,7 +265,7 @@
                 v-model="formData.isActive"
                 type="checkbox"
                 class="form-group__checkbox-input"
-              />
+              >
               <span class="form-group__checkbox-label">
                 <strong>Active</strong>
                 <span class="form-group__checkbox-description">
@@ -281,7 +281,7 @@
                 v-model="formData.isPrimary"
                 type="checkbox"
                 class="form-group__checkbox-input"
-              />
+              >
               <span class="form-group__checkbox-label">
                 <strong>Primary Provider</strong>
                 <span class="form-group__checkbox-description">
@@ -295,8 +295,8 @@
         <div class="modal__footer">
           <button
             type="button"
-            @click="$emit('close')"
             class="btn btn--secondary"
+            @click="$emit('close')"
           >
             Cancel
           </button>

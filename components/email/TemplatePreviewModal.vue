@@ -40,7 +40,7 @@
           <strong>Subject:</strong> {{ template.subject }}
         </div>
 
-        <div class="template-preview-modal__variables" v-if="template.variables.length > 0">
+        <div v-if="template.variables.length > 0" class="template-preview-modal__variables">
           <strong>Available Variables:</strong>
           <div class="template-preview-modal__variable-list">
             <span

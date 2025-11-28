@@ -21,9 +21,9 @@
           </NuxtLink>
         </Tooltip>
         <button 
-          @click="refreshData" 
           class="btn btn--secondary"
           :disabled="dashboardStore.loading"
+          @click="refreshData"
         >
           <AppIcon name="refresh" :class="{ 'animate-spin': dashboardStore.loading }" />
           Refresh
@@ -35,7 +35,7 @@
     <div v-if="dashboardStore.error" class="alert alert--error">
       <AppIcon name="alert-circle" />
       <span>{{ dashboardStore.error }}</span>
-      <button @click="dashboardStore.clearError" class="alert__close">
+      <button class="alert__close" @click="dashboardStore.clearError">
         <AppIcon name="x" />
       </button>
     </div>
@@ -130,7 +130,7 @@
           </Tooltip>
         </h2>
         <div v-if="dashboardStore.loading && !dashboardStore.systemHealth" class="dashboard__section-loading">
-          <div class="skeleton-pulse" style="height: 200px; border-radius: 8px;"></div>
+          <div class="skeleton-pulse" style="height: 200px; border-radius: 8px;"/>
         </div>
         <DashboardSystemHealth v-else-if="dashboardStore.systemHealth" :health="dashboardStore.systemHealth" />
       </div>
@@ -144,7 +144,7 @@
           </Tooltip>
         </h2>
         <div v-if="dashboardStore.loading && dashboardStore.recentActivity.length === 0" class="dashboard__section-loading">
-          <div class="skeleton-pulse" style="height: 200px; border-radius: 8px;"></div>
+          <div class="skeleton-pulse" style="height: 200px; border-radius: 8px;"/>
         </div>
         <DashboardActivityFeed v-else :activities="dashboardStore.recentActivity" />
       </div>

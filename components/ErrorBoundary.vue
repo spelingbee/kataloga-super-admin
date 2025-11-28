@@ -18,10 +18,10 @@
       </div>
       
       <div class="error-boundary__actions">
-        <button @click="retry" class="error-boundary__btn error-boundary__btn--primary">
+        <button class="error-boundary__btn error-boundary__btn--primary" @click="retry">
           Try Again
         </button>
-        <button v-if="onReset" @click="reset" class="error-boundary__btn error-boundary__btn--secondary">
+        <button v-if="onReset" class="error-boundary__btn error-boundary__btn--secondary" @click="reset">
           Reset
         </button>
       </div>
@@ -68,7 +68,7 @@ onErrorCaptured((err: Error) => {
   console.error('Error caught by boundary:', err)
   
   // Report error
-  if (process.client) {
+  if (import.meta.client) {
     useErrorReporting().reportError(err, {
       component: 'ErrorBoundary',
       context: 'Component Error',
@@ -80,7 +80,7 @@ onErrorCaptured((err: Error) => {
 })
 
 // Handle unhandled promise rejections
-if (process.client) {
+if (import.meta.client) {
   window.addEventListener('unhandledrejection', (event) => {
     error.value = new Error(event.reason?.message || 'Unhandled promise rejection')
     console.error('Unhandled rejection:', event.reason)

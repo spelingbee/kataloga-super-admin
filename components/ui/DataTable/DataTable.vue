@@ -17,7 +17,7 @@
         class="data-table__search-input"
         :aria-label="searchPlaceholder"
         aria-describedby="search-results-count"
-      />
+      >
       <span :id="`search-results-count-${tableId}`" class="sr-only" aria-live="polite">
         {{ filteredData.length }} results found
       </span>
@@ -103,7 +103,7 @@
               role="cell"
               aria-label="Row actions"
             >
-              <slot name="actions" :row="row"></slot>
+              <slot name="actions" :row="row"/>
             </td>
           </tr>
           <tr v-if="paginatedData.length === 0" role="row">
@@ -281,7 +281,7 @@ const visiblePages = computed(() => {
   const pages: number[] = []
   const maxVisible = 5
   let start = Math.max(1, currentPage.value - Math.floor(maxVisible / 2))
-  let end = Math.min(totalPages.value, start + maxVisible - 1)
+  const end = Math.min(totalPages.value, start + maxVisible - 1)
 
   if (end - start < maxVisible - 1) {
     start = Math.max(1, end - maxVisible + 1)

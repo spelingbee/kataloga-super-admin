@@ -7,7 +7,7 @@
           Configure storage providers for file uploads and media management
         </p>
       </div>
-      <button @click="openAddModal" class="btn btn--primary">
+      <button class="btn btn--primary" @click="openAddModal">
         <AppIcon name="plus" class="btn__icon" />
         Add Storage
       </button>
@@ -16,7 +16,7 @@
     <div v-if="storageConfigs.length === 0" class="settings-storage__empty">
       <AppIcon name="database" class="settings-storage__empty-icon" />
       <p class="settings-storage__empty-text">No storage configurations</p>
-      <button @click="openAddModal" class="btn btn--primary">
+      <button class="btn btn--primary" @click="openAddModal">
         Add Your First Storage
       </button>
     </div>
@@ -41,24 +41,24 @@
           </div>
           <div class="storage-card__actions">
             <button
-              @click="testStorage(storage.id!)"
               class="btn btn--sm btn--secondary"
               :disabled="testing"
+              @click="testStorage(storage.id!)"
             >
               <AppIcon name="check-circle" class="btn__icon" />
               Test
             </button>
             <button
-              @click="openEditModal(storage)"
               class="btn btn--sm btn--secondary"
+              @click="openEditModal(storage)"
             >
               <AppIcon name="edit" class="btn__icon" />
               Edit
             </button>
             <button
-              @click="handleDelete(storage.id!)"
               class="btn btn--sm btn--danger"
               :disabled="storage.isPrimary"
+              @click="handleDelete(storage.id!)"
             >
               <AppIcon name="trash" class="btn__icon" />
               Delete
@@ -102,8 +102,8 @@
           <div class="usage-footer">
             <span class="usage-footer__percentage">{{ storage.usage.percentage.toFixed(1) }}% used</span>
             <button
-              @click="refreshUsage(storage.id!)"
               class="usage-footer__refresh"
+              @click="refreshUsage(storage.id!)"
             >
               <AppIcon name="refresh-cw" />
               Refresh

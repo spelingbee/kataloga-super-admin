@@ -22,7 +22,7 @@
           },
         ]"
         @change="handleChange"
-      />
+      >
     </div>
     <p v-if="error" class="form-datepicker__error">{{ error }}</p>
     <p v-else-if="hint" class="form-datepicker__hint">{{ hint }}</p>

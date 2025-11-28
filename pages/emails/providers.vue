@@ -70,8 +70,8 @@
           </button>
           <button
             class="email-providers-page__action-btn email-providers-page__action-btn--test"
-            @click="handleTest(provider.id)"
             :disabled="testingProvider === provider.id"
+            @click="handleTest(provider.id)"
           >
             {{ testingProvider === provider.id ? 'Testing...' : 'Test Connection' }}
           </button>

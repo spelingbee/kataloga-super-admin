@@ -2,7 +2,7 @@
   <div class="registration-details">
     <!-- Loading State -->
     <div v-if="loading && !registration" class="registration-details__loading">
-      <div class="registration-details__spinner"></div>
+      <div class="registration-details__spinner"/>
       <p>Loading registration details...</p>
     </div>
 

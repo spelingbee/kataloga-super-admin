@@ -43,7 +43,7 @@
           <input
             v-model="includeCurrentFilters"
             type="checkbox"
-          />
+          >
           <span>Include current filters</span>
         </label>
       </div>

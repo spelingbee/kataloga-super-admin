@@ -5,12 +5,12 @@
         <h3 class="modal__title">
           {{ storage ? 'Edit Storage Configuration' : 'Add Storage Configuration' }}
         </h3>
-        <button @click="$emit('close')" class="modal__close">
+        <button class="modal__close" @click="$emit('close')">
           <AppIcon name="x" />
         </button>
       </div>
 
-      <form @submit.prevent="handleSubmit" class="modal__body">
+      <form class="modal__body" @submit.prevent="handleSubmit">
         <!-- Storage Type -->
         <div class="form-group">
           <label for="storageType" class="form-group__label">
@@ -46,7 +46,7 @@
               class="form-group__input"
               placeholder="/var/www/uploads"
               required
-            />
+            >
             <p class="form-group__hint">
               Absolute path to the storage directory on the server
             </p>
@@ -63,7 +63,7 @@
               class="form-group__input"
               placeholder="https://example.com/uploads"
               required
-            />
+            >
             <p class="form-group__hint">
               Public URL to access stored files
             </p>
@@ -85,7 +85,7 @@
               class="form-group__input"
               placeholder="my-bucket"
               required
-            />
+            >
           </div>
 
           <div class="form-group">
@@ -123,7 +123,7 @@
                 type="text"
                 class="form-group__input"
                 required
-              />
+              >
             </div>
 
             <div class="form-group">
@@ -136,7 +136,7 @@
                 type="password"
                 class="form-group__input"
                 required
-              />
+              >
             </div>
           </div>
 
@@ -150,7 +150,7 @@
               type="url"
               class="form-group__input"
               placeholder="https://s3.example.com"
-            />
+            >
             <p class="form-group__hint">
               Use for S3-compatible services like MinIO or DigitalOcean Spaces
             </p>
@@ -172,7 +172,7 @@
               class="form-group__input"
               placeholder="my-bucket"
               required
-            />
+            >
           </div>
 
           <div class="form-group">
@@ -208,7 +208,7 @@
               class="form-group__input"
               placeholder="my-container"
               required
-            />
+            >
           </div>
 
           <div class="form-group">
@@ -221,7 +221,7 @@
               type="text"
               class="form-group__input"
               required
-            />
+            >
           </div>
 
           <div class="form-group">
@@ -234,7 +234,7 @@
               type="password"
               class="form-group__input"
               required
-            />
+            >
           </div>
         </div>
 
@@ -246,7 +246,7 @@
                 v-model="formData.isActive"
                 type="checkbox"
                 class="form-group__checkbox-input"
-              />
+              >
               <span class="form-group__checkbox-label">
                 <strong>Active</strong>
                 <span class="form-group__checkbox-description">
@@ -262,7 +262,7 @@
                 v-model="formData.isPrimary"
                 type="checkbox"
                 class="form-group__checkbox-input"
-              />
+              >
               <span class="form-group__checkbox-label">
                 <strong>Primary Storage</strong>
                 <span class="form-group__checkbox-description">
@@ -276,8 +276,8 @@
         <div class="modal__footer">
           <button
             type="button"
-            @click="$emit('close')"
             class="btn btn--secondary"
+            @click="$emit('close')"
           >
             Cancel
           </button>

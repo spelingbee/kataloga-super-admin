@@ -3,7 +3,7 @@
     <Transition name="onboarding-fade">
       <div v-if="isActive && currentStep" class="onboarding-overlay" @click="handleOverlayClick">
         <!-- Spotlight effect -->
-        <div class="onboarding-spotlight" :style="spotlightStyle"></div>
+        <div class="onboarding-spotlight" :style="spotlightStyle"/>
 
         <!-- Tour card -->
         <div
@@ -17,7 +17,7 @@
         >
           <!-- Progress bar -->
           <div class="onboarding-card__progress">
-            <div class="onboarding-card__progress-bar" :style="{ width: `${progress}%` }"></div>
+            <div class="onboarding-card__progress-bar" :style="{ width: `${progress}%` }"/>
           </div>
 
           <!-- Content -->
@@ -39,22 +39,22 @@
               <button
                 v-if="!isFirstStep"
                 class="onboarding-card__button onboarding-card__button--secondary"
-                @click="previousStep"
                 aria-label="Previous step"
+                @click="previousStep"
               >
                 Previous
               </button>
               <button
                 class="onboarding-card__button onboarding-card__button--text"
-                @click="skipTour"
                 aria-label="Skip tour"
+                @click="skipTour"
               >
                 Skip Tour
               </button>
               <button
                 class="onboarding-card__button onboarding-card__button--primary"
-                @click="nextStep"
                 :aria-label="isLastStep ? 'Finish tour' : 'Next step'"
+                @click="nextStep"
               >
                 {{ isLastStep ? 'Finish' : 'Next' }}
               </button>

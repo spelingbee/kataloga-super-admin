@@ -17,7 +17,7 @@ class PerformanceMonitor {
    * Mark a performance point
    */
   mark(name: string): void {
-    if (process.client && 'performance' in window) {
+    if (import.meta.client && 'performance' in window) {
       performance.mark(name)
     }
   }
@@ -26,7 +26,7 @@ class PerformanceMonitor {
    * Measure time between two marks
    */
   measure(name: string, startMark: string, endMark: string): number | null {
-    if (process.client && 'performance' in window) {
+    if (import.meta.client && 'performance' in window) {
       try {
         performance.measure(name, startMark, endMark)
         const measure = performance.getEntriesByName(name)[0] as PerformanceEntry
@@ -88,7 +88,7 @@ class PerformanceMonitor {
    */
   clear(): void {
     this.metrics = []
-    if (process.client && 'performance' in window) {
+    if (import.meta.client && 'performance' in window) {
       performance.clearMarks()
       performance.clearMeasures()
     }
@@ -98,7 +98,7 @@ class PerformanceMonitor {
    * Get Web Vitals
    */
   getWebVitals(): Record<string, number> {
-    if (!process.client || !('performance' in window)) {
+    if (!import.meta.client || !('performance' in window)) {
       return {}
     }
 
@@ -135,7 +135,7 @@ class PerformanceMonitor {
    * Log performance report
    */
   logReport(): void {
-    if (!process.client) return
+    if (!import.meta.client) return
 
     console.group('Performance Report')
     console.table(this.getMetrics())
@@ -233,7 +233,7 @@ export const measureApiCall = async <T>(
  * Check if performance is degraded
  */
 export const isPerformanceDegraded = (): boolean => {
-  if (!process.client) return false
+  if (!import.meta.client) return false
 
   const vitals = performanceMonitor.getWebVitals()
 
@@ -250,7 +250,7 @@ export const isPerformanceDegraded = (): boolean => {
  * Get bundle size information
  */
 export const getBundleInfo = (): Record<string, number> => {
-  if (!process.client || !('performance' in window)) {
+  if (!import.meta.client || !('performance' in window)) {
     return {}
   }
 

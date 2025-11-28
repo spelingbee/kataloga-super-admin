@@ -7,13 +7,13 @@
   >
     <div class="webhook-logs">
       <div v-if="loading" class="webhook-logs__loading">
-        <div class="spinner"></div>
+        <div class="spinner"/>
         <p>Loading logs...</p>
       </div>
 
       <div v-else-if="error" class="webhook-logs__error">
         <p>{{ error }}</p>
-        <button @click="loadLogs" class="btn btn--primary btn--sm">
+        <button class="btn btn--primary btn--sm" @click="loadLogs">
           Retry
         </button>
       </div>
@@ -67,8 +67,8 @@
             </div>
             <div class="logs-table__cell logs-table__cell--actions">
               <button
-                @click="viewLogDetails(log)"
                 class="btn btn--secondary btn--sm"
+                @click="viewLogDetails(log)"
               >
                 <AppIcon name="eye" />
                 View

@@ -6,7 +6,7 @@
     </div>
 
     <div v-if="loading" class="chart-container__loading">
-      <div class="chart-container__spinner"></div>
+      <div class="chart-container__spinner"/>
       <p>Loading chart data...</p>
     </div>
 

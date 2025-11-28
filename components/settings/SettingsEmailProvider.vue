@@ -7,7 +7,7 @@
           Configure email providers for sending notifications and transactional emails
         </p>
       </div>
-      <button @click="openAddModal" class="btn btn--primary">
+      <button class="btn btn--primary" @click="openAddModal">
         <AppIcon name="plus" class="btn__icon" />
         Add Provider
       </button>
@@ -16,7 +16,7 @@
     <div v-if="providers.length === 0" class="settings-email__empty">
       <AppIcon name="mail" class="settings-email__empty-icon" />
       <p class="settings-email__empty-text">No email providers configured</p>
-      <button @click="openAddModal" class="btn btn--primary">
+      <button class="btn btn--primary" @click="openAddModal">
         Add Your First Provider
       </button>
     </div>
@@ -41,24 +41,24 @@
           </div>
           <div class="email-provider-card__actions">
             <button
-              @click="testProvider(provider.id!)"
               class="btn btn--sm btn--secondary"
               :disabled="testing"
+              @click="testProvider(provider.id!)"
             >
               <AppIcon name="check-circle" class="btn__icon" />
               Test
             </button>
             <button
-              @click="openEditModal(provider)"
               class="btn btn--sm btn--secondary"
+              @click="openEditModal(provider)"
             >
               <AppIcon name="edit" class="btn__icon" />
               Edit
             </button>
             <button
-              @click="handleDelete(provider.id!)"
               class="btn btn--sm btn--danger"
               :disabled="provider.isPrimary"
+              @click="handleDelete(provider.id!)"
             >
               <AppIcon name="trash" class="btn__icon" />
               Delete

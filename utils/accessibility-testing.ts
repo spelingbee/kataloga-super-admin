@@ -327,7 +327,7 @@ export function logAccessibilityReport(): void {
  * Adds visual indicators for accessibility features
  */
 export function enableAccessibilityTestingMode(): void {
-  if (!process.client) return
+  if (!import.meta.client) return
   
   const style = document.createElement('style')
   style.id = 'a11y-testing-mode'
@@ -386,7 +386,7 @@ export function enableAccessibilityTestingMode(): void {
  * Disable accessibility testing mode
  */
 export function disableAccessibilityTestingMode(): void {
-  if (!process.client) return
+  if (!import.meta.client) return
   
   const style = document.getElementById('a11y-testing-mode')
   if (style) {

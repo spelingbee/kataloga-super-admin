@@ -65,7 +65,7 @@
                       <div
                         class="geographic-distribution__percentage-fill"
                         :style="{ width: `${region.percentage}%` }"
-                      ></div>
+                      />
                       <span class="geographic-distribution__percentage-text">
                         {{ region.percentage.toFixed(1) }}%
                       </span>
@@ -91,7 +91,7 @@
         <div v-if="geoData.trends.length > 0" class="geographic-distribution__trends">
           <h4 class="geographic-distribution__section-title">Geographic Trends</h4>
           <div class="geographic-distribution__trends-chart">
-            <canvas ref="trendsChartRef"></canvas>
+            <canvas ref="trendsChartRef"/>
           </div>
         </div>
       </div>

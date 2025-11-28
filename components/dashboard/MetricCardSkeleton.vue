@@ -1,14 +1,14 @@
 <template>
   <div class="metric-card-skeleton">
     <div class="metric-card-skeleton__header">
-      <div class="metric-card-skeleton__icon skeleton-pulse"></div>
+      <div class="metric-card-skeleton__icon skeleton-pulse"/>
       <div class="metric-card-skeleton__info">
-        <div class="metric-card-skeleton__title skeleton-pulse"></div>
-        <div class="metric-card-skeleton__value skeleton-pulse"></div>
+        <div class="metric-card-skeleton__title skeleton-pulse"/>
+        <div class="metric-card-skeleton__value skeleton-pulse"/>
       </div>
     </div>
     <div class="metric-card-skeleton__trend">
-      <div class="metric-card-skeleton__trend-value skeleton-pulse"></div>
+      <div class="metric-card-skeleton__trend-value skeleton-pulse"/>
     </div>
   </div>
 </template>

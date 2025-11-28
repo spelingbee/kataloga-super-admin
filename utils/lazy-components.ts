@@ -94,7 +94,7 @@ export const LazyExportUtils = {
 /**
  * Preload component for better UX
  */
-export const preloadLazyComponent = (loader: () => Promise<Component>) => {
+export const customPreloadComponent = (loader: () => Promise<Component>) => {
   // Trigger the import but don't wait for it
   loader().catch(() => {
     // Silently fail, component will be loaded when needed
@@ -104,14 +104,14 @@ export const preloadLazyComponent = (loader: () => Promise<Component>) => {
 /**
  * Preload multiple components
  */
-export const preloadLazyComponents = (loaders: Array<() => Promise<Component>>) => {
-  loaders.forEach(loader => preloadLazyComponent(loader))
+export const customPreloadComponents = (loaders: Array<() => Promise<Component>>) => {
+  loaders.forEach(loader => customPreloadComponent(loader))
 }
 
 /**
  * Route-based component preloading
  */
-export const preloadRouteModules = (routeName: string) => {
+export const customPreloadRouteComponents = (routeName: string) => {
   const preloadMap: Record<string, Array<() => Promise<Component>>> = {
     analytics: [
       LazyChartComponents.RevenueAnalytics,
@@ -134,6 +134,6 @@ export const preloadRouteModules = (routeName: string) => {
 
   const components = preloadMap[routeName]
   if (components) {
-    preloadLazyComponents(components)
+    preloadComponents(components)
   }
 }

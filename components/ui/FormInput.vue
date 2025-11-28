@@ -22,7 +22,7 @@
         ]"
         @blur="handleBlur"
         @focus="handleFocus"
-      />
+      >
     </div>
     <p v-if="error" class="form-input__error">{{ error }}</p>
     <p v-else-if="hint" class="form-input__hint">{{ hint }}</p>

@@ -6,7 +6,7 @@
     :closable="closable"
   >
     <form @submit.prevent="handleSubmit">
-      <slot></slot>
+      <slot/>
     </form>
 
     <template #footer>
@@ -24,7 +24,7 @@
           :disabled="loading"
           @click="handleSubmit"
         >
-          <span v-if="loading" class="form-dialog__spinner"></span>
+          <span v-if="loading" class="form-dialog__spinner"/>
           {{ loading ? loadingText : submitText }}
         </button>
       </slot>

@@ -44,9 +44,9 @@ export class ApiService {
 
     // Handle 401 Unauthorized - try to refresh token
     // Skip refresh for login/register endpoints
-    const isAuthEndpoint = originalRequest.url?.includes('/auth/admin/login') || 
+    const isAuthEndpoint = originalRequest.url?.includes('/auth/admin/login') ||
                           originalRequest.url?.includes('/auth/refresh')
-    
+
     if (error.response?.status === 401 && !originalRequest._retry && !isAuthEndpoint) {
       originalRequest._retry = true
 
