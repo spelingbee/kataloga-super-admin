@@ -100,12 +100,12 @@ export const useRegistrationStore = defineStore('registration', {
           { params }
         )
 
-        this.registrations = response.data.data
+        this.registrations = response.data
         this.pagination = {
-          page: response.data.page,
-          limit: response.data.limit,
-          total: response.data.total,
-          totalPages: response.data.totalPages,
+          page: response.page,
+          limit: response.limit,
+          total: response.total,
+          totalPages: response.totalPages || Math.ceil(response.total / response.limit),
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch registrations'

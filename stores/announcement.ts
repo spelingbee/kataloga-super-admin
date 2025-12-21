@@ -120,12 +120,12 @@ export const useAnnouncementStore = defineStore('announcement', {
           { params }
         )
 
-        this.announcements = response.data.data
+        this.announcements = response.data
         this.pagination = {
-          page: response.data.page,
-          limit: response.data.limit,
-          total: response.data.total,
-          totalPages: response.data.totalPages,
+          page: response.page,
+          limit: response.limit,
+          total: response.total,
+          totalPages: response.totalPages || Math.ceil(response.total / response.limit),
         }
         this.lastFetched = Date.now()
       } catch (error: any) {
@@ -404,7 +404,7 @@ export const useAnnouncementStore = defineStore('announcement', {
           `/api/admin/announcements/${announcementId}/deliveries`
         )
 
-        this.deliveries = response.data.data
+        this.deliveries = response.data
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch delivery tracking'
         console.error('Delivery tracking fetch error:', error)

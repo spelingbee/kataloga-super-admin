@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { ref, readonly } from 'vue'
 
 export interface NotificationAction {
   label: string
@@ -14,70 +15,78 @@ export interface Notification {
   action?: NotificationAction
 }
 
-interface NotificationState {
-  notifications: Notification[]
-}
+export const useNotificationStore = defineStore('notification', () => {
+  // State
+  const notifications = ref<Notification[]>([])
 
-export const useNotificationStore = defineStore('notification', {
-  state: (): NotificationState => ({
-    notifications: [],
-  }),
+  // Actions
+  const add = (notification: Omit<Notification, 'id'>): string => {
+    const id = `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+    notifications.value.push({
+      id,
+      ...notification,
+    })
+    return id
+  }
 
-  actions: {
-    add(notification: Omit<Notification, 'id'>) {
-      const id = `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-      this.notifications.push({
-        id,
-        ...notification,
-      })
-      return id
-    },
+  const remove = (id: string): void => {
+    const index = notifications.value.findIndex((n) => n.id === id)
+    if (index !== -1) {
+      notifications.value.splice(index, 1)
+    }
+  }
 
-    remove(id: string) {
-      const index = this.notifications.findIndex((n) => n.id === id)
-      if (index !== -1) {
-        this.notifications.splice(index, 1)
-      }
-    },
+  const success = (message: string, title?: string, duration?: number): string => {
+    return add({
+      type: 'success',
+      title,
+      message,
+      duration: duration ?? 5000,
+    })
+  }
 
-    success(message: string, title?: string, duration?: number) {
-      return this.add({
-        type: 'success',
-        title,
-        message,
-        duration: duration ?? 5000,
-      })
-    },
+  const error = (message: string, title?: string, duration?: number): string => {
+    return add({
+      type: 'error',
+      title,
+      message,
+      duration: duration ?? 7000,
+    })
+  }
 
-    error(message: string, title?: string, duration?: number) {
-      return this.add({
-        type: 'error',
-        title,
-        message,
-        duration: duration ?? 7000,
-      })
-    },
+  const warning = (message: string, title?: string, duration?: number): string => {
+    return add({
+      type: 'warning',
+      title,
+      message,
+      duration: duration ?? 6000,
+    })
+  }
 
-    warning(message: string, title?: string, duration?: number) {
-      return this.add({
-        type: 'warning',
-        title,
-        message,
-        duration: duration ?? 6000,
-      })
-    },
+  const info = (message: string, title?: string, duration?: number): string => {
+    return add({
+      type: 'info',
+      title,
+      message,
+      duration: duration ?? 5000,
+    })
+  }
 
-    info(message: string, title?: string, duration?: number) {
-      return this.add({
-        type: 'info',
-        title,
-        message,
-        duration: duration ?? 5000,
-      })
-    },
+  const clear = (): void => {
+    notifications.value = []
+  }
 
-    clear() {
-      this.notifications = []
-    },
-  },
+  return {
+    // State
+    notifications: readonly(notifications),
+    
+    // Actions
+    add,
+    remove,
+    success,
+    error,
+    warning,
+    info,
+    clear,
+  }
 })

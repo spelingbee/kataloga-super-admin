@@ -85,7 +85,7 @@ export const usePlanStore = defineStore('plan', {
           { params }
         )
 
-        this.plans = response.data.data
+        this.plans = response.data
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch plans'
         console.error('Plan fetch error:', error)

@@ -129,12 +129,12 @@ export const useSubscriptionStore = defineStore('subscription', {
           { params }
         )
 
-        this.subscriptions = response.data.data
+        this.subscriptions = response.data
         this.pagination = {
-          page: response.data.page,
-          limit: response.data.limit,
-          total: response.data.total,
-          totalPages: response.data.totalPages,
+          page: response.page,
+          limit: response.limit,
+          total: response.total,
+          totalPages: response.totalPages || Math.ceil(response.total / response.limit),
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch subscriptions'

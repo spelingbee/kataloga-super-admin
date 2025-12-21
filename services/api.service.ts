@@ -139,27 +139,27 @@ export class ApiService {
     return this.api
   }
 
-  public async get<T>(url: string, config?: any): Promise<ApiResponse<T>> {
+  public async get<T>(url: string, config?: any): Promise<T> {
     const response = await this.api.get<ApiResponse<T>>(url, config)
     return response.data
   }
 
-  public async post<T>(url: string, data?: any, config?: any): Promise<ApiResponse<T>> {
+  public async post<T>(url: string, data?: any, config?: any): Promise<T> {
     const response = await this.api.post<ApiResponse<T>>(url, data, config)
     return response.data
   }
 
-  public async put<T>(url: string, data?: any, config?: any): Promise<ApiResponse<T>> {
+  public async put<T>(url: string, data?: any, config?: any): Promise<T> {
     const response = await this.api.put<ApiResponse<T>>(url, data, config)
     return response.data
   }
 
-  public async patch<T>(url: string, data?: any, config?: any): Promise<ApiResponse<T>> {
+  public async patch<T>(url: string, data?: any, config?: any): Promise<T> {
     const response = await this.api.patch<ApiResponse<T>>(url, data, config)
     return response.data
   }
 
-  public async delete<T>(url: string, config?: any): Promise<ApiResponse<T>> {
+  public async delete<T>(url: string, config?: any): Promise<T> {
     const response = await this.api.delete<ApiResponse<T>>(url, config)
     return response.data
   }

@@ -108,12 +108,12 @@ export const useAuditStore = defineStore('audit', {
           { params }
         )
 
-        this.logs = response.data.data
+        this.logs = response.data
         this.pagination = {
-          page: response.data.page,
-          limit: response.data.limit,
-          total: response.data.total,
-          totalPages: response.data.totalPages,
+          page: response.page,
+          limit: response.limit,
+          total: response.total,
+          totalPages: response.totalPages || Math.ceil(response.total / response.limit),
         }
         this.lastFetched = Date.now()
       } catch (error: any) {

@@ -14,12 +14,28 @@ export interface ApiError {
   details?: any
 }
 
+export interface PaginationMeta {
+  page: number
+  limit: number
+  total: number
+  totalPages: number
+  hasNextPage: boolean
+  hasPreviousPage: boolean
+}
+
+// Backend actually returns flat structure
 export interface PaginatedResponse<T> {
   data: T[]
   total: number
   page: number
   limit: number
-  totalPages: number
+  totalPages?: number
+}
+
+// Nested structure (not used by current backend)
+export interface NestedPaginatedResponse<T> {
+  data: T[]
+  meta: PaginationMeta
 }
 
 export interface User {

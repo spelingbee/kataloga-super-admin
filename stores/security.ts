@@ -151,12 +151,12 @@ export const useSecurityStore = defineStore('security', {
           { params }
         )
 
-        this.events = response.data.data
+        this.events = response.data
         this.pagination = {
-          page: response.data.page,
-          limit: response.data.limit,
-          total: response.data.total,
-          totalPages: response.data.totalPages,
+          page: response.page,
+          limit: response.limit,
+          total: response.total,
+          totalPages: response.totalPages || Math.ceil(response.total / response.limit),
         }
         this.lastFetched = Date.now()
       } catch (error: any) {
@@ -244,12 +244,12 @@ export const useSecurityStore = defineStore('security', {
           { params }
         )
 
-        this.blockedIPs = response.data.data
+        this.blockedIPs = response.data
         this.pagination = {
-          page: response.data.page,
-          limit: response.data.limit,
-          total: response.data.total,
-          totalPages: response.data.totalPages,
+          page: response.page,
+          limit: response.limit,
+          total: response.total,
+          totalPages: response.totalPages || Math.ceil(response.total / response.limit),
         }
         this.lastFetched = Date.now()
       } catch (error: any) {
@@ -370,12 +370,12 @@ export const useSecurityStore = defineStore('security', {
           { params }
         )
 
-        this.suspiciousActivities = response.data.data
+        this.suspiciousActivities = response.data
         this.pagination = {
-          page: response.data.page,
-          limit: response.data.limit,
-          total: response.data.total,
-          totalPages: response.data.totalPages,
+          page: response.page,
+          limit: response.limit,
+          total: response.total,
+          totalPages: response.totalPages || Math.ceil(response.total / response.limit),
         }
         this.lastFetched = Date.now()
       } catch (error: any) {

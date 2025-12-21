@@ -88,12 +88,12 @@ export const useMenuStore = defineStore('menu', {
           { params }
         )
 
-        this.menus = response.data.data
+        this.menus = response.data
         this.pagination = {
-          page: response.data.page,
-          limit: response.data.limit,
-          total: response.data.total,
-          totalPages: response.data.totalPages,
+          page: response.page,
+          limit: response.limit,
+          total: response.total,
+          totalPages: response.totalPages || Math.ceil(response.total / response.limit),
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch menus'
@@ -157,12 +157,12 @@ export const useMenuStore = defineStore('menu', {
           { params }
         )
 
-        this.menuItems = response.data.data
+        this.menuItems = response.data
         this.pagination = {
-          page: response.data.page,
-          limit: response.data.limit,
-          total: response.data.total,
-          totalPages: response.data.totalPages,
+          page: response.page,
+          limit: response.limit,
+          total: response.total,
+          totalPages: response.totalPages || Math.ceil(response.total / response.limit),
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch menu items'
@@ -316,7 +316,7 @@ export const useMenuStore = defineStore('menu', {
           { params }
         )
 
-        this.categories = response.data.data
+        this.categories = response.data
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch categories'
         console.error('Categories fetch error:', error)
