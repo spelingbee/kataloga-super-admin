@@ -1,0 +1,91 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "filter": "Filter",
+    "clear": "Clear",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "retry": "Retry",
+    "actions": "Actions",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "email": "Email",
+    "password": "Password",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "loginTitle": "Super Admin Panel",
+    "loginSubtitle": "Sign in to manage your platform"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcomeBack": "Welcome back, {userName}!",
+    "totalTenants": "Total Tenants",
+    "activeTenants": "Active Tenants",
+    "pendingRegistrations": "Pending Registrations",
+    "monthlyRevenue": "Monthly Recurring Revenue"
+  },
+  "tenants": {
+    "title": "Tenants",
+    "allTenants": "All Tenants",
+    "activateTenant": "Activate Tenant",
+    "deactivateTenant": "Deactivate Tenant",
+    "confirmActivate": "Are you sure you want to activate this tenant?",
+    "confirmDeactivate": "Are you sure you want to deactivate this tenant?"
+  },
+  "support": {
+    "title": "Support",
+    "closeTicket": "Close Ticket",
+    "confirmClose": "Are you sure you want to close this ticket?"
+  },
+  "security": {
+    "title": "Security",
+    "suspiciousActivity": "Suspicious Activity",
+    "markResolved": "Mark as Resolved",
+    "confirmResolve": "Are you sure you want to mark this activity as resolved?"
+  },
+  "integrations": {
+    "title": "Integrations",
+    "deleteWebhook": "Delete Webhook",
+    "confirmDelete": "Are you sure you want to delete this webhook?"
+  },
+  "help": {
+    "title": "Help",
+    "faq": "FAQ",
+    "whatIsSuperAdmin": "What is the Super Admin Panel?",
+    "howToApprove": "How do I approve a tenant registration?",
+    "whatHappensReject": "What happens when I reject a registration?"
+  },
+  "emails": {
+    "title": "Emails",
+    "resendEmail": "Resend Email",
+    "deleteEmail": "Delete Email",
+    "confirmResend": "Are you sure you want to resend this email?",
+    "confirmDelete": "Are you sure you want to delete this email?"
+  },
+  "announcements": {
+    "title": "Announcements",
+    "sendNow": "Send Now",
+    "cancelScheduled": "Cancel Scheduled",
+    "confirmSend": "Are you sure you want to send this announcement now?",
+    "confirmCancel": "Are you sure you want to cancel this scheduled announcement?"
+  }
+}
