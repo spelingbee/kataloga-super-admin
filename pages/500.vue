@@ -74,7 +74,7 @@ const retry = () => {
 
 <style scoped lang="scss">
 @use '../assets/scss/variables' as *;
-
+@use "sass:color";
 .error-page {
   min-height: 100vh;
   display: flex;
@@ -133,7 +133,7 @@ const retry = () => {
   text-decoration: underline;
   
   &:hover {
-    color: darken($primary-color, 10%);
+    color: color.adjust($primary-color, $lightness: -10%);
   }
 }
 
@@ -202,7 +202,7 @@ const retry = () => {
   color: white;
   
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 
