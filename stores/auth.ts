@@ -96,24 +96,48 @@ login = async (credentials: LoginCredentials): Promise<void> => {
     }
   }
 
-  const initializeAuth = (): void => {
-    if (import.meta.client) {
-      const storedToken = localStorage.getItem('admin_token')
-      const storedRefreshToken = localStorage.getItem('admin_refresh_token')
-      const userStr = localStorage.getItem('admin_user')
+  let initializationPromise: Promise<void> | null = null
 
-      if (storedToken && storedRefreshToken && userStr) {
-        try {
-          token.value = storedToken
-          refreshToken.value = storedRefreshToken
-          user.value = JSON.parse(userStr)
-          isAuthenticated.value = true
-        } catch (error) {
-          console.error('Failed to parse stored user:', error)
+  const initializeAuth = async (): Promise<void> => {
+    if (!import.meta.client) return
+    if (initializationPromise) return initializationPromise
+
+    initializationPromise = (async () => {
+      try {
+        // With httpOnly cookies, we prioritize active session check
+        await fetchCurrentUser()
+      } catch (error: any) {
+        // If it's a 401, we are definitely NOT authenticated. 
+        // Stop here and clear everything to avoid loops.
+        if (error.response?.status === 401) {
           clearAuth()
+          return
         }
+
+        // For other errors (network issues), we can try to restore state 
+        // from localStorage as a best-effort fallback
+        const storedToken = localStorage.getItem('admin_token')
+        const storedRefreshToken = localStorage.getItem('admin_refresh_token')
+        const userStr = localStorage.getItem('admin_user')
+
+        if (storedToken && storedRefreshToken && userStr) {
+          try {
+            token.value = storedToken
+            refreshToken.value = storedRefreshToken
+            user.value = JSON.parse(userStr)
+            isAuthenticated.value = true
+          } catch (e) {
+            clearAuth()
+          }
+        }
+      } finally {
+        // We keep the promise null so it can be re-tried if needed 
+        // (though clearAuth handles the state usually)
+        initializationPromise = null
       }
-    }
+    })()
+
+    return initializationPromise
   }
 
   const clearAuth = (): void => {

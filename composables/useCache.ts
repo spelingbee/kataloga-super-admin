@@ -127,7 +127,7 @@ export const useCache = () => {
 
     // Fetch fresh data
     const response = await apiService.get<T>(url)
-    const data = response.data
+    const data = response
 
     // Cache the response
     cacheManager.set(key, data, ttl)

@@ -59,28 +59,26 @@ fetchDashboardData = async (force = false): Promise<void> => {
     try {
       const { cachedGet } = useCache()
       
-      // Fetch all dashboard data in parallel with caching
-      const [metricsData, activityData, healthData] = await Promise.all([
-        cachedGet<DashboardMetrics>('/api/admin/analytics/dashboard', {
-          ttl: CacheTTL.MEDIUM,
-          force,
-        }),
-        cachedGet<Activity[]>('/api/admin/dashboard/activity', {
-          ttl: CacheTTL.SHORT,
-          force,
-        }),
-        cachedGet<SystemHealth>('/api/admin/dashboard/health', {
-          ttl: CacheTTL.SHORT,
-          force,
-        }),
-      ])
+      // Fetch dashboard metrics (includes all data we need)
+      const metricsData = await cachedGet<DashboardMetrics>('/api/admin/analytics/dashboard', {
+        ttl: CacheTTL.MEDIUM,
+        force,
+      })
 
       metrics.value = metricsData
-      recentActivity.value = activityData
-      systemHealth.value = healthData
+      
+      // Populate activity and health from metrics data
+      recentActivity.value = (metricsData as any).recentActivity || []
+      systemHealth.value = metricsData.system ? {
+        apiUptime: metricsData.system.apiUptime,
+        databaseStatus: metricsData.system.databaseStatus,
+        emailDeliveryRate: metricsData.system.emailDeliveryRate,
+        storageUsed: metricsData.system.storageUsed,
+      } : null
+      
       lastFetched.value = Date.now()
     } catch (err: any) {
-      error.value = err.response?.data?.message || 'Failed to fetch dashboard data'
+      error.value = err.message || 'Failed to fetch dashboard data'
       console.error('Dashboard fetch error:', err)
       throw err
     } finally {
@@ -103,24 +101,29 @@ fetchDashboardData = async (force = false): Promise<void> => {
 
   const fetchRecentActivity = async (): Promise<void> => {
     try {
-      const { cachedGet } = useCache()
-      recentActivity.value = await cachedGet<Activity[]>('/api/admin/dashboard/activity', {
-        ttl: CacheTTL.SHORT,
-      })
+      // Activity endpoint not implemented yet
+      // For now, return empty array
+      recentActivity.value = []
     } catch (err: any) {
-      error.value = err.response?.data?.message || 'Failed to fetch activity'
+      error.value = err.message || 'Failed to fetch activity'
       throw err
     }
   }
 
   const fetchSystemHealth = async (): Promise<void> => {
     try {
-      const { cachedGet } = useCache()
-      systemHealth.value = await cachedGet<SystemHealth>('/api/admin/dashboard/health', {
-        ttl: CacheTTL.SHORT,
-      })
+      // Health endpoint not implemented yet
+      // Get health data from metrics instead
+      if (metrics.value?.system) {
+        systemHealth.value = {
+          apiUptime: metrics.value.system.apiUptime,
+          databaseStatus: metrics.value.system.databaseStatus,
+          emailDeliveryRate: metrics.value.system.emailDeliveryRate,
+          storageUsed: metrics.value.system.storageUsed,
+        }
+      }
     } catch (err: any) {
-      error.value = err.response?.data?.message || 'Failed to fetch system health'
+      error.value = err.message || 'Failed to fetch system health'
       throw err
     }
   }

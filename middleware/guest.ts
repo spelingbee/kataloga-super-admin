@@ -1,9 +1,9 @@
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware(async (to, from) => {
   const authStore = useAuthStore()
 
   // Initialize auth state from localStorage if not already done
   if (!authStore.isAuthenticated && import.meta.client) {
-    authStore.initializeAuth()
+    await authStore.initializeAuth()
   }
 
   // If user is already authenticated, redirect to dashboard

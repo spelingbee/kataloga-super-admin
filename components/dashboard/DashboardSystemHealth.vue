@@ -113,18 +113,17 @@ const getStatusClass = (value: number, threshold: number) => {
   return 'health-metric__progress--danger'
 }
 
-const formatStorage = (bytes: number) => {
-  const gb = bytes / (1024 ** 3)
+const formatStorage = (gb: number) => {
   return `${gb.toFixed(2)} GB`
 }
 
-const getStoragePercentage = (bytes: number) => {
-  const maxStorage = 100 * (1024 ** 3) // 100 GB
-  return Math.min((bytes / maxStorage) * 100, 100)
+const getStoragePercentage = (gb: number) => {
+  const maxStorage = 100 // 100 GB max
+  return Math.min((gb / maxStorage) * 100, 100)
 }
 
-const getStorageStatusClass = (bytes: number) => {
-  const percentage = getStoragePercentage(bytes)
+const getStorageStatusClass = (gb: number) => {
+  const percentage = getStoragePercentage(gb)
   if (percentage < 70) return 'health-metric__progress--success'
   if (percentage < 85) return 'health-metric__progress--warning'
   return 'health-metric__progress--danger'

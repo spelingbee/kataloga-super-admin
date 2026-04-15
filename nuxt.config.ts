@@ -162,7 +162,7 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'preconnect', href: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:3000' },
+        { rel: 'preconnect', href: process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:3001' },
       ],
     },
   },

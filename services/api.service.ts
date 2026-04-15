@@ -12,6 +12,7 @@ export class ApiService {
         'Content-Type': 'application/json',
       },
       timeout: 30000,
+      withCredentials: true,
     })
 
     this.setupInterceptors()
@@ -59,8 +60,13 @@ export class ApiService {
       } catch (refreshError) {
         // Refresh failed, clear auth and redirect to login
         this.clearAuth()
+        
         if (typeof window !== 'undefined') {
-          window.location.href = '/login'
+          // Prevent infinite reload loops if already on login page
+          const currentPath = window.location.pathname
+          if (currentPath !== '/login') {
+            window.location.href = '/login'
+          }
         }
         return Promise.reject(refreshError)
       }
