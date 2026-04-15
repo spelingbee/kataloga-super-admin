@@ -19,7 +19,8 @@ export const useErrorReporting = () => {
 
   const options: ErrorReportingOptions = {
     enabled: !isDevelopment,
-    endpoint: `${config.public.apiBaseUrl}/api/admin/errors/report`,
+    endpoint: `${config.public.apiUrl}/api/admin/errors/report`,
+    performanceEndpoint: `${config.public.apiUrl}/api/admin/performance/report`,
     sampleRate: 1.0, // Report 100% of errors
   }
 

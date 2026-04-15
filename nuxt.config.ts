@@ -16,7 +16,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiBaseUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3001',
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3001',
       appName: process.env.NUXT_PUBLIC_APP_NAME || 'Super Admin Panel',
       enable2FA: process.env.NUXT_PUBLIC_ENABLE_2FA === 'true',
     },
