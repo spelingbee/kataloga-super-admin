@@ -138,12 +138,24 @@ export const useTicketStore = defineStore('ticket', {
           { params }
         )
 
-        this.tickets = response.data
-        this.pagination = {
-          page: response.page,
-          limit: response.limit,
-          total: response.total,
-          totalPages: response.totalPages || Math.ceil(response.total / response.limit),
+        this.tickets = response.data || []
+        
+        // Handle both nested and flat pagination structures
+        if (response.meta) {
+          this.pagination = {
+            page: response.meta.page,
+            limit: response.meta.limit,
+            total: response.meta.total,
+            totalPages: response.meta.totalPages,
+          }
+        } else {
+          // Fallback for flat structure
+          this.pagination = {
+            page: (response as any).page || 1,
+            limit: (response as any).limit || 20,
+            total: (response as any).total || 0,
+            totalPages: (response as any).totalPages || 0,
+          }
         }
         this.lastFetched = Date.now()
       } catch (error: any) {

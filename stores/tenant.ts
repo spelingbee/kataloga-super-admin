@@ -91,12 +91,24 @@ export const useTenantStore = defineStore('tenant', () => {
         { params }
       )
 
-      tenants.value = response.data
-      pagination.value = {
-        page: response.page,
-        limit: response.limit,
-        total: response.total,
-        totalPages: response.totalPages || Math.ceil(response.total / response.limit),
+      tenants.value = response.data || []
+      
+      // Handle both nested and flat pagination structures
+      if (response.meta) {
+        pagination.value = {
+          page: response.meta.page,
+          limit: response.meta.limit,
+          total: response.meta.total,
+          totalPages: response.meta.totalPages,
+        }
+      } else {
+        // Fallback for flat structure
+        pagination.value = {
+          page: (response as any).page || 1,
+          limit: (response as any).limit || 50,
+          total: (response as any).total || 0,
+          totalPages: (response as any).totalPages || 0,
+        }
       }
     } catch (err: any) {
       error.value = err.response?.data?.message || 'Failed to fetch tenants'

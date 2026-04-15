@@ -57,14 +57,27 @@ export class ApiService {
           return this.api(originalRequest)
         }
       } catch (refreshError) {
-        // Refresh failed, clear auth but don't redirect automatically
-        // Let the middleware handle the redirect
+        // Refresh failed, clear auth and redirect to login
         this.clearAuth()
+        if (typeof window !== 'undefined') {
+          window.location.href = '/login'
+        }
         return Promise.reject(refreshError)
       }
     }
 
-    // Don't retry network errors automatically - just fail
+    // Extract error message from backend response structure
+    const errorData = error.response?.data as any
+    if (errorData && errorData.error) {
+      const enhancedError = new Error(errorData.error.message || 'Request failed')
+      Object.assign(enhancedError, {
+        code: errorData.error.code,
+        statusCode: errorData.statusCode,
+        response: error.response
+      })
+      return Promise.reject(enhancedError)
+    }
+
     return Promise.reject(error)
   }
 
@@ -81,16 +94,21 @@ export class ApiService {
           throw new Error('No refresh token available')
         }
 
-        const response = await axios.post<ApiResponse<{ accessToken: string; refreshToken: string }>>(
+        const response = await axios.post(
           `${this.api.defaults.baseURL}/api/auth/refresh`,
           { refreshToken }
         )
 
-        const { accessToken, refreshToken: newRefreshToken } = response.data.data
-        this.setToken(accessToken)
-        this.setRefreshToken(newRefreshToken)
+        // Backend returns { success, statusCode, data: { accessToken, refreshToken, user }, error, meta }
+        const responseData = response.data
+        if (responseData && responseData.data) {
+          const { accessToken, refreshToken: newRefreshToken } = responseData.data
+          this.setToken(accessToken)
+          this.setRefreshToken(newRefreshToken)
+          return accessToken
+        }
 
-        return accessToken
+        throw new Error('Invalid refresh response')
       } finally {
         this.refreshTokenPromise = null
       }
@@ -140,27 +158,48 @@ export class ApiService {
   }
 
   public async get<T>(url: string, config?: any): Promise<T> {
-    const response = await this.api.get<ApiResponse<T>>(url, config)
-    return response.data
+    const response = await this.api.get(url, config)
+    // Backend returns { success, statusCode, data, error, meta }
+    // We need to extract the actual data from response.data.data
+    if (response.data && typeof response.data === 'object' && 'data' in response.data) {
+      return response.data.data as T
+    }
+    return response.data as T
   }
 
   public async post<T>(url: string, data?: any, config?: any): Promise<T> {
-    const response = await this.api.post<ApiResponse<T>>(url, data, config)
-    return response.data
+    const response = await this.api.post(url, data, config)
+    // Backend returns { success, statusCode, data, error, meta }
+    if (response.data && typeof response.data === 'object' && 'data' in response.data) {
+      return response.data.data as T
+    }
+    return response.data as T
   }
 
   public async put<T>(url: string, data?: any, config?: any): Promise<T> {
-    const response = await this.api.put<ApiResponse<T>>(url, data, config)
-    return response.data
+    const response = await this.api.put(url, data, config)
+    // Backend returns { success, statusCode, data, error, meta }
+    if (response.data && typeof response.data === 'object' && 'data' in response.data) {
+      return response.data.data as T
+    }
+    return response.data as T
   }
 
   public async patch<T>(url: string, data?: any, config?: any): Promise<T> {
-    const response = await this.api.patch<ApiResponse<T>>(url, data, config)
-    return response.data
+    const response = await this.api.patch(url, data, config)
+    // Backend returns { success, statusCode, data, error, meta }
+    if (response.data && typeof response.data === 'object' && 'data' in response.data) {
+      return response.data.data as T
+    }
+    return response.data as T
   }
 
   public async delete<T>(url: string, config?: any): Promise<T> {
-    const response = await this.api.delete<ApiResponse<T>>(url, config)
-    return response.data
+    const response = await this.api.delete(url, config)
+    // Backend returns { success, statusCode, data, error, meta }
+    if (response.data && typeof response.data === 'object' && 'data' in response.data) {
+      return response.data.data as T
+    }
+    return response.data as T
   }
 }

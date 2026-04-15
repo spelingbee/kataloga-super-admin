@@ -103,9 +103,12 @@
 
       <!-- Owner -->
       <template #cell-owner="{ row }">
-        <div class="registrations-page__owner">
+        <div v-if="row.owner" class="registrations-page__owner">
           <div class="registrations-page__owner-name">{{ row.owner.name }}</div>
           <div class="registrations-page__owner-email">{{ row.owner.email }}</div>
+        </div>
+        <div v-else class="registrations-page__owner">
+          <div class="registrations-page__owner-name">N/A</div>
         </div>
       </template>
 

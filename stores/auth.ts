@@ -27,20 +27,17 @@ login = async (credentials: LoginCredentials): Promise<void> => {
       const { apiService } = useApi()
       const response = await apiService.post<LoginResponse>('/api/auth/admin/login', credentials)
 
-      // Backend returns tokens directly without ApiResponse wrapper
-      const { accessToken, refreshToken: newRefreshToken, user: newUser } = response as any
-
-      // Store tokens
-      token.value = accessToken
-      refreshToken.value = newRefreshToken
-      user.value = newUser
+      // Store tokens and user data
+      token.value = response.accessToken
+      refreshToken.value = response.refreshToken
+      user.value = response.user
       isAuthenticated.value = true
 
       // Persist to localStorage
       if (import.meta.client) {
-        localStorage.setItem('admin_token', accessToken)
-        localStorage.setItem('admin_refresh_token', newRefreshToken)
-        localStorage.setItem('admin_user', JSON.stringify(newUser))
+        localStorage.setItem('admin_token', response.accessToken)
+        localStorage.setItem('admin_refresh_token', response.refreshToken)
+        localStorage.setItem('admin_user', JSON.stringify(response.user))
       }
     } catch (error: any) {
       clearAuth()
@@ -71,22 +68,15 @@ login = async (credentials: LoginCredentials): Promise<void> => {
         refreshToken: refreshToken.value,
       })
 
-      const data = response
-      const { accessToken, refreshToken: newRefreshToken, user: newUser } = data
-
-      if (!accessToken || !newUser) {
-        throw new Error('Invalid refresh response')
-      }
-
-      token.value = accessToken
-      refreshToken.value = newRefreshToken
-      user.value = newUser
+      token.value = response.accessToken
+      refreshToken.value = response.refreshToken
+      user.value = response.user
       isAuthenticated.value = true
 
       if (import.meta.client) {
-        localStorage.setItem('admin_token', accessToken)
-        localStorage.setItem('admin_refresh_token', newRefreshToken)
-        localStorage.setItem('admin_user', JSON.stringify(newUser))
+        localStorage.setItem('admin_token', response.accessToken)
+        localStorage.setItem('admin_refresh_token', response.refreshToken)
+        localStorage.setItem('admin_user', JSON.stringify(response.user))
       }
     } catch (error) {
       clearAuth()

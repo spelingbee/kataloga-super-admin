@@ -23,19 +23,19 @@ export interface PaginationMeta {
   hasPreviousPage: boolean
 }
 
-// Backend actually returns flat structure
+// Backend returns nested structure with meta
 export interface PaginatedResponse<T> {
+  data: T[]
+  meta: PaginationMeta
+}
+
+// Flat structure (legacy, for backward compatibility)
+export interface FlatPaginatedResponse<T> {
   data: T[]
   total: number
   page: number
   limit: number
   totalPages?: number
-}
-
-// Nested structure (not used by current backend)
-export interface NestedPaginatedResponse<T> {
-  data: T[]
-  meta: PaginationMeta
 }
 
 export interface User {

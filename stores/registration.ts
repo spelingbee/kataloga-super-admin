@@ -100,12 +100,38 @@ export const useRegistrationStore = defineStore('registration', {
           { params }
         )
 
-        this.registrations = response.data
-        this.pagination = {
-          page: response.page,
-          limit: response.limit,
-          total: response.total,
-          totalPages: response.totalPages || Math.ceil(response.total / response.limit),
+        console.log('Registration response:', response)
+        console.log('Response type:', typeof response)
+        console.log('Response keys:', Object.keys(response || {}))
+
+        // Check if response has the expected structure
+        if (!response) {
+          throw new Error('Empty response from server')
+        }
+
+        // Handle different response structures
+        if (response.data && Array.isArray(response.data)) {
+          this.registrations = response.data
+          
+          // Check if meta exists
+          if (response.meta) {
+            this.pagination = {
+              page: response.meta.page,
+              limit: response.meta.limit,
+              total: response.meta.total,
+              totalPages: response.meta.totalPages,
+            }
+          } else {
+            // Fallback: try to get pagination from top level
+            this.pagination = {
+              page: (response as any).page || 1,
+              limit: (response as any).limit || 50,
+              total: (response as any).total || 0,
+              totalPages: (response as any).totalPages || 0,
+            }
+          }
+        } else {
+          throw new Error('Invalid response structure')
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch registrations'
@@ -126,7 +152,7 @@ export const useRegistrationStore = defineStore('registration', {
           `/api/admin/tenants/${registrationId}/details`
         )
 
-        this.currentRegistration = response.data
+        this.currentRegistration = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch registration details'
         console.error('Registration details fetch error:', error)
