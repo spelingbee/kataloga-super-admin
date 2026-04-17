@@ -349,6 +349,7 @@ watch(() => props.provider, initializeForm, { immediate: true })
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '~/assets/scss/variables' as *;
 
 .modal-overlay {
@@ -523,7 +524,7 @@ watch(() => props.provider, initializeForm, { immediate: true })
   color: white;
   
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

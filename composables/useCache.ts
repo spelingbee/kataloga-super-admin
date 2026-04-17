@@ -1,108 +1,16 @@
 /**
  * Cache composable for API responses with TTL support
- * Provides in-memory caching with automatic expiration
+ * Connects the zero-dependency CacheManager to the Nuxt framework
  */
 
-interface CacheEntry<T> {
-  data: T
-  timestamp: number
-  ttl: number
-}
-
-interface CacheOptions {
-  ttl?: number // Time to live in milliseconds
-  key?: string // Custom cache key
-  force?: boolean // Force refresh, bypass cache
-}
-
-class CacheManager {
-  private cache = new Map<string, CacheEntry<any>>()
-  private readonly DEFAULT_TTL = 5 * 60 * 1000 // 5 minutes
-
-  set<T>(key: string, data: T, ttl: number = this.DEFAULT_TTL): void {
-    this.cache.set(key, {
-      data,
-      timestamp: Date.now(),
-      ttl,
-    })
-  }
-
-  get<T>(key: string): T | null {
-    const entry = this.cache.get(key)
-    
-    if (!entry) {
-      return null
-    }
-
-    // Check if cache entry has expired
-    if (Date.now() - entry.timestamp > entry.ttl) {
-      this.cache.delete(key)
-      return null
-    }
-
-    return entry.data as T
-  }
-
-  has(key: string): boolean {
-    const entry = this.cache.get(key)
-    
-    if (!entry) {
-      return false
-    }
-
-    // Check if cache entry has expired
-    if (Date.now() - entry.timestamp > entry.ttl) {
-      this.cache.delete(key)
-      return false
-    }
-
-    return true
-  }
-
-  invalidate(key: string): void {
-    this.cache.delete(key)
-  }
-
-  invalidatePattern(pattern: string): void {
-    const regex = new RegExp(pattern)
-    for (const key of this.cache.keys()) {
-      if (regex.test(key)) {
-        this.cache.delete(key)
-      }
-    }
-  }
-
-  clear(): void {
-    this.cache.clear()
-  }
-
-  getSize(): number {
-    return this.cache.size
-  }
-
-  // Clean up expired entries
-  cleanup(): void {
-    const now = Date.now()
-    for (const [key, entry] of this.cache.entries()) {
-      if (now - entry.timestamp > entry.ttl) {
-        this.cache.delete(key)
-      }
-    }
-  }
-}
-
-// Singleton cache manager
-const cacheManager = new CacheManager()
-
-// Run cleanup every 5 minutes
-if (import.meta.client) {
-  setInterval(() => {
-    cacheManager.cleanup()
-  }, 5 * 60 * 1000)
-}
+import { type CacheOptions } from '~/utils/cache-manager'
 
 export const useCache = () => {
-  const { apiService } = useApi()
+  const { $cacheManager, $apiService } = useNuxtApp() as any
+  
+  // Use provided instances
+  const cacheManager = $cacheManager
+  const apiService = $apiService
 
   /**
    * Cached GET request
@@ -191,13 +99,5 @@ export const useCache = () => {
   }
 }
 
-/**
- * Cache TTL presets
- */
-export const CacheTTL = {
-  SHORT: 1 * 60 * 1000, // 1 minute
-  MEDIUM: 5 * 60 * 1000, // 5 minutes
-  LONG: 15 * 60 * 1000, // 15 minutes
-  HOUR: 60 * 60 * 1000, // 1 hour
-  DAY: 24 * 60 * 60 * 1000, // 24 hours
-} as const
+// Re-export constants and types from the utility file for backward compatibility
+export { type CacheOptions, CacheTTL } from '~/utils/cache-manager'

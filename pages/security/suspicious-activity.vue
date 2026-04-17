@@ -335,6 +335,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '../../assets/scss/variables' as *;
 
 .suspicious-activity-page {
@@ -390,7 +391,7 @@ onMounted(() => {
   font-weight: 600;
 
   &:hover {
-    background: darken($bg-secondary, 3%);
+    background: color.adjust($bg-secondary, $lightness: -3%);
   }
 }
 
@@ -419,7 +420,7 @@ onMounted(() => {
     transition: $transition-base;
 
     &:hover {
-      background: darken($error-color, 10%);
+      background: color.adjust($error-color, $lightness: -10%);
     }
   }
 }
@@ -446,7 +447,7 @@ onMounted(() => {
 
 .risk-badge--medium {
   background: lighten($warning-color, 40%);
-  color: darken($warning-color, 20%);
+  color: color.adjust($warning-color, $lightness: -20%);
 }
 
 .risk-badge--low {
@@ -476,7 +477,7 @@ onMounted(() => {
 
 .status-badge--unresolved {
   background: lighten($warning-color, 40%);
-  color: darken($warning-color, 20%);
+  color: color.adjust($warning-color, $lightness: -20%);
 }
 
 .suspicious-activity-page__actions {
@@ -559,7 +560,7 @@ onMounted(() => {
   border-color: $primary-color;
 
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

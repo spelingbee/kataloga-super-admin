@@ -42,66 +42,12 @@ export default defineNuxtConfig({
       },
     },
     build: {
-      // Enable code splitting
-      rollupOptions: {
-        output: {
-          manualChunks: (id) => {
-            // Vendor chunks
-            if (id.includes('node_modules')) {
-              // Vue ecosystem
-              if (id.includes('vue') || id.includes('pinia') || id.includes('@vue')) {
-                return 'vendor-vue'
-              }
-              // Charts
-              if (id.includes('apexcharts')) {
-                return 'vendor-charts'
-              }
-              // Export utilities
-              if (id.includes('jspdf') || id.includes('html2canvas')) {
-                return 'vendor-export'
-              }
-              // HTTP and utilities
-              if (id.includes('axios') || id.includes('dayjs')) {
-                return 'vendor-utils'
-              }
-              // Other vendors
-              return 'vendor-other'
-            }
-            
-            // Component chunks
-            if (id.includes('/components/analytics/')) {
-              return 'components-analytics'
-            }
-            if (id.includes('/components/email/')) {
-              return 'components-email'
-            }
-            if (id.includes('/components/security/')) {
-              return 'components-security'
-            }
-            if (id.includes('/components/subscription/')) {
-              return 'components-subscription'
-            }
-            if (id.includes('/components/tenant/')) {
-              return 'components-tenant'
-            }
-            
-            // Store chunks
-            if (id.includes('/stores/')) {
-              return 'stores'
-            }
-          },
-        },
-      },
-      // Optimize chunk size
+      // Let Nuxt/Vite handle code splitting automatically
+      // Custom manualChunks was causing "Cannot access before initialization" errors
+      // by splitting Vue internals across chunks with incorrect load order
       chunkSizeWarningLimit: 1000,
       // Minify options
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true, // Remove console.log in production
-          drop_debugger: true,
-        },
-      },
+      minify: false,
     },
     // Optimize dependencies
     optimizeDeps: {
@@ -149,7 +95,7 @@ export default defineNuxtConfig({
   // Enable compression
   nitro: {
     compressPublicAssets: true,
-    minify: true,
+    minify: false,
   },
 
   app: {

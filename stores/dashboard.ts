@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed, readonly } from 'vue'
 import type { DashboardMetrics, Activity, SystemHealth } from '~/types'
-import { CacheTTL } from '~/composables/useCache'
+import { CacheTTL } from '~/utils/cache-manager'
 
 const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
 const AUTO_REFRESH_INTERVAL = 60 * 1000 // 1 minute

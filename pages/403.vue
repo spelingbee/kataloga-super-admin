@@ -52,6 +52,7 @@ const goBack = () => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '../assets/scss/variables' as *;
 
 .error-page {
@@ -146,7 +147,7 @@ const goBack = () => {
   color: white;
   
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

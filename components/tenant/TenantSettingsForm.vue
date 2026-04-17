@@ -199,6 +199,7 @@ function handleCancel() {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '../../assets/scss/variables' as *;
 
 .tenant-settings-form {
@@ -299,7 +300,7 @@ function handleCancel() {
   color: white;
 
   &:hover:not(:disabled) {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

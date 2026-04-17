@@ -434,6 +434,7 @@ function formatPrice(price: number): string {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '../../assets/scss/variables' as *;
 
 .bulk-operations {
@@ -835,7 +836,7 @@ function formatPrice(price: number): string {
   color: white;
 
   &:hover:not(:disabled) {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

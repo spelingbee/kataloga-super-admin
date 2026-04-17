@@ -111,6 +111,7 @@ onMounted(async () => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '../../assets/scss/variables' as *;
 
 .new-subscription-page {
@@ -176,7 +177,7 @@ onMounted(async () => {
     transition: $transition-base;
 
     &:hover {
-      background: darken($error-color, 10%);
+      background: color.adjust($error-color, $lightness: -10%);
     }
   }
 }

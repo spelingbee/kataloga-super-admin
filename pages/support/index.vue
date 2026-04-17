@@ -481,6 +481,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '~/assets/scss/variables' as *;
 
 .support-tickets-page {
@@ -518,7 +519,7 @@ onMounted(() => {
   transition: background $transition-base;
 
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 
@@ -603,7 +604,7 @@ onMounted(() => {
   transition: background $transition-base;
 
   &:hover {
-    background: darken($bg-secondary, 3%);
+    background: color.adjust($bg-secondary, $lightness: -3%);
   }
 }
 
@@ -633,7 +634,7 @@ onMounted(() => {
     font-weight: 500;
 
     &:hover {
-      background: darken($error-color, 10%);
+      background: color.adjust($error-color, $lightness: -10%);
     }
   }
 }
@@ -872,7 +873,7 @@ onMounted(() => {
   border-color: $primary-color;
 
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

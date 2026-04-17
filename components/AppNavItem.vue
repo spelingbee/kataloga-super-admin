@@ -52,6 +52,7 @@ const isActive = computed(() => {
 
 <style scoped lang="scss">
 @use '@/assets/scss/variables' as *;
+@use 'sass:color';
 
 .nav-item {
   display: flex;
@@ -79,7 +80,7 @@ const isActive = computed(() => {
   color: white;
   
   &:hover {
-    background: darken($primary-color, 5%);
+    background: color.adjust($primary-color, $lightness: -5%);
     color: white;
   }
 }

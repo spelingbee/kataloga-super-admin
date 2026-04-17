@@ -180,6 +180,7 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 @use '../assets/scss/variables' as *;
+@use 'sass:color';
 
 .onboarding-overlay {
   position: fixed;
@@ -279,7 +280,7 @@ onUnmounted(() => {
   color: #ffffff;
   
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

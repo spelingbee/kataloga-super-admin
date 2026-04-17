@@ -169,6 +169,7 @@ const refreshData = async () => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '../../assets/scss/variables' as *;
 
 .security-dashboard {
@@ -327,7 +328,7 @@ const refreshData = async () => {
   transition: $transition-base;
 
   &:hover {
-    color: darken($primary-color, 10%);
+    color: color.adjust($primary-color, $lightness: -10%);
   }
 }
 
@@ -378,7 +379,7 @@ const refreshData = async () => {
   background: linear-gradient(
     90deg,
     $bg-secondary 0%,
-    darken($bg-secondary, 3%) 50%,
+    color.adjust($bg-secondary, $lightness: -3%) 50%,
     $bg-secondary 100%
   );
   background-size: 200% 100%;

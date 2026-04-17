@@ -210,6 +210,7 @@ function resetForm(): void {
 
 <style scoped lang="scss">
 @use '../../assets/scss/variables' as *;
+@use 'sass:color';
 
 .export-audit-logs-modal {
   padding: $spacing-md;
@@ -311,7 +312,7 @@ function resetForm(): void {
   border: 1px solid $border-color;
 
   &:hover:not(:disabled) {
-    background: darken($bg-secondary, 3%);
+    background: color.adjust($bg-secondary, $lightness: -3%);
   }
 }
 
@@ -320,7 +321,7 @@ function resetForm(): void {
   color: white;
 
   &:hover:not(:disabled) {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

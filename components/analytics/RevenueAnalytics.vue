@@ -246,6 +246,7 @@ const planChartOptions = computed(() => {
 
 <style scoped lang="scss">
 @use '../../assets/scss/variables' as *;
+@use 'sass:color';
 
 .revenue-analytics {
   display: flex;
@@ -357,7 +358,7 @@ const planChartOptions = computed(() => {
 
 .revenue-analytics__projection-card {
   padding: $spacing-lg;
-  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 10%) 100%);
+  background: linear-gradient(135deg, $primary-color 0%, color.adjust($primary-color, $lightness: -10%) 100%);
   border-radius: $radius-md;
   color: white;
 }

@@ -563,6 +563,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '../../assets/scss/variables' as *;
 
 .registrations-page {
@@ -617,7 +618,7 @@ onMounted(() => {
   transition: $transition-base;
 
   &:hover {
-    background: darken($bg-secondary, 3%);
+    background: color.adjust($bg-secondary, $lightness: -3%);
   }
 }
 
@@ -663,7 +664,7 @@ onMounted(() => {
   border-color: $success-color;
 
   &:hover {
-    background: darken($success-color, 10%);
+    background: color.adjust($success-color, $lightness: -10%);
   }
 }
 
@@ -673,7 +674,7 @@ onMounted(() => {
   border-color: $error-color;
 
   &:hover {
-    background: darken($error-color, 10%);
+    background: color.adjust($error-color, $lightness: -10%);
   }
 }
 
@@ -702,7 +703,7 @@ onMounted(() => {
     transition: $transition-base;
 
     &:hover {
-      background: darken($error-color, 10%);
+      background: color.adjust($error-color, $lightness: -10%);
     }
   }
 }
@@ -898,7 +899,7 @@ onMounted(() => {
   border-color: $primary-color;
 
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

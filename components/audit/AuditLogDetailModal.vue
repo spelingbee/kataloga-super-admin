@@ -134,6 +134,7 @@ function handleClose(): void {
 
 <style scoped lang="scss">
 @use '../../assets/scss/variables' as *;
+@use 'sass:color';
 
 .audit-log-detail-modal {
   padding: $spacing-md;
@@ -274,7 +275,7 @@ function handleClose(): void {
   border: 1px solid $border-color;
 
   &:hover {
-    background: darken($bg-secondary, 3%);
+    background: color.adjust($bg-secondary, $lightness: -3%);
   }
 }
 

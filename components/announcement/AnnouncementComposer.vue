@@ -447,6 +447,7 @@ function handleCancel() {
 
 <style scoped lang="scss">
 @use '../../assets/scss/variables' as *;
+@use 'sass:color';
 
 .announcement-composer__section {
   margin-bottom: $spacing-xl;
@@ -550,7 +551,7 @@ function handleCancel() {
   transition: $transition-base;
 
   &:hover:not(:disabled) {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 
   &:disabled {

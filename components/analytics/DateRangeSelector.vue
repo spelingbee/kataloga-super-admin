@@ -126,6 +126,7 @@ watch(
 
 <style scoped lang="scss">
 @use '../../assets/scss/variables' as *;
+@use 'sass:color';
 
 .date-range-selector {
   display: flex;
@@ -154,7 +155,7 @@ watch(
   transition: $transition-base;
 
   &:hover {
-    background: darken($bg-secondary, 3%);
+    background: color.adjust($bg-secondary, $lightness: -3%);
     border-color: $primary-color;
   }
 
@@ -212,7 +213,7 @@ watch(
   transition: $transition-base;
 
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

@@ -194,6 +194,7 @@ const formatDateTime = (date: string): string => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '~/assets/scss/variables' as *;
 
 .email-providers-page {
@@ -232,7 +233,7 @@ const formatDateTime = (date: string): string => {
   transition: background $transition-base;
   
   &:hover {
-    background: darken($bg-secondary, 3%);
+    background: color.adjust($bg-secondary, $lightness: -3%);
   }
 }
 
@@ -262,7 +263,7 @@ const formatDateTime = (date: string): string => {
     font-weight: 500;
     
     &:hover {
-      background: darken($error-color, 10%);
+      background: color.adjust($error-color, $lightness: -10%);
     }
   }
 }

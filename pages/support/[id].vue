@@ -488,6 +488,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '~/assets/scss/variables' as *;
 
 .ticket-details-page {
@@ -519,7 +520,7 @@ onUnmounted(() => {
     font-weight: 500;
 
     &:hover {
-      background: darken($error-color, 10%);
+      background: color.adjust($error-color, $lightness: -10%);
     }
   }
 }
@@ -536,7 +537,7 @@ onUnmounted(() => {
   transition: background $transition-base;
 
   &:hover {
-    background: darken($bg-secondary, 3%);
+    background: color.adjust($bg-secondary, $lightness: -3%);
   }
 }
 
@@ -591,7 +592,7 @@ onUnmounted(() => {
   color: white;
 
   &:hover {
-    background: darken($success-color, 10%);
+    background: color.adjust($success-color, $lightness: -10%);
   }
 }
 
@@ -600,7 +601,7 @@ onUnmounted(() => {
   color: white;
 
   &:hover {
-    background: darken($info-color, 10%);
+    background: color.adjust($info-color, $lightness: -10%);
   }
 }
 
@@ -766,7 +767,7 @@ onUnmounted(() => {
   transition: background $transition-base;
 
   &:hover:not(:disabled) {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 
   &:disabled {
@@ -833,7 +834,7 @@ onUnmounted(() => {
   transition: background $transition-base;
 
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

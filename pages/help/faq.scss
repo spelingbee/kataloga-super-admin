@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../../assets/scss/variables' as *;
 
 .faq-page {
@@ -64,8 +65,8 @@
   color: #ffffff;
   
   &:hover {
-    background: darken($primary-color, 10%);
-    border-color: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
+    border-color: color.adjust($primary-color, $lightness: -10%);
   }
 }
 
@@ -210,7 +211,7 @@
 .faq-support-card {
   text-align: center;
   padding: $spacing-xl;
-  background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 15%) 100%);
+  background: linear-gradient(135deg, $primary-color 0%, color.adjust($primary-color, $lightness: -15%) 100%);
   border-radius: $radius-lg;
   color: #ffffff;
   

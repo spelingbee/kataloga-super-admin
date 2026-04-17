@@ -513,6 +513,9 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
+@use '../../assets/scss/variables' as *;
+
 .tenant-details {
   padding: $spacing-lg;
   min-height: 100vh;
@@ -574,7 +577,7 @@ onMounted(() => {
     transition: $transition-base;
 
     &:hover {
-      background: darken($primary-color, 10%);
+      background: color.adjust($primary-color, $lightness: -10%);
     }
 
     & + button {
@@ -583,7 +586,7 @@ onMounted(() => {
       border: 1px solid $border-color;
 
       &:hover {
-        background: darken($bg-secondary, 3%);
+        background: color.adjust($bg-secondary, $lightness: -3%);
       }
     }
   }
@@ -604,7 +607,7 @@ onMounted(() => {
   transition: $transition-base;
 
   &:hover {
-    color: darken($primary-color, 10%);
+    color: color.adjust($primary-color, $lightness: -10%);
   }
 }
 
@@ -684,7 +687,7 @@ onMounted(() => {
   border-color: $success-color;
 
   &:hover {
-    background: darken($success-color, 10%);
+    background: color.adjust($success-color, $lightness: -10%);
   }
 }
 
@@ -694,7 +697,7 @@ onMounted(() => {
   border-color: $secondary-color;
 
   &:hover {
-    background: darken($secondary-color, 10%);
+    background: color.adjust($secondary-color, $lightness: -10%);
   }
 }
 
@@ -704,7 +707,7 @@ onMounted(() => {
   border-color: $warning-color;
 
   &:hover {
-    background: darken($warning-color, 10%);
+    background: color.adjust($warning-color, $lightness: -10%);
   }
 }
 
@@ -714,7 +717,7 @@ onMounted(() => {
   border-color: $info-color;
 
   &:hover {
-    background: darken($info-color, 10%);
+    background: color.adjust($info-color, $lightness: -10%);
   }
 }
 
@@ -724,7 +727,7 @@ onMounted(() => {
   border-color: $error-color;
 
   &:hover {
-    background: darken($error-color, 10%);
+    background: color.adjust($error-color, $lightness: -10%);
   }
 }
 
@@ -772,7 +775,7 @@ onMounted(() => {
   transition: $transition-base;
 
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

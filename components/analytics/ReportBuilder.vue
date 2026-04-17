@@ -408,6 +408,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @use '../../assets/scss/variables' as *;
+@use 'sass:color';
 
 .report-builder {
   background: white;
@@ -518,7 +519,7 @@ onMounted(() => {
   border-color: $primary-color;
 
   &:hover {
-    background: darken($primary-color, 5%);
+    background: color.adjust($primary-color, $lightness: -5%);
   }
 }
 
@@ -688,7 +689,7 @@ onMounted(() => {
   color: white;
 
   &:hover:not(:disabled) {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

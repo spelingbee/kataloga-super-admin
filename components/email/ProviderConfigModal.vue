@@ -376,6 +376,7 @@ const formatProviderType = (type: string): string => {
 
 <style scoped lang="scss">
 @use '~/assets/scss/variables' as *;
+@use 'sass:color';
 
 .provider-config-modal {
   position: fixed;
@@ -562,7 +563,7 @@ const formatProviderType = (type: string): string => {
   color: white;
   
   &:hover:not(:disabled) {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 
@@ -572,7 +573,7 @@ const formatProviderType = (type: string): string => {
   border: 1px solid $border-color;
   
   &:hover {
-    background: darken($bg-secondary, 3%);
+    background: color.adjust($bg-secondary, $lightness: -3%);
   }
 }
 

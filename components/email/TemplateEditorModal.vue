@@ -223,6 +223,7 @@ const handleSubmit = async () => {
 
 <style scoped lang="scss">
 @use '~/assets/scss/variables' as *;
+@use 'sass:color';
 
 .template-editor-modal {
   position: fixed;
@@ -403,7 +404,7 @@ const handleSubmit = async () => {
   color: white;
   
   &:hover:not(:disabled) {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 
@@ -413,7 +414,7 @@ const handleSubmit = async () => {
   border: 1px solid $border-color;
   
   &:hover {
-    background: darken($bg-secondary, 3%);
+    background: color.adjust($bg-secondary, $lightness: -3%);
   }
 }
 
@@ -422,7 +423,7 @@ const handleSubmit = async () => {
   color: white;
   
   &:hover {
-    background: darken($info-color, 10%);
+    background: color.adjust($info-color, $lightness: -10%);
   }
 }
 

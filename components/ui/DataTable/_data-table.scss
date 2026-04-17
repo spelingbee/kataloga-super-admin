@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../../../assets/scss/variables' as *;
 
 .data-table {
@@ -53,12 +54,12 @@
   transition: background-color $transition-base;
 
   &:hover {
-    background-color: darken($bg-secondary, 3%);
+    background-color: color.adjust($bg-secondary, $lightness: -3%);
   }
 }
 
 .data-table__header--sorted {
-  background-color: darken($bg-secondary, 5%);
+  background-color: color.adjust($bg-secondary, $lightness: -5%);
 }
 
 .data-table__header-content {
@@ -145,6 +146,6 @@
   border-color: $primary-color;
 
   &:hover {
-    background-color: darken($primary-color, 10%);
+    background-color: color.adjust($primary-color, $lightness: -10%);
   }
 }

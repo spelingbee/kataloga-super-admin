@@ -95,6 +95,7 @@ if (import.meta.client) {
 
 <style scoped lang="scss">
 @use '../assets/scss/variables' as *;
+@use 'sass:color';
 
 .error-boundary {
   padding: $spacing-xl;
@@ -184,7 +185,7 @@ if (import.meta.client) {
   color: white;
   
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 

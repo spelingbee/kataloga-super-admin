@@ -143,6 +143,7 @@ const formatType = (type: string): string => {
 
 <style scoped lang="scss">
 @use '~/assets/scss/variables' as *;
+@use 'sass:color';
 
 .template-preview-modal {
   position: fixed;
@@ -366,7 +367,7 @@ const formatType = (type: string): string => {
   border: 1px solid $border-color;
   
   &:hover {
-    background: darken($bg-secondary, 3%);
+    background: color.adjust($bg-secondary, $lightness: -3%);
   }
 }
 

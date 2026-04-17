@@ -328,6 +328,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '../../assets/scss/variables' as *;
 
 .audit-analytics-page {
@@ -373,7 +374,7 @@ onMounted(() => {
   transition: $transition-base;
 
   &:hover {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 
@@ -402,7 +403,7 @@ onMounted(() => {
     transition: $transition-base;
 
     &:hover {
-      background: darken($error-color, 10%);
+      background: color.adjust($error-color, $lightness: -10%);
     }
   }
 }

@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../../../assets/scss/variables' as *;
 
 // Стили для FormDialog.vue
@@ -15,7 +16,7 @@
   color: $text-secondary;
 
   &:hover {
-    background-color: darken($bg-secondary, 5%);
+    background-color: color.adjust($bg-secondary, $lightness: -5%);
   }
 }
 
@@ -27,7 +28,7 @@
   gap: $spacing-sm;
 
   &:hover:not(:disabled) {
-    background-color: darken($primary-color, 10%);
+    background-color: color.adjust($primary-color, $lightness: -10%);
   }
 
   &:disabled {

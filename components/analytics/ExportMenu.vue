@@ -203,6 +203,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '../../assets/scss/variables' as *;
 
 .export-menu {
@@ -224,7 +225,7 @@ onUnmounted(() => {
   transition: $transition-base;
 
   &:hover:not(:disabled) {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 
   &:disabled {
@@ -389,7 +390,7 @@ onUnmounted(() => {
   color: white;
 
   &:hover:not(:disabled) {
-    background: darken($primary-color, 10%);
+    background: color.adjust($primary-color, $lightness: -10%);
   }
 }
 </style>

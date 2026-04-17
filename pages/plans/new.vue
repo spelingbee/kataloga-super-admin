@@ -83,6 +83,7 @@ function clearError(): void {
 </script>
 
 <style scoped lang="scss">
+@use 'sass:color';
 @use '../../assets/scss/variables' as *;
 
 .new-plan-page {
@@ -148,7 +149,7 @@ function clearError(): void {
     transition: $transition-base;
 
     &:hover {
-      background: darken($error-color, 10%);
+      background: color.adjust($error-color, $lightness: -10%);
     }
   }
 }
