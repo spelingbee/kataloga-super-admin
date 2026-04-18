@@ -115,7 +115,7 @@ export function useExport() {
       exportError.value = null
       
       const { apiService } = useApi()
-      await apiService.post('/api/admin/analytics/email-report', {
+      await apiService.post('/admin/analytics/email-report', {
         reportType,
         dateRange,
         recipientEmail,

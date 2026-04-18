@@ -112,7 +112,7 @@ const debouncedSearch = useDebounceFn(async () => {
 
   loading.value = true
   try {
-    const response = await api.get<SearchResult[]>('/api/admin/search', {
+    const response = await api.get<SearchResult[]>('/admin/search', {
       params: { q: query.value },
     })
     results.value = response.data || []

@@ -101,7 +101,7 @@ export class ApiService {
         }
 
         const response = await axios.post(
-          `${this.api.defaults.baseURL}/api/auth/refresh`,
+          `${this.api.defaults.baseURL}/auth/refresh`,
           { refreshToken }
         )
 

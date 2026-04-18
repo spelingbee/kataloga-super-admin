@@ -28,7 +28,7 @@ export default defineNuxtPlugin(() => {
   // Invalidate tenant-related cache when tenant data changes
   const tenantStore = useTenantStore()
   watch(() => tenantStore.tenants, () => {
-    invalidatePattern('/api/admin/tenants')
+    invalidatePattern('/admin/tenants')
   }, { deep: true })
 
   // Provide cache utilities globally

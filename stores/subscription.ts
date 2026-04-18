@@ -125,7 +125,7 @@ export const useSubscriptionStore = defineStore('subscription', {
         }
 
         const response = await apiService.get<PaginatedResponse<Subscription>>(
-          '/api/admin/subscriptions',
+          '/admin/subscriptions',
           { params }
         )
 
@@ -164,7 +164,7 @@ export const useSubscriptionStore = defineStore('subscription', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<Subscription>(
-          `/api/admin/subscriptions/${subscriptionId}`
+          `/admin/subscriptions/${subscriptionId}`
         )
 
         this.currentSubscription = response.data
@@ -201,7 +201,7 @@ export const useSubscriptionStore = defineStore('subscription', {
         }
 
         const response = await apiService.get<BillingHistoryItem[]>(
-          `/api/admin/subscriptions/${subscriptionId}/billing-history`,
+          `/admin/subscriptions/${subscriptionId}/billing-history`,
           { params }
         )
 
@@ -229,7 +229,7 @@ export const useSubscriptionStore = defineStore('subscription', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Subscription>(
-          '/api/admin/subscriptions',
+          '/admin/subscriptions',
           data
         )
 
@@ -250,7 +250,7 @@ export const useSubscriptionStore = defineStore('subscription', {
     async fetchPlans(): Promise<any[]> {
       try {
         const { apiService } = useApi()
-        const response = await apiService.get<any[]>('/api/admin/plans')
+        const response = await apiService.get<any[]>('/admin/plans')
         return response.data
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch plans'
@@ -263,7 +263,7 @@ export const useSubscriptionStore = defineStore('subscription', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Subscription>(
-          `/api/admin/subscriptions/${subscriptionId}/change-plan`,
+          `/admin/subscriptions/${subscriptionId}/change-plan`,
           { planId: newPlanId }
         )
 
@@ -285,7 +285,7 @@ export const useSubscriptionStore = defineStore('subscription', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Subscription>(
-          `/api/admin/subscriptions/${subscriptionId}/extend-trial`,
+          `/admin/subscriptions/${subscriptionId}/extend-trial`,
           { trialEndsAt: newTrialEndDate, reason }
         )
 
@@ -312,7 +312,7 @@ export const useSubscriptionStore = defineStore('subscription', {
       try {
         const { apiService } = useApi()
         await apiService.post(
-          `/api/admin/subscriptions/${subscriptionId}/apply-discount`,
+          `/admin/subscriptions/${subscriptionId}/apply-discount`,
           { 
             type: discountType,
             value: discountValue,
@@ -332,7 +332,7 @@ export const useSubscriptionStore = defineStore('subscription', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Subscription>(
-          `/api/admin/subscriptions/${subscriptionId}/cancel`,
+          `/admin/subscriptions/${subscriptionId}/cancel`,
           { reason }
         )
 
@@ -356,7 +356,7 @@ export const useSubscriptionStore = defineStore('subscription', {
       try {
         const { apiService } = useApi()
         await apiService.post(
-          `/api/admin/subscriptions/${subscriptionId}/refund`,
+          `/admin/subscriptions/${subscriptionId}/refund`,
           { paymentId, amount }
         )
 
@@ -405,7 +405,7 @@ export const useSubscriptionStore = defineStore('subscription', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<SubscriptionHistory>(
-          `/api/admin/subscriptions/${subscriptionId}/history`
+          `/admin/subscriptions/${subscriptionId}/history`
         )
 
         this.subscriptionHistory = response.data

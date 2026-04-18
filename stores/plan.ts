@@ -81,7 +81,7 @@ export const usePlanStore = defineStore('plan', {
         }
 
         const response = await apiService.get<{ data: Plan[]; total: number }>(
-          '/api/admin/plans',
+          '/admin/plans',
           { params }
         )
 
@@ -102,7 +102,7 @@ export const usePlanStore = defineStore('plan', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<Plan>(
-          `/api/admin/plans/${planId}`
+          `/admin/plans/${planId}`
         )
 
         this.currentPlan = response.data
@@ -130,7 +130,7 @@ export const usePlanStore = defineStore('plan', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Plan>(
-          '/api/admin/plans',
+          '/admin/plans',
           data
         )
 
@@ -160,7 +160,7 @@ export const usePlanStore = defineStore('plan', {
       try {
         const { apiService } = useApi()
         const response = await apiService.patch<Plan>(
-          `/api/admin/plans/${planId}`,
+          `/admin/plans/${planId}`,
           data
         )
 
@@ -187,7 +187,7 @@ export const usePlanStore = defineStore('plan', {
       try {
         const { apiService } = useApi()
         const response = await apiService.delete<Plan>(
-          `/api/admin/plans/${planId}`
+          `/admin/plans/${planId}`
         )
 
         const index = this.plans.findIndex(p => p.id === planId)

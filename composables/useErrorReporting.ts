@@ -19,8 +19,8 @@ export const useErrorReporting = () => {
 
   const options: ErrorReportingOptions = {
     enabled: !isDevelopment,
-    endpoint: `${config.public.apiUrl}/api/admin/errors/report`,
-    performanceEndpoint: `${config.public.apiUrl}/api/admin/performance/report`,
+    endpoint: `${config.public.apiUrl}/admin/errors/report`,
+    performanceEndpoint: `${config.public.apiUrl}/admin/performance/report`,
     sampleRate: 1.0, // Report 100% of errors
   }
 
@@ -108,7 +108,7 @@ export const useErrorReporting = () => {
       }
 
       if (options.endpoint) {
-        fetch(`${config.public.apiBaseUrl}/api/admin/performance/report`, {
+        fetch(`${config.public.apiBaseUrl}/admin/performance/report`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

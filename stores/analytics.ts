@@ -111,9 +111,9 @@ export const useAnalyticsStore = defineStore('analytics', {
 
         // Fetch all analytics data in parallel
         const [registrationResponse, tenantResponse, revenueResponse] = await Promise.all([
-          apiService.get<RegistrationMetrics>('/api/admin/analytics/registrations', { params }),
-          apiService.get<TenantPerformanceMetrics>('/api/admin/analytics/tenants', { params }),
-          apiService.get<RevenueMetrics>('/api/admin/analytics/revenue', { params }),
+          apiService.get<RegistrationMetrics>('/admin/analytics/registrations', { params }),
+          apiService.get<TenantPerformanceMetrics>('/admin/analytics/tenants', { params }),
+          apiService.get<RevenueMetrics>('/admin/analytics/revenue', { params }),
         ])
 
         this.registrationMetrics = registrationResponse.data
@@ -138,7 +138,7 @@ export const useAnalyticsStore = defineStore('analytics', {
         }
 
         const response = await apiService.get<RegistrationMetrics>(
-          '/api/admin/analytics/registrations',
+          '/admin/analytics/registrations',
           { params }
         )
         this.registrationMetrics = response.data
@@ -158,7 +158,7 @@ export const useAnalyticsStore = defineStore('analytics', {
         }
 
         const response = await apiService.get<TenantPerformanceMetrics>(
-          '/api/admin/analytics/tenants',
+          '/admin/analytics/tenants',
           { params }
         )
         this.tenantMetrics = response.data
@@ -178,7 +178,7 @@ export const useAnalyticsStore = defineStore('analytics', {
         }
 
         const response = await apiService.get<RevenueMetrics>(
-          '/api/admin/analytics/revenue',
+          '/admin/analytics/revenue',
           { params }
         )
         this.revenueMetrics = response.data
@@ -202,7 +202,7 @@ export const useAnalyticsStore = defineStore('analytics', {
         }
 
         const response = await apiService.get<ConversionFunnelMetrics>(
-          '/api/admin/analytics/conversion-funnel',
+          '/admin/analytics/conversion-funnel',
           { params }
         )
         this.conversionFunnelMetrics = response.data
@@ -222,7 +222,7 @@ export const useAnalyticsStore = defineStore('analytics', {
         }
 
         const response = await apiService.get<CohortAnalysisMetrics>(
-          '/api/admin/analytics/cohort-analysis',
+          '/admin/analytics/cohort-analysis',
           { params }
         )
         this.cohortAnalysisMetrics = response.data
@@ -242,7 +242,7 @@ export const useAnalyticsStore = defineStore('analytics', {
         }
 
         const response = await apiService.get<GeographicDistributionMetrics>(
-          '/api/admin/analytics/geographic-distribution',
+          '/admin/analytics/geographic-distribution',
           { params }
         )
         this.geographicMetrics = response.data

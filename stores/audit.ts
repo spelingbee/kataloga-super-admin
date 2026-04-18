@@ -104,7 +104,7 @@ export const useAuditStore = defineStore('audit', {
         }
 
         const response = await apiService.get<PaginatedResponse<AuditLogListItem>>(
-          '/api/admin/audit/logs',
+          '/admin/audit/logs',
           { params }
         )
 
@@ -144,7 +144,7 @@ export const useAuditStore = defineStore('audit', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<AuditLog>(
-          `/api/admin/audit/logs/${logId}`
+          `/admin/audit/logs/${logId}`
         )
 
         this.currentLog = response.data
@@ -173,7 +173,7 @@ export const useAuditStore = defineStore('audit', {
         }
 
         const response = await apiService.get<AuditAnalytics>(
-          '/api/admin/audit/analytics',
+          '/admin/audit/analytics',
           { params }
         )
 
@@ -220,7 +220,7 @@ export const useAuditStore = defineStore('audit', {
         }
 
         const response = await apiService.get(
-          '/api/admin/audit/logs/export',
+          '/admin/audit/logs/export',
           { 
             params,
             responseType: 'blob'

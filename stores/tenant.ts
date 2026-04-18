@@ -87,7 +87,7 @@ export const useTenantStore = defineStore('tenant', () => {
       }
 
       const response = await apiService.get<PaginatedResponse<TenantListItem>>(
-        '/api/admin/tenants',
+        '/admin/tenants',
         { params }
       )
 
@@ -126,7 +126,7 @@ export const useTenantStore = defineStore('tenant', () => {
     try {
       const { apiService } = useApi()
       const response = await apiService.get<TenantDetails>(
-        `/api/admin/tenants/${tenantId}/details`
+        `/admin/tenants/${tenantId}/details`
       )
 
       currentTenant.value = response
@@ -142,7 +142,7 @@ export const useTenantStore = defineStore('tenant', () => {
   const activateTenant = async (tenantId: string): Promise<void> => {
     try {
       const { apiService } = useApi()
-      await apiService.patch(`/api/admin/tenants/${tenantId}/status`, {
+      await apiService.patch(`/admin/tenants/${tenantId}/status`, {
         status: 'active'
       })
 
@@ -163,7 +163,7 @@ export const useTenantStore = defineStore('tenant', () => {
   const deactivateTenant = async (tenantId: string): Promise<void> => {
     try {
       const { apiService } = useApi()
-      await apiService.patch(`/api/admin/tenants/${tenantId}/status`, {
+      await apiService.patch(`/admin/tenants/${tenantId}/status`, {
         status: 'inactive'
       })
 
@@ -184,7 +184,7 @@ export const useTenantStore = defineStore('tenant', () => {
   const suspendTenant = async (tenantId: string): Promise<void> => {
     try {
       const { apiService } = useApi()
-      await apiService.patch(`/api/admin/tenants/${tenantId}/status`, {
+      await apiService.patch(`/admin/tenants/${tenantId}/status`, {
         status: 'suspended'
       })
 
@@ -205,7 +205,7 @@ export const useTenantStore = defineStore('tenant', () => {
   const deleteTenant = async (tenantId: string): Promise<void> => {
     try {
       const { apiService } = useApi()
-      await apiService.delete(`/api/admin/tenants/${tenantId}`)
+      await apiService.delete(`/admin/tenants/${tenantId}`)
 
       // Remove from local state
       tenants.value = tenants.value.filter(t => t.id !== tenantId)
@@ -222,7 +222,7 @@ export const useTenantStore = defineStore('tenant', () => {
     try {
       const { apiService } = useApi()
       const response = await apiService.post<{ token: string; url: string }>(
-        `/api/admin/tenants/${tenantId}/impersonate`,
+        `/admin/tenants/${tenantId}/impersonate`,
         { reason }
       )
 
@@ -237,7 +237,7 @@ export const useTenantStore = defineStore('tenant', () => {
     try {
       const { apiService } = useApi()
       const response = await apiService.get<any>(
-        `/api/admin/tenants/${tenantId}/statistics`
+        `/admin/tenants/${tenantId}/statistics`
       )
 
       if (currentTenant.value?.id === tenantId) {
@@ -253,7 +253,7 @@ export const useTenantStore = defineStore('tenant', () => {
     try {
       const { apiService } = useApi()
       const response = await apiService.patch<TenantSettings>(
-        `/api/admin/tenants/${tenantId}/settings`,
+        `/admin/tenants/${tenantId}/settings`,
         settings
       )
 

@@ -96,7 +96,7 @@ export const useRegistrationStore = defineStore('registration', {
         }
 
         const response = await apiService.get<PaginatedResponse<RegistrationListItem>>(
-          '/api/admin/tenants',
+          '/admin/tenants',
           { params }
         )
 
@@ -149,7 +149,7 @@ export const useRegistrationStore = defineStore('registration', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<RegistrationDetails>(
-          `/api/admin/tenants/${registrationId}/details`
+          `/admin/tenants/${registrationId}/details`
         )
 
         this.currentRegistration = response
@@ -165,7 +165,7 @@ export const useRegistrationStore = defineStore('registration', {
     async approveRegistration(registrationId: string, notes?: string): Promise<void> {
       try {
         const { apiService } = useApi()
-        await apiService.post(`/api/admin/tenants/${registrationId}/approve`, {
+        await apiService.post(`/admin/tenants/${registrationId}/approve`, {
           notes
         })
 
@@ -189,7 +189,7 @@ export const useRegistrationStore = defineStore('registration', {
     async rejectRegistration(registrationId: string, reason: string): Promise<void> {
       try {
         const { apiService } = useApi()
-        await apiService.post(`/api/admin/tenants/${registrationId}/reject`, {
+        await apiService.post(`/admin/tenants/${registrationId}/reject`, {
           reason
         })
 
@@ -213,7 +213,7 @@ export const useRegistrationStore = defineStore('registration', {
     async requestInformation(registrationId: string, message: string): Promise<void> {
       try {
         const { apiService } = useApi()
-        await apiService.post(`/api/admin/tenants/${registrationId}/request-info`, {
+        await apiService.post(`/admin/tenants/${registrationId}/request-info`, {
           message
         })
 
@@ -237,7 +237,7 @@ export const useRegistrationStore = defineStore('registration', {
     async bulkApprove(registrationIds: string[], notes?: string): Promise<void> {
       try {
         const { apiService } = useApi()
-        await apiService.post('/api/admin/tenants/bulk-approve', {
+        await apiService.post('/admin/tenants/bulk-approve', {
           registrationIds,
           notes
         })
@@ -261,7 +261,7 @@ export const useRegistrationStore = defineStore('registration', {
     async bulkReject(registrationIds: string[], reason: string): Promise<void> {
       try {
         const { apiService } = useApi()
-        await apiService.post('/api/admin/tenants/bulk-reject', {
+        await apiService.post('/admin/tenants/bulk-reject', {
           registrationIds,
           reason
         })

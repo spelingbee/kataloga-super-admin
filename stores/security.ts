@@ -98,7 +98,7 @@ export const useSecurityStore = defineStore('security', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<SecurityDashboardMetrics>(
-          '/api/admin/security/dashboard'
+          '/admin/security/dashboard'
         )
 
         this.dashboardMetrics = response.data
@@ -147,7 +147,7 @@ export const useSecurityStore = defineStore('security', {
         }
 
         const response = await apiService.get<PaginatedResponse<SecurityEventListItem>>(
-          '/api/admin/security/events',
+          '/admin/security/events',
           { params }
         )
 
@@ -187,7 +187,7 @@ export const useSecurityStore = defineStore('security', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<SecurityEvent>(
-          `/api/admin/security/events/${eventId}`
+          `/admin/security/events/${eventId}`
         )
 
         this.currentEvent = response.data
@@ -207,7 +207,7 @@ export const useSecurityStore = defineStore('security', {
       try {
         const { apiService } = useApi()
         await apiService.post(
-          `/api/admin/security/events/${eventId}/resolve`,
+          `/admin/security/events/${eventId}/resolve`,
           { notes }
         )
 
@@ -252,7 +252,7 @@ export const useSecurityStore = defineStore('security', {
         }
 
         const response = await apiService.get<PaginatedResponse<BlockedIPListItem>>(
-          '/api/admin/security/blocked-ips',
+          '/admin/security/blocked-ips',
           { params }
         )
 
@@ -292,7 +292,7 @@ export const useSecurityStore = defineStore('security', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<BlockedIP>(
-          `/api/admin/security/blocked-ips/${ipId}`
+          `/admin/security/blocked-ips/${ipId}`
         )
 
         this.currentBlockedIP = response.data
@@ -311,7 +311,7 @@ export const useSecurityStore = defineStore('security', {
 
       try {
         const { apiService } = useApi()
-        await apiService.post('/api/admin/security/block-ip', {
+        await apiService.post('/admin/security/block-ip', {
           ipAddress,
           reason,
           isPermanent,
@@ -338,7 +338,7 @@ export const useSecurityStore = defineStore('security', {
 
       try {
         const { apiService } = useApi()
-        await apiService.delete(`/api/admin/security/unblock-ip/${ipId}`)
+        await apiService.delete(`/admin/security/unblock-ip/${ipId}`)
 
         // Remove from local state
         this.blockedIPs = this.blockedIPs.filter(ip => ip.id !== ipId)
@@ -390,7 +390,7 @@ export const useSecurityStore = defineStore('security', {
         }
 
         const response = await apiService.get<PaginatedResponse<SuspiciousActivityListItem>>(
-          '/api/admin/security/suspicious-activity',
+          '/admin/security/suspicious-activity',
           { params }
         )
 
@@ -430,7 +430,7 @@ export const useSecurityStore = defineStore('security', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<SuspiciousActivity>(
-          `/api/admin/security/suspicious-activity/${activityId}`
+          `/admin/security/suspicious-activity/${activityId}`
         )
 
         this.currentActivity = response.data
@@ -450,7 +450,7 @@ export const useSecurityStore = defineStore('security', {
       try {
         const { apiService } = useApi()
         await apiService.post(
-          `/api/admin/security/suspicious-activity/${activityId}/resolve`,
+          `/admin/security/suspicious-activity/${activityId}/resolve`,
           { notes }
         )
 

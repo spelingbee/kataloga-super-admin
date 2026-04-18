@@ -173,7 +173,7 @@ async function handleExportHistory(): Promise<void> {
   try {
     const apiService = useApiService()
     const response = await apiService.get(
-      `/api/admin/audit/export`,
+      `/admin/audit/export`,
       {
         params: {
           type: 'subscription',

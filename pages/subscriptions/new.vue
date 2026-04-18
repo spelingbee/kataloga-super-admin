@@ -91,7 +91,7 @@ async function fetchPlans(): Promise<void> {
 async function fetchTenants(): Promise<void> {
   try {
     const { apiService } = useApi()
-    const response = await apiService.get('/api/admin/tenants', {
+    const response = await apiService.get('/admin/tenants', {
       params: { limit: 1000 }, // Get all tenants for selection
     })
     tenants.value = response.data || []

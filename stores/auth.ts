@@ -25,7 +25,7 @@ login = async (credentials: LoginCredentials): Promise<void> => {
     loading.value = true
     try {
       const { apiService } = useApi()
-      const response = await apiService.post<LoginResponse>('/api/auth/admin/login', credentials)
+      const response = await apiService.post<LoginResponse>('/auth/admin/login', credentials)
 
       // Store tokens and user data
       token.value = response.accessToken
@@ -50,7 +50,7 @@ login = async (credentials: LoginCredentials): Promise<void> => {
   const logout = async (): Promise<void> => {
     try {
       const { apiService } = useApi()
-      await apiService.post('/api/auth/logout')
+      await apiService.post('/auth/logout')
     } catch (error) {
       console.error('Logout error:', error)
     } finally {
@@ -64,7 +64,7 @@ login = async (credentials: LoginCredentials): Promise<void> => {
   const refreshSession = async (): Promise<void> => {
     try {
       const { apiService } = useApi()
-      const response = await apiService.post<LoginResponse>('/api/auth/refresh', {
+      const response = await apiService.post<LoginResponse>('/auth/refresh', {
         refreshToken: refreshToken.value,
       })
 
@@ -87,7 +87,7 @@ login = async (credentials: LoginCredentials): Promise<void> => {
   const fetchCurrentUser = async (): Promise<void> => {
     try {
       const { apiService } = useApi()
-      const response = await apiService.get<User>('/api/auth/me')
+      const response = await apiService.get<User>('/auth/me')
       user.value = response
       isAuthenticated.value = true
     } catch (error) {

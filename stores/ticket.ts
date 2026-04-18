@@ -134,7 +134,7 @@ export const useTicketStore = defineStore('ticket', {
         }
 
         const response = await apiService.get<PaginatedResponse<TicketListItem>>(
-          '/api/admin/support/tickets',
+          '/admin/support/tickets',
           { params }
         )
 
@@ -174,7 +174,7 @@ export const useTicketStore = defineStore('ticket', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<Ticket>(
-          `/api/admin/support/tickets/${ticketId}`
+          `/admin/support/tickets/${ticketId}`
         )
 
         this.currentTicket = response.data
@@ -206,7 +206,7 @@ export const useTicketStore = defineStore('ticket', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Ticket>(
-          '/api/admin/support/tickets',
+          '/admin/support/tickets',
           data
         )
 
@@ -255,7 +255,7 @@ export const useTicketStore = defineStore('ticket', {
       try {
         const { apiService } = useApi()
         const response = await apiService.patch<Ticket>(
-          `/api/admin/support/tickets/${ticketId}/status`,
+          `/admin/support/tickets/${ticketId}/status`,
           { status }
         )
 
@@ -296,7 +296,7 @@ export const useTicketStore = defineStore('ticket', {
       try {
         const { apiService } = useApi()
         const response = await apiService.patch<Ticket>(
-          `/api/admin/support/tickets/${ticketId}/priority`,
+          `/admin/support/tickets/${ticketId}/priority`,
           { priority }
         )
 
@@ -330,7 +330,7 @@ export const useTicketStore = defineStore('ticket', {
       try {
         const { apiService } = useApi()
         const response = await apiService.patch<Ticket>(
-          `/api/admin/support/tickets/${ticketId}/assign`,
+          `/admin/support/tickets/${ticketId}/assign`,
           { adminUserId }
         )
 
@@ -390,7 +390,7 @@ export const useTicketStore = defineStore('ticket', {
         }
 
         const response = await apiService.post<TicketMessage>(
-          `/api/admin/support/tickets/${ticketId}/reply`,
+          `/admin/support/tickets/${ticketId}/reply`,
           requestData
         )
 
@@ -435,7 +435,7 @@ export const useTicketStore = defineStore('ticket', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Ticket>(
-          `/api/admin/support/tickets/${ticketId}/close`,
+          `/admin/support/tickets/${ticketId}/close`,
           { resolution }
         )
 
@@ -472,7 +472,7 @@ export const useTicketStore = defineStore('ticket', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Ticket>(
-          `/api/admin/support/tickets/${ticketId}/reopen`
+          `/admin/support/tickets/${ticketId}/reopen`
         )
 
         // Update local state
@@ -506,7 +506,7 @@ export const useTicketStore = defineStore('ticket', {
 
       try {
         const { apiService } = useApi()
-        await apiService.delete(`/api/admin/support/tickets/${ticketId}`)
+        await apiService.delete(`/admin/support/tickets/${ticketId}`)
 
         // Remove from local state
         this.tickets = this.tickets.filter(t => t.id !== ticketId)

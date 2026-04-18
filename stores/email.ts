@@ -109,7 +109,7 @@ export const useEmailStore = defineStore('email', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<EmailDashboardMetrics>(
-          '/api/admin/email/dashboard'
+          '/admin/email/dashboard'
         )
 
         this.dashboardMetrics = response.data
@@ -156,7 +156,7 @@ export const useEmailStore = defineStore('email', {
         }
 
         const response = await apiService.get<PaginatedResponse<EmailListItem>>(
-          '/api/admin/email/list',
+          '/admin/email/list',
           { params }
         )
 
@@ -195,7 +195,7 @@ export const useEmailStore = defineStore('email', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<EmailDetails>(
-          `/api/admin/email/${emailId}`
+          `/admin/email/${emailId}`
         )
 
         this.currentEmail = response.data
@@ -211,7 +211,7 @@ export const useEmailStore = defineStore('email', {
     async resendEmail(emailId: string): Promise<void> {
       try {
         const { apiService } = useApi()
-        await apiService.post(`/api/admin/email/${emailId}/resend`)
+        await apiService.post(`/admin/email/${emailId}/resend`)
 
         // Refresh email details if currently viewing
         if (this.currentEmail?.id === emailId) {
@@ -226,7 +226,7 @@ export const useEmailStore = defineStore('email', {
     async bulkResend(emailIds: string[]): Promise<void> {
       try {
         const { apiService } = useApi()
-        await apiService.post('/api/admin/email/bulk-resend', { emailIds })
+        await apiService.post('/admin/email/bulk-resend', { emailIds })
 
         // Refresh email list
         await this.fetchEmails(this.pagination.page)
@@ -239,7 +239,7 @@ export const useEmailStore = defineStore('email', {
     async deleteEmail(emailId: string): Promise<void> {
       try {
         const { apiService } = useApi()
-        await apiService.delete(`/api/admin/email/${emailId}`)
+        await apiService.delete(`/admin/email/${emailId}`)
 
         // Remove from local state
         this.emails = this.emails.filter(e => e.id !== emailId)
@@ -255,7 +255,7 @@ export const useEmailStore = defineStore('email', {
     async bulkDelete(emailIds: string[]): Promise<void> {
       try {
         const { apiService } = useApi()
-        await apiService.post('/api/admin/email/bulk-delete', { emailIds })
+        await apiService.post('/admin/email/bulk-delete', { emailIds })
 
         // Remove from local state
         this.emails = this.emails.filter(e => !emailIds.includes(e.id))
@@ -321,7 +321,7 @@ export const useEmailStore = defineStore('email', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<EmailTemplateListItem[]>(
-          '/api/admin/email/templates'
+          '/admin/email/templates'
         )
 
         this.templates = response.data
@@ -341,7 +341,7 @@ export const useEmailStore = defineStore('email', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<EmailTemplate>(
-          `/api/admin/email/templates/${templateId}`
+          `/admin/email/templates/${templateId}`
         )
 
         this.currentTemplate = response.data
@@ -361,7 +361,7 @@ export const useEmailStore = defineStore('email', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<EmailTemplate>(
-          '/api/admin/email/templates',
+          '/admin/email/templates',
           template
         )
 
@@ -391,7 +391,7 @@ export const useEmailStore = defineStore('email', {
       try {
         const { apiService } = useApi()
         const response = await apiService.put<EmailTemplate>(
-          `/api/admin/email/templates/${templateId}`,
+          `/admin/email/templates/${templateId}`,
           template
         )
 
@@ -424,7 +424,7 @@ export const useEmailStore = defineStore('email', {
     async deleteTemplate(templateId: string): Promise<void> {
       try {
         const { apiService } = useApi()
-        await apiService.delete(`/api/admin/email/templates/${templateId}`)
+        await apiService.delete(`/admin/email/templates/${templateId}`)
 
         // Remove from local state
         this.templates = this.templates.filter(t => t.id !== templateId)
@@ -441,7 +441,7 @@ export const useEmailStore = defineStore('email', {
       try {
         const { apiService } = useApi()
         const response = await apiService.patch<EmailTemplate>(
-          `/api/admin/email/templates/${templateId}/toggle`
+          `/admin/email/templates/${templateId}/toggle`
         )
 
         // Update in list
@@ -468,7 +468,7 @@ export const useEmailStore = defineStore('email', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<EmailProvider[]>(
-          '/api/admin/email/providers'
+          '/admin/email/providers'
         )
 
         this.providers = response.data
@@ -485,7 +485,7 @@ export const useEmailStore = defineStore('email', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<{ success: boolean; message: string }>(
-          `/api/admin/email/providers/${providerId}/test`
+          `/admin/email/providers/${providerId}/test`
         )
 
         return response.data
@@ -502,7 +502,7 @@ export const useEmailStore = defineStore('email', {
       try {
         const { apiService } = useApi()
         const response = await apiService.put<EmailProvider>(
-          `/api/admin/email/providers/${providerId}`,
+          `/admin/email/providers/${providerId}`,
           config
         )
 

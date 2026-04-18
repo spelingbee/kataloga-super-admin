@@ -116,7 +116,7 @@ export const useAnnouncementStore = defineStore('announcement', {
         }
 
         const response = await apiService.get<PaginatedResponse<AnnouncementListItem>>(
-          '/api/admin/announcements',
+          '/admin/announcements',
           { params }
         )
 
@@ -156,7 +156,7 @@ export const useAnnouncementStore = defineStore('announcement', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<Announcement>(
-          `/api/admin/announcements/${announcementId}`
+          `/admin/announcements/${announcementId}`
         )
 
         this.currentAnnouncement = response.data
@@ -186,7 +186,7 @@ export const useAnnouncementStore = defineStore('announcement', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Announcement>(
-          '/api/admin/announcements',
+          '/admin/announcements',
           data
         )
 
@@ -240,7 +240,7 @@ export const useAnnouncementStore = defineStore('announcement', {
       try {
         const { apiService } = useApi()
         const response = await apiService.patch<Announcement>(
-          `/api/admin/announcements/${announcementId}`,
+          `/admin/announcements/${announcementId}`,
           data
         )
 
@@ -288,7 +288,7 @@ export const useAnnouncementStore = defineStore('announcement', {
 
       try {
         const { apiService } = useApi()
-        await apiService.delete(`/api/admin/announcements/${announcementId}`)
+        await apiService.delete(`/admin/announcements/${announcementId}`)
 
         // Remove from local state
         this.announcements = this.announcements.filter(a => a.id !== announcementId)
@@ -311,7 +311,7 @@ export const useAnnouncementStore = defineStore('announcement', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Announcement>(
-          `/api/admin/announcements/${announcementId}/send`
+          `/admin/announcements/${announcementId}/send`
         )
 
         // Update local state
@@ -346,7 +346,7 @@ export const useAnnouncementStore = defineStore('announcement', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Announcement>(
-          `/api/admin/announcements/${announcementId}/schedule`,
+          `/admin/announcements/${announcementId}/schedule`,
           { scheduledFor }
         )
 
@@ -380,7 +380,7 @@ export const useAnnouncementStore = defineStore('announcement', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<Announcement>(
-          `/api/admin/announcements/${announcementId}/cancel-schedule`
+          `/admin/announcements/${announcementId}/cancel-schedule`
         )
 
         // Update local state
@@ -413,7 +413,7 @@ export const useAnnouncementStore = defineStore('announcement', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<PaginatedResponse<AnnouncementDelivery>>(
-          `/api/admin/announcements/${announcementId}/deliveries`
+          `/admin/announcements/${announcementId}/deliveries`
         )
 
         this.deliveries = response.data
@@ -430,7 +430,7 @@ export const useAnnouncementStore = defineStore('announcement', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<{ count: number; tenants: any[] }>(
-          '/api/admin/announcements/preview-targets',
+          '/admin/announcements/preview-targets',
           { target }
         )
 

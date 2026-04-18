@@ -84,7 +84,7 @@ export const useMenuStore = defineStore('menu', {
         }
 
         const response = await apiService.get<PaginatedResponse<MenuListItem>>(
-          `/api/admin/tenants/${tenantId}/menus`,
+          `/admin/tenants/${tenantId}/menus`,
           { params }
         )
 
@@ -123,7 +123,7 @@ export const useMenuStore = defineStore('menu', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<MenuDetails>(
-          `/api/admin/tenants/${tenantId}/menus/${menuId}`
+          `/admin/tenants/${tenantId}/menus/${menuId}`
         )
 
         this.currentMenu = response.data
@@ -165,7 +165,7 @@ export const useMenuStore = defineStore('menu', {
         }
 
         const response = await apiService.get<PaginatedResponse<MenuItem>>(
-          `/api/admin/tenants/${tenantId}/menus/${menuId}/items`,
+          `/admin/tenants/${tenantId}/menus/${menuId}/items`,
           { params }
         )
 
@@ -212,7 +212,7 @@ export const useMenuStore = defineStore('menu', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<MenuItem>(
-          `/api/admin/tenants/${tenantId}/menus/${menuId}/items`,
+          `/admin/tenants/${tenantId}/menus/${menuId}/items`,
           itemData
         )
 
@@ -251,7 +251,7 @@ export const useMenuStore = defineStore('menu', {
       try {
         const { apiService } = useApi()
         const response = await apiService.patch<MenuItem>(
-          `/api/admin/tenants/${tenantId}/menus/${menuId}/items/${itemId}`,
+          `/admin/tenants/${tenantId}/menus/${menuId}/items/${itemId}`,
           itemData
         )
 
@@ -272,7 +272,7 @@ export const useMenuStore = defineStore('menu', {
       try {
         const { apiService } = useApi()
         await apiService.delete(
-          `/api/admin/tenants/${tenantId}/menus/${menuId}/items/${itemId}`
+          `/admin/tenants/${tenantId}/menus/${menuId}/items/${itemId}`
         )
 
         // Remove from local state
@@ -306,7 +306,7 @@ export const useMenuStore = defineStore('menu', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<{ affectedCount: number; message: string }>(
-          `/api/admin/tenants/${tenantId}/menus/${menuId}/items/bulk-update`,
+          `/admin/tenants/${tenantId}/menus/${menuId}/items/bulk-update`,
           {
             itemIds,
             ...updates
@@ -336,7 +336,7 @@ export const useMenuStore = defineStore('menu', {
         }
 
         const response = await apiService.get<PaginatedResponse<CategoryWithItemCount>>(
-          `/api/admin/tenants/${tenantId}/menus/categories`,
+          `/admin/tenants/${tenantId}/menus/categories`,
           { params }
         )
 
@@ -357,7 +357,7 @@ export const useMenuStore = defineStore('menu', {
       try {
         const { apiService } = useApi()
         const response = await apiService.post<CategoryWithItemCount>(
-          `/api/admin/tenants/${tenantId}/menus/categories`,
+          `/admin/tenants/${tenantId}/menus/categories`,
           categoryData
         )
 
@@ -379,7 +379,7 @@ export const useMenuStore = defineStore('menu', {
       try {
         const { apiService } = useApi()
         const response = await apiService.patch<CategoryWithItemCount>(
-          `/api/admin/tenants/${tenantId}/menus/categories/${categoryId}`,
+          `/admin/tenants/${tenantId}/menus/categories/${categoryId}`,
           categoryData
         )
 
@@ -400,7 +400,7 @@ export const useMenuStore = defineStore('menu', {
       try {
         const { apiService } = useApi()
         await apiService.delete(
-          `/api/admin/tenants/${tenantId}/menus/categories/${categoryId}`
+          `/admin/tenants/${tenantId}/menus/categories/${categoryId}`
         )
 
         // Remove from local state
@@ -467,7 +467,7 @@ export const useMenuStore = defineStore('menu', {
         if (filters?.endDate) params.endDate = filters.endDate
 
         const response = await apiService.get<MenuHistory>(
-          `/api/admin/audit/menu/${tenantId}/history`,
+          `/admin/audit/menu/${tenantId}/history`,
           { params }
         )
 

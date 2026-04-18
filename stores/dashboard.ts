@@ -60,7 +60,7 @@ fetchDashboardData = async (force = false): Promise<void> => {
       const { cachedGet } = useCache()
       
       // Fetch dashboard metrics (includes all data we need)
-      const metricsData = await cachedGet<DashboardMetrics>('/api/admin/analytics/dashboard', {
+      const metricsData = await cachedGet<DashboardMetrics>('/admin/analytics/dashboard', {
         ttl: CacheTTL.MEDIUM,
         force,
       })
@@ -89,7 +89,7 @@ fetchDashboardData = async (force = false): Promise<void> => {
   const fetchMetrics = async (): Promise<void> => {
     try {
       const { cachedGet } = useCache()
-      metrics.value = await cachedGet<DashboardMetrics>('/api/admin/analytics/dashboard', {
+      metrics.value = await cachedGet<DashboardMetrics>('/admin/analytics/dashboard', {
         ttl: CacheTTL.MEDIUM,
       })
       lastFetched.value = Date.now()
