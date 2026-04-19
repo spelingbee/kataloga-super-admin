@@ -108,7 +108,7 @@ export const useErrorReporting = () => {
       }
 
       if (options.endpoint) {
-        fetch(`${config.public.apiBaseUrl}/admin/performance/report`, {
+        fetch(`${config.public.apiUrl}/admin/performance/report`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
