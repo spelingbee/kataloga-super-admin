@@ -83,12 +83,13 @@
       <div class="subscription-details__section">
         <h2 class="subscription-details__section-title">Plan Features</h2>
         <div class="subscription-details__card">
-          <ul class="subscription-details__features">
-            <li v-for="feature in subscription.plan.features" :key="feature" class="subscription-details__feature">
+          <ul v-if="planFeaturesList.length > 0" class="subscription-details__features">
+            <li v-for="feature in planFeaturesList" :key="feature" class="subscription-details__feature">
               <span class="subscription-details__feature-icon">✓</span>
               {{ feature }}
             </li>
           </ul>
+          <p v-else class="subscription-details__no-features">No features defined for this plan.</p>
         </div>
       </div>
 
@@ -181,6 +182,39 @@ const daysUntilTrialEnd = computed(() => {
   const now = new Date()
   const diff = trialEnd.getTime() - now.getTime()
   return Math.ceil(diff / (1000 * 60 * 60 * 24))
+})
+
+/**
+ * Normalize plan.features to a string array regardless of backend format.
+ * Backend stores features as:
+ *   - string[]  → ['Analytics', 'Multi-location']
+ *   - object    → { analytics: true, multiLocation: false, ... }
+ * We display only enabled features with human-readable names.
+ */
+const planFeaturesList = computed((): string[] => {
+  const raw = props.subscription?.plan?.features
+  if (!raw) return []
+
+  // Already a string array
+  if (Array.isArray(raw)) {
+    return (raw as any[]).filter(f => typeof f === 'string' && f.trim())
+  }
+
+  // Object format: { featureKey: true/false }
+  if (typeof raw === 'object') {
+    return Object.entries(raw as Record<string, any>)
+      .filter(([, val]) => val === true || val === 1)
+      .map(([key]) =>
+        // Convert camelCase/snake_case to readable label
+        key
+          .replace(/_/g, ' ')
+          .replace(/([A-Z])/g, ' $1')
+          .replace(/^\w/, c => c.toUpperCase())
+          .trim()
+      )
+  }
+
+  return []
 })
 
 function formatCurrency(value: number): string {
@@ -387,6 +421,12 @@ function formatPaymentType(type: string): string {
 .status-badge--expired {
   background: lighten($error-color, 40%);
   color: $error-color;
+}
+
+.subscription-details__no-features {
+  color: $text-secondary;
+  font-size: 0.875rem;
+  margin: 0;
 }
 
 .subscription-details__features {

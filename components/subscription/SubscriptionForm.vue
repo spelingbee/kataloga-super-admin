@@ -40,7 +40,7 @@
             </div>
 
             <ul class="plan-card__features">
-              <li v-for="feature in plan.features" :key="feature" class="plan-card__feature">
+              <li v-for="feature in getPlanFeatures(plan)" :key="feature" class="plan-card__feature">
                 <span class="plan-card__feature-icon">✓</span>
                 {{ feature }}
               </li>
@@ -256,6 +256,33 @@ onMounted(() => {
   formData.value.startDate = today.toISOString().split('T')[0]
   calculateEndDate(formData.value.billingCycle)
 })
+
+/**
+ * Normalize plan.features to a string array regardless of backend format.
+ * Backend stores features as string[] or { key: boolean } object.
+ */
+function getPlanFeatures(plan: Plan): string[] {
+  const raw = plan.features as any
+  if (!raw) return []
+
+  if (Array.isArray(raw)) {
+    return raw.filter((f: any) => typeof f === 'string' && f.trim())
+  }
+
+  if (typeof raw === 'object') {
+    return Object.entries(raw as Record<string, any>)
+      .filter(([, val]) => val === true || val === 1)
+      .map(([key]) =>
+        key
+          .replace(/_/g, ' ')
+          .replace(/([A-Z])/g, ' $1')
+          .replace(/^\w/, (c: string) => c.toUpperCase())
+          .trim()
+      )
+  }
+
+  return []
+}
 
 function selectPlan(plan: Plan) {
   formData.value.planId = plan.id
