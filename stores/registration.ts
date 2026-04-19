@@ -148,11 +148,11 @@ export const useRegistrationStore = defineStore('registration', {
 
       try {
         const { apiService } = useApi()
-        const response = await apiService.get<RegistrationDetails>(
+        const response = await apiService.get<ApiResponse<RegistrationDetails>>(
           `/admin/tenants/${registrationId}/details`
         )
 
-        this.currentRegistration = response
+        this.currentRegistration = response.data
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch registration details'
         console.error('Registration details fetch error:', error)

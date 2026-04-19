@@ -111,18 +111,18 @@
           <div class="registration-details__info-grid">
             <div class="registration-details__info-item">
               <span class="registration-details__info-label">Name</span>
-              <span class="registration-details__info-value">{{ registration.owner.name }}</span>
+              <span class="registration-details__info-value">{{ registration.owner?.name }}</span>
             </div>
             <div class="registration-details__info-item">
               <span class="registration-details__info-label">Email</span>
               <span class="registration-details__info-value">
-                <a :href="`mailto:${registration.owner.email}`">{{ registration.owner.email }}</a>
+                <a :href="`mailto:${registration.owner?.email}`">{{ registration.owner?.email }}</a>
               </span>
             </div>
             <div class="registration-details__info-item">
               <span class="registration-details__info-label">Phone</span>
               <span class="registration-details__info-value">
-                <a :href="`tel:${registration.owner.phone}`">{{ registration.owner.phone }}</a>
+                <a :href="`tel:${registration.owner?.phone}`">{{ registration.owner?.phone }}</a>
               </span>
             </div>
           </div>
@@ -134,23 +134,23 @@
           <div class="registration-details__info-grid">
             <div class="registration-details__info-item registration-details__info-item--full">
               <span class="registration-details__info-label">Street</span>
-              <span class="registration-details__info-value">{{ registration.address.street }}</span>
+              <span class="registration-details__info-value">{{ registration.address?.street }}</span>
             </div>
             <div class="registration-details__info-item">
               <span class="registration-details__info-label">City</span>
-              <span class="registration-details__info-value">{{ registration.address.city }}</span>
+              <span class="registration-details__info-value">{{ registration.address?.city }}</span>
             </div>
             <div class="registration-details__info-item">
               <span class="registration-details__info-label">State</span>
-              <span class="registration-details__info-value">{{ registration.address.state }}</span>
+              <span class="registration-details__info-value">{{ registration.address?.state }}</span>
             </div>
             <div class="registration-details__info-item">
               <span class="registration-details__info-label">Postal Code</span>
-              <span class="registration-details__info-value">{{ registration.address.postalCode }}</span>
+              <span class="registration-details__info-value">{{ registration.address?.postalCode }}</span>
             </div>
             <div class="registration-details__info-item">
               <span class="registration-details__info-label">Country</span>
-              <span class="registration-details__info-value">{{ registration.address.country }}</span>
+              <span class="registration-details__info-value">{{ registration.address?.country }}</span>
             </div>
           </div>
         </div>
