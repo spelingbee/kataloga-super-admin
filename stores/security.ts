@@ -101,7 +101,7 @@ export const useSecurityStore = defineStore('security', {
           '/admin/security/dashboard'
         )
 
-        this.dashboardMetrics = response.data
+        this.dashboardMetrics = response
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch security dashboard metrics'
@@ -190,7 +190,7 @@ export const useSecurityStore = defineStore('security', {
           `/admin/security/events/${eventId}`
         )
 
-        this.currentEvent = response.data
+        this.currentEvent = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch event details'
         console.error('Event details fetch error:', error)
@@ -295,7 +295,7 @@ export const useSecurityStore = defineStore('security', {
           `/admin/security/blocked-ips/${ipId}`
         )
 
-        this.currentBlockedIP = response.data
+        this.currentBlockedIP = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch blocked IP details'
         console.error('Blocked IP details fetch error:', error)
@@ -433,7 +433,7 @@ export const useSecurityStore = defineStore('security', {
           `/admin/security/suspicious-activity/${activityId}`
         )
 
-        this.currentActivity = response.data
+        this.currentActivity = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch activity details'
         console.error('Activity details fetch error:', error)

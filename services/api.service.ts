@@ -165,47 +165,32 @@ export class ApiService {
 
   public async get<T>(url: string, config?: any): Promise<T> {
     const response = await this.api.get(url, config)
-    // Backend returns { success, statusCode, data, error, meta }
-    // We need to extract the actual data from response.data.data
-    if (response.data && typeof response.data === 'object' && 'data' in response.data) {
-      return response.data.data as T
+    // If responseType is blob, return the full data (the blob itself)
+    if (config?.responseType === 'blob') {
+      return response.data as T
     }
-    return response.data as T
+    // Backend returns { success, statusCode, data, error, meta }
+    // We only unwrap the first layer of 'data' to preserve inner structures (like { data, meta })
+    return response.data?.data as T
   }
 
   public async post<T>(url: string, data?: any, config?: any): Promise<T> {
     const response = await this.api.post(url, data, config)
-    // Backend returns { success, statusCode, data, error, meta }
-    if (response.data && typeof response.data === 'object' && 'data' in response.data) {
-      return response.data.data as T
-    }
-    return response.data as T
+    return response.data?.data as T
   }
 
   public async put<T>(url: string, data?: any, config?: any): Promise<T> {
     const response = await this.api.put(url, data, config)
-    // Backend returns { success, statusCode, data, error, meta }
-    if (response.data && typeof response.data === 'object' && 'data' in response.data) {
-      return response.data.data as T
-    }
-    return response.data as T
+    return response.data?.data as T
   }
 
   public async patch<T>(url: string, data?: any, config?: any): Promise<T> {
     const response = await this.api.patch(url, data, config)
-    // Backend returns { success, statusCode, data, error, meta }
-    if (response.data && typeof response.data === 'object' && 'data' in response.data) {
-      return response.data.data as T
-    }
-    return response.data as T
+    return response.data?.data as T
   }
 
   public async delete<T>(url: string, config?: any): Promise<T> {
     const response = await this.api.delete(url, config)
-    // Backend returns { success, statusCode, data, error, meta }
-    if (response.data && typeof response.data === 'object' && 'data' in response.data) {
-      return response.data.data as T
-    }
-    return response.data as T
+    return response.data?.data as T
   }
 }

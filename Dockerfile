@@ -7,25 +7,25 @@ RUN npm install -g pnpm
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package.json ./
-# Copy pnpm-lock.yaml if it exists, otherwise skip
-COPY pnpm-lock.yaml* ./
+# Copy root workspace files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# Install dependencies
-RUN pnpm config set node-linker hoisted && pnpm install
+# Copy the specific package and app needed for the build
+COPY packages/api-types ./packages/api-types
+COPY apps/super-admin ./apps/super-admin
+
+# Install dependencies for the super-admin and its workspace dependencies
+RUN pnpm install --filter super-admin...
 
 # Development stage
 FROM base AS development
-COPY . .
+WORKDIR /app/apps/super-admin
 EXPOSE 3002
 CMD ["pnpm", "dev"]
 
 # Build stage
 FROM base AS build
-
-# Copy source code
-COPY . .
+WORKDIR /app/apps/super-admin
 
 # Build the application
 RUN pnpm run build
@@ -41,8 +41,8 @@ RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nuxt -u 1001
 
 # Copy built application
-COPY --from=build --chown=nuxt:nodejs /app/.output /app/.output
-COPY --from=build --chown=nuxt:nodejs /app/package.json /app/package.json
+COPY --from=build --chown=nuxt:nodejs /app/apps/super-admin/.output /app/.output
+COPY --from=build --chown=nuxt:nodejs /app/apps/super-admin/package.json /app/package.json
 
 # Set environment variables
 ENV NODE_ENV=production

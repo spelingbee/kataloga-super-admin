@@ -112,7 +112,7 @@ export const useEmailStore = defineStore('email', {
           '/admin/email/dashboard'
         )
 
-        this.dashboardMetrics = response.data
+        this.dashboardMetrics = response
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch email dashboard metrics'
@@ -198,7 +198,7 @@ export const useEmailStore = defineStore('email', {
           `/admin/email/${emailId}`
         )
 
-        this.currentEmail = response.data
+        this.currentEmail = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch email details'
         console.error('Email details fetch error:', error)
@@ -324,7 +324,7 @@ export const useEmailStore = defineStore('email', {
           '/admin/email/templates'
         )
 
-        this.templates = response.data
+        this.templates = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch email templates'
         console.error('Template fetch error:', error)
@@ -344,7 +344,7 @@ export const useEmailStore = defineStore('email', {
           `/admin/email/templates/${templateId}`
         )
 
-        this.currentTemplate = response.data
+        this.currentTemplate = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch template details'
         console.error('Template details fetch error:', error)
@@ -366,15 +366,15 @@ export const useEmailStore = defineStore('email', {
         )
 
         this.templates.push({
-          id: response.data.id,
-          name: response.data.name,
-          subject: response.data.subject,
-          type: response.data.type,
-          isActive: response.data.isActive,
-          updatedAt: response.data.updatedAt,
+          id: response.id,
+          name: response.name,
+          subject: response.subject,
+          type: response.type,
+          isActive: response.isActive,
+          updatedAt: response.updatedAt,
         })
 
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to create template'
         console.error('Template create error:', error)
@@ -399,18 +399,18 @@ export const useEmailStore = defineStore('email', {
         const index = this.templates.findIndex(t => t.id === templateId)
         if (index > -1) {
           this.templates[index] = {
-            id: response.data.id,
-            name: response.data.name,
-            subject: response.data.subject,
-            type: response.data.type,
-            isActive: response.data.isActive,
-            updatedAt: response.data.updatedAt,
+            id: response.id,
+            name: response.name,
+            subject: response.subject,
+            type: response.type,
+            isActive: response.isActive,
+            updatedAt: response.updatedAt,
           }
         }
 
         // Update current template if viewing
         if (this.currentTemplate?.id === templateId) {
-          this.currentTemplate = response.data
+          this.currentTemplate = response
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to update template'
@@ -447,12 +447,12 @@ export const useEmailStore = defineStore('email', {
         // Update in list
         const index = this.templates.findIndex(t => t.id === templateId)
         if (index > -1 && this.templates[index]) {
-          this.templates[index].isActive = response.data.isActive
+          this.templates[index].isActive = response.isActive
         }
 
         // Update current template if viewing
         if (this.currentTemplate?.id === templateId) {
-          this.currentTemplate.isActive = response.data.isActive
+          this.currentTemplate.isActive = response.isActive
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to toggle template status'
@@ -471,7 +471,7 @@ export const useEmailStore = defineStore('email', {
           '/admin/email/providers'
         )
 
-        this.providers = response.data
+        this.providers = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch email providers'
         console.error('Provider fetch error:', error)
@@ -488,7 +488,7 @@ export const useEmailStore = defineStore('email', {
           `/admin/email/providers/${providerId}/test`
         )
 
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to test provider'
         throw error
@@ -509,7 +509,7 @@ export const useEmailStore = defineStore('email', {
         // Update in list
         const index = this.providers.findIndex(p => p.id === providerId)
         if (index > -1) {
-          this.providers[index] = response.data
+          this.providers[index] = response
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to update provider'

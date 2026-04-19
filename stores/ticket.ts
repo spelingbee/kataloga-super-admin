@@ -177,7 +177,7 @@ export const useTicketStore = defineStore('ticket', {
           `/admin/support/tickets/${ticketId}`
         )
 
-        this.currentTicket = response.data
+        this.currentTicket = response
 
         // Mark ticket as read in local state
         const index = this.tickets.findIndex(t => t.id === ticketId)
@@ -211,7 +211,7 @@ export const useTicketStore = defineStore('ticket', {
         )
 
         // Add to local state
-        const ticket = response.data
+        const ticket = response
         if (ticket?.id) {
           const newTicket: TicketListItem = {
             id: ticket.id,
@@ -235,7 +235,7 @@ export const useTicketStore = defineStore('ticket', {
           this.currentTicket = ticket
         }
 
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to create ticket'
         console.error('Ticket create error:', error)
@@ -260,7 +260,7 @@ export const useTicketStore = defineStore('ticket', {
         )
 
         // Update local state
-        const ticket = response.data
+        const ticket = response
         if (ticket?.id) {
           const index = this.tickets.findIndex(t => t.id === ticketId)
           if (index !== -1 && this.tickets[index]) {
@@ -301,7 +301,7 @@ export const useTicketStore = defineStore('ticket', {
         )
 
         // Update local state
-        const ticket = response.data
+        const ticket = response
         if (ticket?.id) {
           const index = this.tickets.findIndex(t => t.id === ticketId)
           if (index !== -1 && this.tickets[index]) {
@@ -335,7 +335,7 @@ export const useTicketStore = defineStore('ticket', {
         )
 
         // Update local state
-        const ticket = response.data
+        const ticket = response
         if (ticket?.id) {
           const index = this.tickets.findIndex(t => t.id === ticketId)
           if (index !== -1 && this.tickets[index]) {
@@ -395,7 +395,7 @@ export const useTicketStore = defineStore('ticket', {
         )
 
         // Update local state
-        const message = response.data
+        const message = response
         if (message && this.currentTicket?.id === ticketId) {
           this.currentTicket.messages.push(message)
           this.currentTicket.responseCount++
@@ -411,7 +411,7 @@ export const useTicketStore = defineStore('ticket', {
           this.tickets[index]!.updatedAt = message.createdAt
         }
 
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to reply to ticket'
         console.error('Ticket reply error:', error)
@@ -440,7 +440,7 @@ export const useTicketStore = defineStore('ticket', {
         )
 
         // Update local state
-        const ticket = response.data
+        const ticket = response
         if (ticket?.id) {
           const index = this.tickets.findIndex(t => t.id === ticketId)
           if (index !== -1 && this.tickets[index]) {
@@ -476,7 +476,7 @@ export const useTicketStore = defineStore('ticket', {
         )
 
         // Update local state
-        const ticket = response.data
+        const ticket = response
         if (ticket?.id) {
           const index = this.tickets.findIndex(t => t.id === ticketId)
           if (index !== -1 && this.tickets[index]) {

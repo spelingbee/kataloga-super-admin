@@ -147,7 +147,7 @@ export const useAuditStore = defineStore('audit', {
           `/admin/audit/logs/${logId}`
         )
 
-        this.currentLog = response.data
+        this.currentLog = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch audit log details'
         console.error('Audit log details fetch error:', error)
@@ -177,7 +177,7 @@ export const useAuditStore = defineStore('audit', {
           { params }
         )
 
-        this.analytics = response.data
+        this.analytics = response
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch audit analytics'
@@ -219,7 +219,7 @@ export const useAuditStore = defineStore('audit', {
           params.search = this.filters.search
         }
 
-        const response = await apiService.get(
+        const response = await apiService.get<Blob>(
           '/admin/audit/logs/export',
           { 
             params,
@@ -227,7 +227,7 @@ export const useAuditStore = defineStore('audit', {
           }
         )
 
-        return response.data as Blob
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to export audit logs'
         console.error('Audit logs export error:', error)

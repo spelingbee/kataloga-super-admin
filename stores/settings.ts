@@ -66,10 +66,10 @@ export const useSettingsStore = defineStore('settings', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.get<SystemSettings>('/admin/settings')
+        const { apiService } = useApi()
+        const response = await apiService.get<SystemSettings>('/admin/settings')
         
-        this.settings = response.data
+        this.settings = response
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.message || 'Failed to fetch settings'
@@ -85,17 +85,17 @@ export const useSettingsStore = defineStore('settings', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.put<GeneralSettings>('/admin/settings/general', settings)
+        const { apiService } = useApi()
+        const response = await apiService.put<GeneralSettings>('/admin/settings/general', settings)
         
         if (this.settings) {
-          this.settings.general = response.data
+          this.settings.general = response
         }
 
         const { success } = useNotification()
         success('General settings updated successfully')
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to update general settings'
         console.error('Error updating general settings:', error)
@@ -113,29 +113,30 @@ export const useSettingsStore = defineStore('settings', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
+        const { apiService } = useApi()
         const endpoint = provider.id 
           ? `/admin/settings/email/${provider.id}`
           : '/admin/settings/email'
         
-        const method = provider.id ? 'put' : 'post'
-        const response = await $api[method]<EmailProviderConfig>(endpoint, provider)
+        const response = await (provider.id 
+          ? apiService.put<EmailProviderConfig>(endpoint, provider)
+          : apiService.post<EmailProviderConfig>(endpoint, provider))
         
         if (this.settings) {
           if (provider.id) {
             const index = this.settings.emailProviders.findIndex(p => p.id === provider.id)
             if (index !== -1) {
-              this.settings.emailProviders[index] = response.data
+              this.settings.emailProviders[index] = response
             }
           } else {
-            this.settings.emailProviders.push(response.data)
+            this.settings.emailProviders.push(response)
           }
         }
 
         const { success } = useNotification()
         success('Email provider updated successfully')
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to update email provider'
         console.error('Error updating email provider:', error)
@@ -153,8 +154,8 @@ export const useSettingsStore = defineStore('settings', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        await $api.delete(`/admin/settings/email/${providerId}`)
+        const { apiService } = useApi()
+        await apiService.delete(`/admin/settings/email/${providerId}`)
         
         if (this.settings) {
           this.settings.emailProviders = this.settings.emailProviders.filter(
@@ -181,19 +182,19 @@ export const useSettingsStore = defineStore('settings', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.post<{ success: boolean; message: string }>(
+        const { apiService } = useApi()
+        const response = await apiService.post<{ success: boolean; message: string }>(
           `/admin/settings/email/${providerId}/test`
         )
         
         const { success, error: showError } = useNotification()
-        if (response.data.success) {
-          success(response.data.message || 'Email provider connection successful')
+        if (response.success) {
+          success(response.message || 'Email provider connection successful')
         } else {
-          showError(response.data.message || 'Email provider connection failed')
+          showError(response.message || 'Email provider connection failed')
         }
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to test email provider'
         console.error('Error testing email provider:', error)
@@ -211,29 +212,30 @@ export const useSettingsStore = defineStore('settings', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
+        const { apiService } = useApi()
         const endpoint = gateway.id 
           ? `/admin/settings/payment/${gateway.id}`
           : '/admin/settings/payment'
         
-        const method = gateway.id ? 'put' : 'post'
-        const response = await $api[method]<PaymentGatewayConfig>(endpoint, gateway)
+        const response = await (gateway.id 
+          ? apiService.put<PaymentGatewayConfig>(endpoint, gateway)
+          : apiService.post<PaymentGatewayConfig>(endpoint, gateway))
         
         if (this.settings) {
           if (gateway.id) {
             const index = this.settings.paymentGateways.findIndex(g => g.id === gateway.id)
             if (index !== -1) {
-              this.settings.paymentGateways[index] = response.data
+              this.settings.paymentGateways[index] = response
             }
           } else {
-            this.settings.paymentGateways.push(response.data)
+            this.settings.paymentGateways.push(response)
           }
         }
 
         const { success } = useNotification()
         success('Payment gateway updated successfully')
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to update payment gateway'
         console.error('Error updating payment gateway:', error)
@@ -251,8 +253,8 @@ export const useSettingsStore = defineStore('settings', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        await $api.delete(`/admin/settings/payment/${gatewayId}`)
+        const { apiService } = useApi()
+        await apiService.delete(`/admin/settings/payment/${gatewayId}`)
         
         if (this.settings) {
           this.settings.paymentGateways = this.settings.paymentGateways.filter(
@@ -279,19 +281,19 @@ export const useSettingsStore = defineStore('settings', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.post<{ success: boolean; message: string }>(
+        const { apiService } = useApi()
+        const response = await apiService.post<{ success: boolean; message: string }>(
           `/admin/settings/payment/${gatewayId}/test`
         )
         
         const { success, error: showError } = useNotification()
-        if (response.data.success) {
-          success(response.data.message || 'Payment gateway connection successful')
+        if (response.success) {
+          success(response.message || 'Payment gateway connection successful')
         } else {
-          showError(response.data.message || 'Payment gateway connection failed')
+          showError(response.message || 'Payment gateway connection failed')
         }
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to test payment gateway'
         console.error('Error testing payment gateway:', error)
@@ -309,29 +311,30 @@ export const useSettingsStore = defineStore('settings', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
+        const { apiService } = useApi()
         const endpoint = storage.id 
           ? `/admin/settings/storage/${storage.id}`
           : '/admin/settings/storage'
         
-        const method = storage.id ? 'put' : 'post'
-        const response = await $api[method]<StorageConfig>(endpoint, storage)
+        const response = await (storage.id
+          ? apiService.put<StorageConfig>(endpoint, storage)
+          : apiService.post<StorageConfig>(endpoint, storage))
         
         if (this.settings) {
           if (storage.id) {
             const index = this.settings.storage.findIndex(s => s.id === storage.id)
             if (index !== -1) {
-              this.settings.storage[index] = response.data
+              this.settings.storage[index] = response
             }
           } else {
-            this.settings.storage.push(response.data)
+            this.settings.storage.push(response)
           }
         }
 
         const { success } = useNotification()
         success('Storage configuration updated successfully')
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to update storage configuration'
         console.error('Error updating storage configuration:', error)
@@ -349,8 +352,8 @@ export const useSettingsStore = defineStore('settings', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        await $api.delete(`/admin/settings/storage/${storageId}`)
+        const { apiService } = useApi()
+        await apiService.delete(`/admin/settings/storage/${storageId}`)
         
         if (this.settings) {
           this.settings.storage = this.settings.storage.filter(
@@ -377,19 +380,19 @@ export const useSettingsStore = defineStore('settings', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.post<{ success: boolean; message: string }>(
+        const { apiService } = useApi()
+        const response = await apiService.post<{ success: boolean; message: string }>(
           `/admin/settings/storage/${storageId}/test`
         )
         
         const { success, error: showError } = useNotification()
-        if (response.data.success) {
-          success(response.data.message || 'Storage connection successful')
+        if (response.success) {
+          success(response.message || 'Storage connection successful')
         } else {
-          showError(response.data.message || 'Storage connection failed')
+          showError(response.message || 'Storage connection failed')
         }
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to test storage connection'
         console.error('Error testing storage connection:', error)
@@ -404,19 +407,19 @@ export const useSettingsStore = defineStore('settings', {
 
     async fetchStorageUsage(storageId: string) {
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.get<StorageConfig['usage']>(
+        const { apiService } = useApi()
+        const response = await apiService.get<StorageConfig['usage']>(
           `/admin/settings/storage/${storageId}/usage`
         )
         
         if (this.settings) {
           const storage = this.settings.storage.find(s => s.id === storageId)
-          if (storage && response.data) {
-            storage.usage = response.data
+          if (storage && response) {
+            storage.usage = response
           }
         }
         
-        return response.data
+        return response
       } catch (error: any) {
         console.error('Error fetching storage usage:', error)
         throw error

@@ -129,23 +129,28 @@ export const useSubscriptionStore = defineStore('subscription', {
           { params }
         )
 
-        this.subscriptions = response.data || []
+        // Map backend DTO to UI structure and normalize status casing
+        this.subscriptions = (response.data || []).map(sub => ({
+          ...sub,
+          tenantName: sub.tenant?.name || 'N/A',
+          tenantId: sub.tenant?.id || '',
+          status: sub.status?.toLowerCase() as any,
+          plan: {
+            ...sub.plan,
+            id: sub.plan?.id || '',
+            name: sub.plan?.name || 'N/A',
+            price: sub.plan?.price || 0,
+            features: (sub as any).plan?.features || []
+          }
+        }))
         
-        // Handle both nested and flat pagination structures
+        // Handle pagination structure
         if (response.meta) {
           this.pagination = {
             page: response.meta.page,
             limit: response.meta.limit,
             total: response.meta.total,
             totalPages: response.meta.totalPages,
-          }
-        } else {
-          // Fallback for flat structure
-          this.pagination = {
-            page: (response as any).page || 1,
-            limit: (response as any).limit || 20,
-            total: (response as any).total || 0,
-            totalPages: (response as any).totalPages || 0,
           }
         }
       } catch (error: any) {
@@ -167,7 +172,7 @@ export const useSubscriptionStore = defineStore('subscription', {
           `/admin/subscriptions/${subscriptionId}`
         )
 
-        this.currentSubscription = response.data
+        this.currentSubscription = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch subscription details'
         console.error('Subscription details fetch error:', error)
@@ -205,7 +210,7 @@ export const useSubscriptionStore = defineStore('subscription', {
           { params }
         )
 
-        this.billingHistory = response.data
+        this.billingHistory = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch billing history'
         console.error('Billing history fetch error:', error)
@@ -234,10 +239,10 @@ export const useSubscriptionStore = defineStore('subscription', {
         )
 
         // Add to local state
-        this.subscriptions.unshift(response.data)
+        this.subscriptions.unshift(response)
         this.pagination.total += 1
 
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to create subscription'
         console.error('Subscription creation error:', error)
@@ -251,7 +256,7 @@ export const useSubscriptionStore = defineStore('subscription', {
       try {
         const { apiService } = useApi()
         const response = await apiService.get<any[]>('/admin/plans')
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch plans'
         console.error('Plans fetch error:', error)
@@ -268,12 +273,12 @@ export const useSubscriptionStore = defineStore('subscription', {
         )
 
         // Update local state
-        const subscription = this.subscriptions.find(s => s.id === subscriptionId)
+        const subscription = this.subscriptions.find((s: Subscription) => s.id === subscriptionId)
         if (subscription) {
-          subscription.plan = response.data.plan
+          subscription.plan = response.plan
         }
         if (this.currentSubscription?.id === subscriptionId) {
-          this.currentSubscription = response.data
+          this.currentSubscription = response
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to change plan'
@@ -290,12 +295,12 @@ export const useSubscriptionStore = defineStore('subscription', {
         )
 
         // Update local state
-        const subscription = this.subscriptions.find(s => s.id === subscriptionId)
+        const subscription = this.subscriptions.find((s: Subscription) => s.id === subscriptionId)
         if (subscription) {
-          subscription.trialEndsAt = response.data.trialEndsAt
+          subscription.trialEndsAt = response.trialEndsAt
         }
         if (this.currentSubscription?.id === subscriptionId) {
-          this.currentSubscription.trialEndsAt = response.data.trialEndsAt
+          this.currentSubscription.trialEndsAt = response.trialEndsAt
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to extend trial'
@@ -337,14 +342,14 @@ export const useSubscriptionStore = defineStore('subscription', {
         )
 
         // Update local state
-        const subscription = this.subscriptions.find(s => s.id === subscriptionId)
+        const subscription = this.subscriptions.find((s: Subscription) => s.id === subscriptionId)
         if (subscription) {
           subscription.status = 'cancelled'
-          subscription.cancelledAt = response.data.cancelledAt
+          subscription.cancelledAt = response.cancelledAt
         }
         if (this.currentSubscription?.id === subscriptionId) {
           this.currentSubscription.status = 'cancelled'
-          this.currentSubscription.cancelledAt = response.data.cancelledAt
+          this.currentSubscription.cancelledAt = response.cancelledAt
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to cancel subscription'
@@ -408,7 +413,7 @@ export const useSubscriptionStore = defineStore('subscription', {
           `/admin/subscriptions/${subscriptionId}/history`
         )
 
-        this.subscriptionHistory = response.data
+        this.subscriptionHistory = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch subscription history'
         console.error('Subscription history fetch error:', error)

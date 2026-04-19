@@ -49,10 +49,10 @@ export const useIntegrationStore = defineStore('integration', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.get<Integration[]>('/admin/integrations')
+        const { apiService } = useApi()
+        const response = await apiService.get<Integration[]>('/admin/integrations')
         
-        this.integrations = response.data
+        this.integrations = response
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.message || 'Failed to fetch integrations'
@@ -68,21 +68,21 @@ export const useIntegrationStore = defineStore('integration', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.patch<Integration>(
+        const { apiService } = useApi()
+        const response = await apiService.patch<Integration>(
           `/admin/integrations/${integrationId}/toggle`,
           { isActive }
         )
         
         const index = this.integrations.findIndex(i => i.id === integrationId)
         if (index !== -1) {
-          this.integrations[index] = response.data
+          this.integrations[index] = response
         }
 
         const { success } = useNotification()
         success(`Integration ${isActive ? 'enabled' : 'disabled'} successfully`)
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to toggle integration'
         console.error('Error toggling integration:', error)
@@ -100,10 +100,10 @@ export const useIntegrationStore = defineStore('integration', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.get<TelegramBotConfig>('/admin/integrations/telegram')
+        const { apiService } = useApi()
+        const response = await apiService.get<TelegramBotConfig>('/admin/integrations/telegram')
         
-        this.telegramConfig = response.data
+        this.telegramConfig = response
       } catch (error: any) {
         this.error = error.message || 'Failed to fetch Telegram configuration'
         console.error('Error fetching Telegram config:', error)
@@ -118,13 +118,13 @@ export const useIntegrationStore = defineStore('integration', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.put<TelegramBotConfig>(
+        const { apiService } = useApi()
+        const response = await apiService.put<TelegramBotConfig>(
           '/admin/integrations/telegram',
           config
         )
         
-        this.telegramConfig = response.data
+        this.telegramConfig = response
 
         // Update integration status
         const telegramIntegration = this.integrations.find(i => i.type === 'telegram')
@@ -137,7 +137,7 @@ export const useIntegrationStore = defineStore('integration', {
         const { success } = useNotification()
         success('Telegram bot configuration updated successfully')
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to update Telegram configuration'
         console.error('Error updating Telegram config:', error)
@@ -155,28 +155,28 @@ export const useIntegrationStore = defineStore('integration', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.post<{ success: boolean; message: string }>(
+        const { apiService } = useApi()
+        const response = await apiService.post<{ success: boolean; message: string }>(
           '/admin/integrations/telegram/test'
         )
         
         const { success, error: showError } = useNotification()
-        if (response.data.success) {
-          success(response.data.message || 'Telegram bot connection successful')
+        if (response.success) {
+          success(response.message || 'Telegram bot connection successful')
           
           if (this.telegramConfig) {
             this.telegramConfig.status = 'connected'
             this.telegramConfig.lastTested = new Date().toISOString()
           }
         } else {
-          showError(response.data.message || 'Telegram bot connection failed')
+          showError(response.message || 'Telegram bot connection failed')
           
           if (this.telegramConfig) {
             this.telegramConfig.status = 'error'
           }
         }
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to test Telegram connection'
         console.error('Error testing Telegram connection:', error)
@@ -198,10 +198,10 @@ export const useIntegrationStore = defineStore('integration', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.get<WebhookConfig[]>('/admin/integrations/webhooks')
+        const { apiService } = useApi()
+        const response = await apiService.get<WebhookConfig[]>('/admin/integrations/webhooks')
         
-        this.webhooks = response.data
+        this.webhooks = response
       } catch (error: any) {
         this.error = error.message || 'Failed to fetch webhooks'
         console.error('Error fetching webhooks:', error)
@@ -216,18 +216,18 @@ export const useIntegrationStore = defineStore('integration', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.post<WebhookConfig>(
+        const { apiService } = useApi()
+        const response = await apiService.post<WebhookConfig>(
           '/admin/integrations/webhooks',
           webhook
         )
         
-        this.webhooks.push(response.data)
+        this.webhooks.push(response)
 
         const { success } = useNotification()
         success('Webhook created successfully')
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to create webhook'
         console.error('Error creating webhook:', error)
@@ -245,21 +245,21 @@ export const useIntegrationStore = defineStore('integration', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.put<WebhookConfig>(
+        const { apiService } = useApi()
+        const response = await apiService.put<WebhookConfig>(
           `/admin/integrations/webhooks/${webhook.id}`,
           webhook
         )
         
         const index = this.webhooks.findIndex(w => w.id === webhook.id)
         if (index !== -1) {
-          this.webhooks[index] = response.data
+          this.webhooks[index] = response
         }
 
         const { success } = useNotification()
         success('Webhook updated successfully')
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to update webhook'
         console.error('Error updating webhook:', error)
@@ -277,8 +277,8 @@ export const useIntegrationStore = defineStore('integration', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        await $api.delete(`/admin/integrations/webhooks/${webhookId}`)
+        const { apiService } = useApi()
+        await apiService.delete(`/admin/integrations/webhooks/${webhookId}`)
         
         this.webhooks = this.webhooks.filter(w => w.id !== webhookId)
 
@@ -301,19 +301,19 @@ export const useIntegrationStore = defineStore('integration', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
-        const response = await $api.post<{ success: boolean; message: string }>(
+        const { apiService } = useApi()
+        const response = await apiService.post<{ success: boolean; message: string }>(
           `/admin/integrations/webhooks/${webhookId}/test`
         )
         
         const { success, error: showError } = useNotification()
-        if (response.data.success) {
-          success(response.data.message || 'Webhook test successful')
+        if (response.success) {
+          success(response.message || 'Webhook test successful')
         } else {
-          showError(response.data.message || 'Webhook test failed')
+          showError(response.message || 'Webhook test failed')
         }
         
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.message || 'Failed to test webhook'
         console.error('Error testing webhook:', error)
@@ -331,14 +331,14 @@ export const useIntegrationStore = defineStore('integration', {
       this.error = null
 
       try {
-        const { $api } = useNuxtApp()
+        const { apiService } = useApi()
         const url = webhookId 
           ? `/admin/integrations/webhooks/${webhookId}/logs`
           : '/admin/integrations/webhooks/logs'
         
-        const response = await $api.get<WebhookLog[]>(url)
+        const response = await apiService.get<WebhookLog[]>(url)
         
-        this.webhookLogs = response.data
+        this.webhookLogs = response
       } catch (error: any) {
         this.error = error.message || 'Failed to fetch webhook logs'
         console.error('Error fetching webhook logs:', error)

@@ -1,4 +1,12 @@
-// Common types for Super Admin Panel
+import type { 
+  PlanResponseDto, 
+  SubscriptionResponseDto, 
+  SubscriptionListItemDto,
+  CreatePlanDto as GeneratedCreatePlanDto,
+  UpdatePlanDto as GeneratedUpdatePlanDto,
+  PaginatedSubscriptionsResponseDto,
+  ApiPaginationMetaDto
+} from '@kataloga/api-types'
 
 export interface ApiResponse<T = any> {
   data: T
@@ -48,6 +56,26 @@ export interface User {
   twoFactorEnabled?: boolean
   createdAt: string
   lastLogin?: string
+}
+
+export type PlanFeatures = string[]
+
+export type Plan = Omit<PlanResponseDto, 'features'> & {
+  features: PlanFeatures
+}
+
+export interface PlanFilters {
+  isActive?: boolean | null
+  sortBy?: string
+  sortOrder?: 'asc' | 'desc'
+}
+
+export interface PlanState {
+  plans: Plan[]
+  currentPlan: Plan | null
+  loading: boolean
+  error: string | null
+  filters: PlanFilters
 }
 
 export interface Tenant {
@@ -102,15 +130,7 @@ export interface TenantStatistics {
   activeUsersCount: number
 }
 
-export interface SubscriptionDetails {
-  id: string
-  plan: string
-  status: 'trial' | 'active' | 'cancelled' | 'expired'
-  billingCycle: 'monthly' | 'yearly'
-  currentPeriodStart: string
-  currentPeriodEnd: string
-  trialEndsAt: string | null
-}
+export type SubscriptionDetails = SubscriptionResponseDto
 
 export interface TenantDetails extends TenantListItem {
   owner: TenantOwner
@@ -141,24 +161,7 @@ export interface TenantState {
   error: string | null
 }
 
-export interface Subscription {
-  id: string
-  tenantId: string
-  tenantName: string
-  plan: {
-    id: string
-    name: string
-    price: number
-    features: string[]
-  }
-  status: 'trial' | 'active' | 'cancelled' | 'expired'
-  billingCycle: 'monthly' | 'yearly'
-  currentPeriodStart: string
-  currentPeriodEnd: string
-  trialEndsAt: string | null
-  cancelledAt: string | null
-  paymentMethod?: PaymentMethod
-}
+export type Subscription = SubscriptionListItemDto
 
 export interface PaymentMethod {
   type: 'card' | 'bank_account' | 'paypal'

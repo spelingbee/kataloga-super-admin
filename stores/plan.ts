@@ -1,34 +1,12 @@
 import { defineStore } from 'pinia'
-
-export interface Plan {
-  id: string
-  name: string
-  maxUsers: number
-  maxSites: number
-  price: number
-  features: string[]
-  isActive: boolean
-  trialDays: number
-  subscriptionCount: number
-  subscriptions?: Array<{
-    id: string
-    tenantName: string
-    status: string
-    startDate: string
-  }>
-}
-
-export interface PlanState {
-  plans: Plan[]
-  currentPlan: Plan | null
-  loading: boolean
-  error: string | null
-  filters: {
-    isActive: boolean | null
-    sortBy: string
-    sortOrder: 'asc' | 'desc'
-  }
-}
+import type { 
+  Plan, 
+  PlanFeatures,
+  PlanFilters, 
+  PlanState,
+  ApiResponse,
+  PaginatedResponse
+} from '~/types'
 
 export const usePlanStore = defineStore('plan', {
   state: (): PlanState => ({
@@ -67,9 +45,9 @@ export const usePlanStore = defineStore('plan', {
 
       try {
         const { apiService } = useApi()
-        
+
         const params: Record<string, any> = {}
-        
+
         if (this.filters.isActive !== null) {
           params.isActive = this.filters.isActive
         }
@@ -80,12 +58,12 @@ export const usePlanStore = defineStore('plan', {
           params.sortOrder = this.filters.sortOrder
         }
 
-        const response = await apiService.get<{ data: Plan[]; total: number }>(
+        const response = await apiService.get<PaginatedResponse<Plan>>(
           '/admin/plans',
           { params }
         )
 
-        this.plans = response.data
+        this.plans = response.data || []
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch plans'
         console.error('Plan fetch error:', error)
@@ -105,7 +83,7 @@ export const usePlanStore = defineStore('plan', {
           `/admin/plans/${planId}`
         )
 
-        this.currentPlan = response.data
+        this.currentPlan = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch plan details'
         console.error('Plan details fetch error:', error)
@@ -117,12 +95,17 @@ export const usePlanStore = defineStore('plan', {
 
     async createPlan(data: {
       name: string
-      maxUsers: number
-      maxSites: number
       price: number
-      features: string[]
+      features: PlanFeatures
       trialDays?: number
       isActive?: boolean
+      maxLocations?: number
+      billingCycle?: 'monthly' | 'yearly'
+      displayName?: string | null
+      maxCategories?: number
+      maxMenuItems?: number
+      maxSites?: number
+      maxUsers?: number
     }): Promise<Plan> {
       this.loading = true
       this.error = null
@@ -134,8 +117,8 @@ export const usePlanStore = defineStore('plan', {
           data
         )
 
-        this.plans.unshift(response.data)
-        return response.data
+        this.plans.unshift(response)
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to create plan'
         console.error('Plan creation error:', error)
@@ -147,12 +130,17 @@ export const usePlanStore = defineStore('plan', {
 
     async updatePlan(planId: string, data: Partial<{
       name: string
-      maxUsers: number
-      maxSites: number
       price: number
-      features: string[]
+      features: PlanFeatures
       trialDays: number
       isActive: boolean
+      maxLocations: number
+      billingCycle: 'monthly' | 'yearly'
+      displayName: string | null
+      maxCategories: number
+      maxMenuItems: number
+      maxSites: number
+      maxUsers: number
     }>): Promise<void> {
       this.loading = true
       this.error = null
@@ -166,10 +154,10 @@ export const usePlanStore = defineStore('plan', {
 
         const index = this.plans.findIndex(p => p.id === planId)
         if (index !== -1) {
-          this.plans[index] = response.data
+          this.plans[index] = response
         }
         if (this.currentPlan?.id === planId) {
-          this.currentPlan = response.data
+          this.currentPlan = response
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to update plan'
@@ -192,10 +180,10 @@ export const usePlanStore = defineStore('plan', {
 
         const index = this.plans.findIndex(p => p.id === planId)
         if (index !== -1) {
-          this.plans[index] = response.data
+          this.plans[index] = response
         }
         if (this.currentPlan?.id === planId) {
-          this.currentPlan = response.data
+          this.currentPlan = response
         }
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to deactivate plan'

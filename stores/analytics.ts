@@ -116,9 +116,9 @@ export const useAnalyticsStore = defineStore('analytics', {
           apiService.get<RevenueMetrics>('/admin/analytics/revenue', { params }),
         ])
 
-        this.registrationMetrics = registrationResponse.data
-        this.tenantMetrics = tenantResponse.data
-        this.revenueMetrics = revenueResponse.data
+        this.registrationMetrics = registrationResponse
+        this.tenantMetrics = tenantResponse
+        this.revenueMetrics = revenueResponse
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch analytics data'
@@ -141,7 +141,7 @@ export const useAnalyticsStore = defineStore('analytics', {
           '/admin/analytics/registrations',
           { params }
         )
-        this.registrationMetrics = response.data
+        this.registrationMetrics = response
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch registration analytics'
@@ -161,7 +161,7 @@ export const useAnalyticsStore = defineStore('analytics', {
           '/admin/analytics/tenants',
           { params }
         )
-        this.tenantMetrics = response.data
+        this.tenantMetrics = response
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch tenant analytics'
@@ -181,7 +181,7 @@ export const useAnalyticsStore = defineStore('analytics', {
           '/admin/analytics/revenue',
           { params }
         )
-        this.revenueMetrics = response.data
+        this.revenueMetrics = response
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch revenue analytics'
@@ -205,7 +205,7 @@ export const useAnalyticsStore = defineStore('analytics', {
           '/admin/analytics/conversion-funnel',
           { params }
         )
-        this.conversionFunnelMetrics = response.data
+        this.conversionFunnelMetrics = response
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch conversion funnel analytics'
@@ -225,7 +225,7 @@ export const useAnalyticsStore = defineStore('analytics', {
           '/admin/analytics/cohort-analysis',
           { params }
         )
-        this.cohortAnalysisMetrics = response.data
+        this.cohortAnalysisMetrics = response
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch cohort analysis'
@@ -245,7 +245,7 @@ export const useAnalyticsStore = defineStore('analytics', {
           '/admin/analytics/geographic-distribution',
           { params }
         )
-        this.geographicMetrics = response.data
+        this.geographicMetrics = response
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch geographic analytics'

@@ -126,7 +126,7 @@ export const useMenuStore = defineStore('menu', {
           `/admin/tenants/${tenantId}/menus/${menuId}`
         )
 
-        this.currentMenu = response.data
+        this.currentMenu = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch menu details'
         console.error('Menu details fetch error:', error)
@@ -217,18 +217,18 @@ export const useMenuStore = defineStore('menu', {
         )
 
         // Add to local state
-        this.menuItems.unshift(response.data)
+        this.menuItems.unshift(response)
         
         // Update menu item count
         const menu = this.menus.find(m => m.id === menuId)
         if (menu) {
           menu.itemCount++
-          if (response.data.isActive) {
+          if (response.isActive) {
             menu.activeItemCount++
           }
         }
 
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to create menu item'
         throw error
@@ -258,10 +258,10 @@ export const useMenuStore = defineStore('menu', {
         // Update local state
         const index = this.menuItems.findIndex(item => item.id === itemId)
         if (index !== -1) {
-          this.menuItems[index] = response.data
+          this.menuItems[index] = response
         }
 
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to update menu item'
         throw error
@@ -316,7 +316,7 @@ export const useMenuStore = defineStore('menu', {
         // Refresh menu items to reflect changes
         await this.fetchMenuItems(tenantId, menuId, this.pagination.page)
 
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to bulk update menu items'
         throw error
@@ -362,9 +362,9 @@ export const useMenuStore = defineStore('menu', {
         )
 
         // Add to local state
-        this.categories.push(response.data)
+        this.categories.push(response)
 
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to create category'
         throw error
@@ -386,10 +386,10 @@ export const useMenuStore = defineStore('menu', {
         // Update local state
         const index = this.categories.findIndex(cat => cat.id === categoryId)
         if (index !== -1) {
-          this.categories[index] = response.data
+          this.categories[index] = response
         }
 
-        return response.data
+        return response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to update category'
         throw error
@@ -471,7 +471,7 @@ export const useMenuStore = defineStore('menu', {
           { params }
         )
 
-        this.menuHistory = response.data
+        this.menuHistory = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch menu history'
         console.error('Menu history fetch error:', error)
