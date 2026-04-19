@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
-import type { 
-  RegistrationState, 
-  RegistrationListItem, 
-  RegistrationDetails, 
+import type {
+  RegistrationState,
+  RegistrationListItem,
+  RegistrationDetails,
   RegistrationFilters,
-  PaginatedResponse 
+  PaginatedResponse, ApiResponse
 } from '~/types'
 
 const DEFAULT_PAGE_SIZE = 50
@@ -148,11 +148,11 @@ export const useRegistrationStore = defineStore('registration', {
 
       try {
         const { apiService } = useApi()
-        const response = await apiService.get<ApiResponse<RegistrationDetails>>(
+        const response = await apiService.get<RegistrationDetails>(
           `/admin/tenants/${registrationId}/details`
         )
 
-        this.currentRegistration = response.data
+        this.currentRegistration = response
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch registration details'
         console.error('Registration details fetch error:', error)
