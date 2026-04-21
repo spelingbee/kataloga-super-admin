@@ -16,7 +16,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3001/api',
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || process.env.NUXT_PUBLIC_API_BASE_URL || 'https://api.kataloga.org/api',
       appName: process.env.NUXT_PUBLIC_APP_NAME || 'Super Admin Panel',
       enable2FA: process.env.NUXT_PUBLIC_ENABLE_2FA === 'true',
     },

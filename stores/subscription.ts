@@ -255,8 +255,9 @@ export const useSubscriptionStore = defineStore('subscription', {
     async fetchPlans(): Promise<any[]> {
       try {
         const { apiService } = useApi()
-        const response = await apiService.get<any[]>('/admin/plans')
-        return response
+        const response = await apiService.get<any>('/admin/plans')
+        // The backend returns { data: Plan[], total: number }
+        return response?.data || []
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch plans'
         console.error('Plans fetch error:', error)
