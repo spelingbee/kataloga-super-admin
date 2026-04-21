@@ -249,6 +249,29 @@ export const useTenantStore = defineStore('tenant', () => {
     }
   }
 
+  const updateTenant = async (tenantId: string, data: { name?: string; slug?: string; businessType?: string }): Promise<void> => {
+    try {
+      const { apiService } = useApi()
+      const response = await apiService.patch<TenantListItem>(
+        `/admin/tenants/${tenantId}`,
+        data
+      )
+
+      // Update local state
+      if (currentTenant.value?.id === tenantId) {
+        currentTenant.value = { ...currentTenant.value, ...response }
+      }
+      
+      const index = tenants.value.findIndex(t => t.id === tenantId)
+      if (index !== -1) {
+        tenants.value[index] = { ...tenants.value[index], ...response }
+      }
+    } catch (err: any) {
+      error.value = err.response?.data?.message || 'Failed to update tenant'
+      throw err
+    }
+  }
+
   const updateTenantSettings = async (tenantId: string, settings: Partial<TenantSettings>): Promise<void> => {
     try {
       const { apiService } = useApi()
@@ -338,6 +361,7 @@ export const useTenantStore = defineStore('tenant', () => {
     deactivateTenant,
     suspendTenant,
     deleteTenant,
+    updateTenant,
     impersonateTenant,
     fetchTenantStatistics,
     updateTenantSettings,

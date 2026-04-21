@@ -116,6 +116,13 @@
             Suspend
           </button>
           <button
+            v-if="row.status !== 'deleted'"
+            class="tenants-page__action-btn tenants-page__action-btn--delete"
+            @click="handleDelete(row.id)"
+          >
+            Delete
+          </button>
+          <button
             class="tenants-page__action-btn tenants-page__action-btn--more"
             @click="showQuickActions(row)"
           >

@@ -71,8 +71,18 @@
       <div class="tenant-details__grid">
         <!-- Business Information -->
         <div class="tenant-details__card">
-          <h2 class="tenant-details__card-title">Business Information</h2>
-          <div class="tenant-details__info-grid">
+          <div class="tenant-details__card-header">
+            <h2 class="tenant-details__card-title">Business Information</h2>
+            <button 
+              v-if="!isEditingBusiness"
+              class="tenant-details__edit-btn"
+              @click="startEditingBusiness"
+            >
+              Edit
+            </button>
+          </div>
+          
+          <div v-if="!isEditingBusiness" class="tenant-details__info-grid">
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Name</span>
               <span class="tenant-details__info-value">{{ tenant.name }}</span>
@@ -94,6 +104,33 @@
               <span class="tenant-details__info-value">{{ formatRelativeTime(tenant.lastActive) }}</span>
             </div>
           </div>
+
+          <form v-else class="tenant-details__edit-form" @submit.prevent="handleUpdateTenant">
+            <div class="tenant-details__form-group">
+              <label>Name</label>
+              <input v-model="editData.name" type="text" class="tenant-details__input" required />
+            </div>
+            <div class="tenant-details__form-group">
+              <label>Slug</label>
+              <input v-model="editData.slug" type="text" class="tenant-details__input" required />
+            </div>
+            <div class="tenant-details__form-group">
+              <label>Business Type</label>
+              <select v-model="editData.businessType" class="tenant-details__input" required>
+                <option value="RESTAURANT">Restaurant</option>
+                <option value="CAFE">Cafe</option>
+                <option value="FLOWERS">Flowers</option>
+                <option value="SHOP">Shop</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+            <div class="tenant-details__edit-actions">
+              <button type="button" class="btn btn--secondary" @click="cancelEditingBusiness">Cancel</button>
+              <button type="submit" class="btn btn--primary" :disabled="updating">
+                {{ updating ? 'Saving...' : 'Save Changes' }}
+              </button>
+            </div>
+          </form>
         </div>
 
         <!-- Owner Details -->
@@ -306,6 +343,48 @@ const router = useRouter()
 const tenantStore = useTenantStore()
 const { showNotification } = useNotification()
 const { confirm } = useConfirm()
+
+// Editing state
+const isEditingBusiness = ref(false)
+const updating = ref(false)
+const editData = ref({
+  name: '',
+  slug: '',
+  businessType: '',
+})
+
+function startEditingBusiness() {
+  if (!tenant.value) return
+  editData.value = {
+    name: tenant.value.name,
+    slug: tenant.value.slug,
+    businessType: tenant.value.businessType || 'RESTAURANT',
+  }
+  isEditingBusiness.value = true
+}
+
+function cancelEditingBusiness() {
+  isEditingBusiness.value = false
+}
+
+async function handleUpdateTenant() {
+  updating.value = true
+  try {
+    await tenantStore.updateTenant(tenantId.value, editData.value)
+    showNotification({
+      type: 'success',
+      message: 'Tenant information updated successfully',
+    })
+    isEditingBusiness.value = false
+  } catch (error) {
+    showNotification({
+      type: 'error',
+      message: 'Failed to update tenant information',
+    })
+  } finally {
+    updating.value = false
+  }
+}
 
 const tenantId = computed(() => route.params.id as string)
 const tenant = computed(() => tenantStore.currentTenant)
