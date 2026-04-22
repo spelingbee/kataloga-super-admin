@@ -139,18 +139,18 @@
           <div class="tenant-details__info-grid">
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Name</span>
-              <span class="tenant-details__info-value">{{ tenant.owner.name }}</span>
+              <span class="tenant-details__info-value">{{ tenant.owner?.name }}</span>
             </div>
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Email</span>
               <span class="tenant-details__info-value">
-                <a :href="`mailto:${tenant.owner.email}`">{{ tenant.owner.email }}</a>
+                <a :href="`mailto:${tenant.owner?.email}`">{{ tenant.owner?.email }}</a>
               </span>
             </div>
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Phone</span>
               <span class="tenant-details__info-value">
-                <a :href="`tel:${tenant.owner.phone}`">{{ tenant.owner.phone }}</a>
+                <a :href="`tel:${tenant.owner?.phone}`">{{ tenant.owner?.phone }}</a>
               </span>
             </div>
           </div>
@@ -162,23 +162,23 @@
           <div class="tenant-details__info-grid">
             <div class="tenant-details__info-item tenant-details__info-item--full">
               <span class="tenant-details__info-label">Street</span>
-              <span class="tenant-details__info-value">{{ tenant.address.street }}</span>
+              <span class="tenant-details__info-value">{{ tenant.address?.street }}</span>
             </div>
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">City</span>
-              <span class="tenant-details__info-value">{{ tenant.address.city }}</span>
+              <span class="tenant-details__info-value">{{ tenant.address?.city }}</span>
             </div>
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">State</span>
-              <span class="tenant-details__info-value">{{ tenant.address.state }}</span>
+              <span class="tenant-details__info-value">{{ tenant.address?.state }}</span>
             </div>
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Postal Code</span>
-              <span class="tenant-details__info-value">{{ tenant.address.postalCode }}</span>
+              <span class="tenant-details__info-value">{{ tenant.address?.postalCode }}</span>
             </div>
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Country</span>
-              <span class="tenant-details__info-value">{{ tenant.address.country }}</span>
+              <span class="tenant-details__info-value">{{ tenant.address?.country }}</span>
             </div>
           </div>
         </div>
@@ -189,29 +189,29 @@
           <div class="tenant-details__info-grid">
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Plan</span>
-              <span class="tenant-details__info-value">{{ tenant.subscription.plan }}</span>
+              <span class="tenant-details__info-value">{{ tenant.subscription?.plan }}</span>
             </div>
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Status</span>
-              <span :class="['subscription-badge', `subscription-badge--${tenant.subscription.status}`]">
-                {{ tenant.subscription.status }}
+              <span :class="['subscription-badge', `subscription-badge--${tenant.subscription?.status}`]">
+                {{ tenant.subscription?.status }}
               </span>
             </div>
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Billing Cycle</span>
-              <span class="tenant-details__info-value">{{ tenant.subscription.billingCycle }}</span>
+              <span class="tenant-details__info-value">{{ tenant.subscription?.billingCycle }}</span>
             </div>
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Current Period Start</span>
-              <span class="tenant-details__info-value">{{ formatDate(tenant.subscription.currentPeriodStart) }}</span>
+              <span class="tenant-details__info-value">{{ formatDate(tenant.subscription?.currentPeriodStart) }}</span>
             </div>
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Current Period End</span>
-              <span class="tenant-details__info-value">{{ formatDate(tenant.subscription.currentPeriodEnd) }}</span>
+              <span class="tenant-details__info-value">{{ formatDate(tenant.subscription?.currentPeriodEnd) }}</span>
             </div>
-            <div v-if="tenant.subscription.trialEndsAt" class="tenant-details__info-item">
+            <div v-if="tenant.subscription?.trialEndsAt" class="tenant-details__info-item">
               <span class="tenant-details__info-label">Trial Ends</span>
-              <span class="tenant-details__info-value">{{ formatDate(tenant.subscription.trialEndsAt) }}</span>
+              <span class="tenant-details__info-value">{{ formatDate(tenant.subscription?.trialEndsAt) }}</span>
             </div>
           </div>
         </div>
