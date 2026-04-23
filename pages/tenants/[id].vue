@@ -182,19 +182,65 @@
             </div>
           </div>
         </div>
+        
+        <!-- Locations & Pickup Details -->
+        <div v-if="tenant.locations && tenant.locations.length > 0" class="tenant-details__card">
+          <h2 class="tenant-details__card-title">Locations & Pickup Details</h2>
+          <div v-for="location in tenant.locations" :key="location.id" class="tenant-details__location-item">
+            <h3 class="tenant-details__location-name">{{ location.name }}</h3>
+            <div class="tenant-details__info-grid">
+              <div class="tenant-details__info-item tenant-details__info-item--full">
+                <span class="tenant-details__info-label">Address</span>
+                <span class="tenant-details__info-value">{{ location.address || 'N/A' }}</span>
+              </div>
+              <div class="tenant-details__info-item">
+                <span class="tenant-details__info-label">Pickup</span>
+                <span :class="['status-badge', location.pickupEnabled ? 'status-badge--active' : 'status-badge--inactive']">
+                  {{ location.pickupEnabled ? 'Enabled' : 'Disabled' }}
+                </span>
+              </div>
+              <div class="tenant-details__info-item">
+                <span class="tenant-details__info-label">Delivery</span>
+                <span :class="['status-badge', location.deliveryEnabled ? 'status-badge--active' : 'status-badge--inactive']">
+                  {{ location.deliveryEnabled ? 'Enabled' : 'Disabled' }}
+                </span>
+              </div>
+              <div v-if="location.workingHours" class="tenant-details__info-item tenant-details__info-item--full">
+                <span class="tenant-details__info-label">Working Hours</span>
+                <span class="tenant-details__info-value">{{ location.workingHours }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-else class="tenant-details__card">
+          <h2 class="tenant-details__card-title">Pickup Details</h2>
+          <div class="tenant-details__empty-state">
+             <p>No locations or pickup details configured for this tenant.</p>
+          </div>
+        </div>
 
         <!-- Subscription Information -->
         <div class="tenant-details__card">
-          <h2 class="tenant-details__card-title">Subscription</h2>
-          <div class="tenant-details__info-grid">
+          <div class="tenant-details__card-header">
+            <h2 class="tenant-details__card-title">Subscription</h2>
+            <button 
+              v-if="!isEditingSubscription"
+              class="tenant-details__edit-btn"
+              @click="startEditingSubscription"
+            >
+              Change Plan
+            </button>
+          </div>
+
+          <div v-if="!isEditingSubscription" class="tenant-details__info-grid">
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Plan</span>
-              <span class="tenant-details__info-value">{{ tenant.subscription?.plan }}</span>
+              <span class="tenant-details__info-value">{{ tenant.subscription?.plan?.name || tenant.subscription?.plan || 'N/A' }}</span>
             </div>
             <div class="tenant-details__info-item">
               <span class="tenant-details__info-label">Status</span>
-              <span :class="['subscription-badge', `subscription-badge--${tenant.subscription?.status}`]">
-                {{ tenant.subscription?.status }}
+              <span :class="['subscription-badge', `subscription-badge--${tenant.subscription?.status?.toLowerCase()}`]">
+                {{ tenant.subscription?.status || 'UNKNOWN' }}
               </span>
             </div>
             <div class="tenant-details__info-item">
@@ -214,6 +260,23 @@
               <span class="tenant-details__info-value">{{ formatDate(tenant.subscription?.trialEndsAt) }}</span>
             </div>
           </div>
+
+          <form v-else class="tenant-details__edit-form" @submit.prevent="handleUpdateSubscription">
+            <div class="tenant-details__form-group">
+              <label>Select Plan</label>
+              <select v-model="subscriptionEditData.planId" class="tenant-details__input" required>
+                <option v-for="plan in availablePlans" :key="plan.id" :value="plan.id">
+                  {{ plan.name }} - {{ formatCurrency(plan.price) }} / {{ plan.billingCycle || 'month' }}
+                </option>
+              </select>
+            </div>
+            <div class="tenant-details__edit-actions">
+              <button type="button" class="btn btn--secondary" @click="cancelEditingSubscription">Cancel</button>
+              <button type="submit" class="btn btn--primary" :disabled="subscriptionUpdating">
+                {{ subscriptionUpdating ? 'Updating...' : 'Update Plan' }}
+              </button>
+            </div>
+          </form>
         </div>
 
         <!-- Statistics -->
@@ -328,10 +391,11 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useTenantStore } from '~/stores/tenant'
+import { useSubscriptionStore } from '~/stores/subscription'
 import { formatDate, formatRelativeTime } from '~/utils/date'
 import TenantSettingsForm from '~/components/tenant/TenantSettingsForm.vue'
 import ImpersonationModal from '~/components/tenant/ImpersonationModal.vue'
-import type { TenantSettings } from '~/types'
+import type { TenantSettings, Plan } from '~/types'
 
 definePageMeta({
   middleware: ['auth', 'role'],
@@ -341,6 +405,7 @@ definePageMeta({
 const route = useRoute()
 const router = useRouter()
 const tenantStore = useTenantStore()
+const subscriptionStore = useSubscriptionStore()
 const { showNotification } = useNotification()
 const { confirm } = useConfirm()
 
@@ -383,6 +448,72 @@ async function handleUpdateTenant() {
     })
   } finally {
     updating.value = false
+  }
+}
+
+// Subscription Editing
+const isEditingSubscription = ref(false)
+const subscriptionUpdating = ref(false)
+const availablePlans = ref<Plan[]>([])
+const subscriptionEditData = ref({
+  planId: '',
+})
+
+async function startEditingSubscription() {
+  if (!tenant.value) return
+  
+  if (availablePlans.value.length === 0) {
+    try {
+      availablePlans.value = await subscriptionStore.fetchPlans()
+    } catch (error) {
+      showNotification({
+        type: 'error',
+        message: 'Failed to fetch available plans',
+      })
+      return
+    }
+  }
+
+  subscriptionEditData.value = {
+    planId: tenant.value.subscription?.plan?.id || '',
+  }
+  isEditingSubscription.value = true
+}
+
+function cancelEditingSubscription() {
+  isEditingSubscription.value = false
+}
+
+async function handleUpdateSubscription() {
+  subscriptionUpdating.value = true
+  try {
+    const subscriptionId = tenant.value?.subscription?.id
+    if (subscriptionId) {
+      await subscriptionStore.changePlan(subscriptionId, subscriptionEditData.value.planId)
+    } else {
+      // Create new subscription if none exists
+      await subscriptionStore.createSubscription({
+        tenantId: tenantId.value,
+        planId: subscriptionEditData.value.planId,
+        billingCycle: 'monthly', // Default
+      })
+    }
+    
+    showNotification({
+      type: 'success',
+      message: 'Subscription updated successfully',
+    })
+    
+    // Refresh tenant details to get updated subscription info
+    await fetchTenantDetails()
+    isEditingSubscription.value = false
+  } catch (error: any) {
+    showNotification({
+      type: 'error',
+      message: error.message || 'Failed to update subscription',
+    })
+  } finally {
+    subscriptionUpdating.value = false
   }
 }
 

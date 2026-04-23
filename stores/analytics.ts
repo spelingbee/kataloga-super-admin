@@ -111,14 +111,72 @@ export const useAnalyticsStore = defineStore('analytics', {
 
         // Fetch all analytics data in parallel
         const [registrationResponse, tenantResponse, revenueResponse] = await Promise.all([
-          apiService.get<RegistrationMetrics>('/admin/analytics/registrations', { params }),
-          apiService.get<TenantPerformanceMetrics>('/admin/analytics/tenants', { params }),
-          apiService.get<RevenueMetrics>('/admin/analytics/revenue', { params }),
+          apiService.get<any>('/admin/analytics/registrations', { params }),
+          apiService.get<any>('/admin/analytics/tenants', { params }),
+          apiService.get<any>('/admin/analytics/revenue', { params }),
         ])
 
-        this.registrationMetrics = registrationResponse
-        this.tenantMetrics = tenantResponse
-        this.revenueMetrics = revenueResponse
+        // Map Registration Metrics
+        this.registrationMetrics = {
+          total: registrationResponse.totalRegistrations,
+          approved: registrationResponse.approvedRegistrations,
+          rejected: registrationResponse.rejectedRegistrations,
+          pending: registrationResponse.pendingRegistrations,
+          conversionRate: registrationResponse.conversionRate,
+          trends: (registrationResponse.registrationsByPeriod || []).flatMap((p: any) => [
+            { date: p.period, count: p.approved, status: 'approved' },
+            { date: p.period, count: p.rejected, status: 'rejected' },
+            { date: p.period, count: p.count - (p.approved + p.rejected), status: 'pending' },
+          ]),
+          statusBreakdown: [
+            { status: 'approved', count: registrationResponse.approvedRegistrations, percentage: registrationResponse.totalRegistrations > 0 ? (registrationResponse.approvedRegistrations / registrationResponse.totalRegistrations) * 100 : 0 },
+            { status: 'pending', count: registrationResponse.pendingRegistrations, percentage: registrationResponse.totalRegistrations > 0 ? (registrationResponse.pendingRegistrations / registrationResponse.totalRegistrations) * 100 : 0 },
+            { status: 'rejected', count: registrationResponse.rejectedRegistrations, percentage: registrationResponse.totalRegistrations > 0 ? (registrationResponse.rejectedRegistrations / registrationResponse.totalRegistrations) * 100 : 0 },
+          ]
+        }
+
+        // Map Tenant Metrics
+        this.tenantMetrics = {
+          totalTenants: tenantResponse.totalActiveTenants,
+          activeTenants: tenantResponse.totalActiveTenants, // Simplified
+          retentionRate: tenantResponse.tenantRetentionRate,
+          churnRate: tenantResponse.churnRate,
+          topPerformers: (tenantResponse.topPerformingTenants || []).map((t: any) => ({
+            id: t.tenantId,
+            name: t.businessName,
+            revenue: t.monthlyRevenue,
+            orderCount: t.totalOrders,
+            growthRate: 0 // Mock growth rate for now
+          })),
+          growthTrend: [
+            { date: new Date().toISOString(), total: tenantResponse.totalActiveTenants, active: tenantResponse.totalActiveTenants, churned: 0 }
+          ]
+        }
+
+        // Map Revenue Metrics
+        this.revenueMetrics = {
+          mrr: revenueResponse.monthlyRecurringRevenue,
+          arr: revenueResponse.annualRecurringRevenue,
+          totalRevenue: revenueResponse.totalRevenue,
+          revenueGrowth: revenueResponse.revenueGrowthRate,
+          revenueTrend: (revenueResponse.revenueByPeriod || []).map((p: any) => ({
+            date: p.period,
+            amount: p.revenue,
+            mrr: revenueResponse.monthlyRecurringRevenue // Simplified mapping
+          })),
+          revenueByPlan: (revenueResponse.revenueByPlan || []).map((p: any) => ({
+            plan: p.planName,
+            revenue: p.revenue,
+            percentage: p.percentage,
+            subscriberCount: p.tenantCount
+          })),
+          projections: {
+            nextMonth: revenueResponse.revenueProjection?.[0]?.projectedRevenue || 0,
+            nextQuarter: revenueResponse.revenueProjection?.[1]?.projectedRevenue || 0,
+            nextYear: revenueResponse.revenueProjection?.[2]?.projectedRevenue || 0,
+          }
+        }
+
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch analytics data'
@@ -137,11 +195,28 @@ export const useAnalyticsStore = defineStore('analytics', {
           to: this.dateRange.to,
         }
 
-        const response = await apiService.get<RegistrationMetrics>(
+        const response = await apiService.get<any>(
           '/admin/analytics/registrations',
           { params }
         )
-        this.registrationMetrics = response
+        
+        this.registrationMetrics = {
+          total: response.totalRegistrations,
+          approved: response.approvedRegistrations,
+          rejected: response.rejectedRegistrations,
+          pending: response.pendingRegistrations,
+          conversionRate: response.conversionRate,
+          trends: (response.registrationsByPeriod || []).flatMap((p: any) => [
+            { date: p.period, count: p.approved, status: 'approved' },
+            { date: p.period, count: p.rejected, status: 'rejected' },
+            { date: p.period, count: p.count - (p.approved + p.rejected), status: 'pending' },
+          ]),
+          statusBreakdown: [
+            { status: 'approved', count: response.approvedRegistrations, percentage: response.totalRegistrations > 0 ? (response.approvedRegistrations / response.totalRegistrations) * 100 : 0 },
+            { status: 'pending', count: response.pendingRegistrations, percentage: response.totalRegistrations > 0 ? (response.pendingRegistrations / response.totalRegistrations) * 100 : 0 },
+            { status: 'rejected', count: response.rejectedRegistrations, percentage: response.totalRegistrations > 0 ? (response.rejectedRegistrations / response.totalRegistrations) * 100 : 0 },
+          ]
+        }
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch registration analytics'
@@ -157,11 +232,27 @@ export const useAnalyticsStore = defineStore('analytics', {
           to: this.dateRange.to,
         }
 
-        const response = await apiService.get<TenantPerformanceMetrics>(
+        const response = await apiService.get<any>(
           '/admin/analytics/tenants',
           { params }
         )
-        this.tenantMetrics = response
+        
+        this.tenantMetrics = {
+          totalTenants: response.totalActiveTenants,
+          activeTenants: response.totalActiveTenants,
+          retentionRate: response.tenantRetentionRate,
+          churnRate: response.churnRate,
+          topPerformers: (response.topPerformingTenants || []).map((t: any) => ({
+            id: t.tenantId,
+            name: t.businessName,
+            revenue: t.monthlyRevenue,
+            orderCount: t.totalOrders,
+            growthRate: 0
+          })),
+          growthTrend: [
+            { date: new Date().toISOString(), total: response.totalActiveTenants, active: response.totalActiveTenants, churned: 0 }
+          ]
+        }
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch tenant analytics'
@@ -177,11 +268,33 @@ export const useAnalyticsStore = defineStore('analytics', {
           to: this.dateRange.to,
         }
 
-        const response = await apiService.get<RevenueMetrics>(
+        const response = await apiService.get<any>(
           '/admin/analytics/revenue',
           { params }
         )
-        this.revenueMetrics = response
+        
+        this.revenueMetrics = {
+          mrr: response.monthlyRecurringRevenue,
+          arr: response.annualRecurringRevenue,
+          totalRevenue: response.totalRevenue,
+          revenueGrowth: response.revenueGrowthRate,
+          revenueTrend: (response.revenueByPeriod || []).map((p: any) => ({
+            date: p.period,
+            amount: p.revenue,
+            mrr: response.monthlyRecurringRevenue
+          })),
+          revenueByPlan: (response.revenueByPlan || []).map((p: any) => ({
+            plan: p.planName,
+            revenue: p.revenue,
+            percentage: p.percentage,
+            subscriberCount: p.tenantCount
+          })),
+          projections: {
+            nextMonth: response.revenueProjection?.[0]?.projectedRevenue || 0,
+            nextQuarter: response.revenueProjection?.[1]?.projectedRevenue || 0,
+            nextYear: response.revenueProjection?.[2]?.projectedRevenue || 0,
+          }
+        }
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch revenue analytics'
@@ -194,6 +307,8 @@ export const useAnalyticsStore = defineStore('analytics', {
     },
 
     async fetchConversionFunnelAnalytics(): Promise<void> {
+      this.loading = true
+      this.error = null
       try {
         const { apiService } = useApi()
         const params = {
@@ -201,19 +316,43 @@ export const useAnalyticsStore = defineStore('analytics', {
           to: this.dateRange.to,
         }
 
-        const response = await apiService.get<ConversionFunnelMetrics>(
+        const response = await apiService.get<any>(
           '/admin/analytics/conversion-funnel',
           { params }
         )
-        this.conversionFunnelMetrics = response
+        
+        // Map backend funnel data to component format
+        this.conversionFunnelMetrics = {
+          totalStarted: response.steps?.[0]?.count || 0,
+          totalCompleted: response.steps?.[response.steps.length - 1]?.count || 0,
+          overallConversionRate: response.conversionRate,
+          stages: (response.steps || []).map((s: any, idx: number) => {
+            const dropOffPoint = response.dropOffPoints?.[idx - 1]
+            return {
+              name: s.name,
+              count: s.count,
+              percentage: s.percentage,
+              dropOffRate: dropOffPoint ? dropOffPoint.percentage : 0
+            }
+          }),
+          insights: (response.dropOffPoints || []).map((d: any) => ({
+            bottleneck: d.step,
+            recommendation: `Optimize the ${d.step} phase to reduce drop-off by ${d.dropOff} users.`
+          }))
+        }
+        
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch conversion funnel analytics'
         throw error
+      } finally {
+        this.loading = false
       }
     },
 
     async fetchCohortAnalytics(): Promise<void> {
+      this.loading = true
+      this.error = null
       try {
         const { apiService } = useApi()
         const params = {
@@ -221,19 +360,40 @@ export const useAnalyticsStore = defineStore('analytics', {
           to: this.dateRange.to,
         }
 
-        const response = await apiService.get<CohortAnalysisMetrics>(
+        const response = await apiService.get<any>(
           '/admin/analytics/cohort-analysis',
           { params }
         )
-        this.cohortAnalysisMetrics = response
+        
+        // Map backend cohort data to component format
+        this.cohortAnalysisMetrics = {
+          cohorts: (response.cohorts || []).map((c: any) => ({
+            cohortDate: c.month,
+            cohortSize: c.registrations,
+            retentionByMonth: Object.entries(c.retention || {}).map(([key, rate]) => ({
+              month: parseInt(key.replace('month', '')),
+              retentionRate: rate as number
+            }))
+          })),
+          averageRetention: Object.entries(response.averageRetention || {}).map(([key, rate]) => ({
+            month: parseInt(key.replace('month', '')),
+            rate: rate as number
+          })),
+          behaviorPatterns: response.behaviorPatterns || []
+        }
+        
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch cohort analysis'
         throw error
+      } finally {
+        this.loading = false
       }
     },
 
     async fetchGeographicAnalytics(): Promise<void> {
+      this.loading = true
+      this.error = null
       try {
         const { apiService } = useApi()
         const params = {
@@ -241,15 +401,33 @@ export const useAnalyticsStore = defineStore('analytics', {
           to: this.dateRange.to,
         }
 
-        const response = await apiService.get<GeographicDistributionMetrics>(
+        const response = await apiService.get<any>(
           '/admin/analytics/geographic-distribution',
           { params }
         )
-        this.geographicMetrics = response
+        
+        // Map backend geographic data
+        this.geographicMetrics = {
+          regions: (response.byRegion || []).map((r: any) => ({
+            name: r.region,
+            count: r.count,
+            percentage: r.percentage,
+            revenue: r.revenue
+          })),
+          cities: (response.byCity || []).map((c: any) => ({
+            name: c.city,
+            count: c.count,
+            percentage: c.percentage,
+            revenue: c.revenue
+          }))
+        }
+        
         this.lastFetched = Date.now()
       } catch (error: any) {
         this.error = error.response?.data?.message || 'Failed to fetch geographic analytics'
         throw error
+      } finally {
+        this.loading = false
       }
     },
 

@@ -138,6 +138,7 @@ export interface TenantDetails extends TenantListItem {
   settings: TenantSettings
   statistics: TenantStatistics
   subscription: SubscriptionDetails
+  locations?: any[]
 }
 
 export interface TenantFilters {

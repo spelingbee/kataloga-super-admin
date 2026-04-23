@@ -268,7 +268,7 @@ export const useSubscriptionStore = defineStore('subscription', {
     async changePlan(subscriptionId: string, newPlanId: string): Promise<void> {
       try {
         const { apiService } = useApi()
-        const response = await apiService.post<Subscription>(
+        const response = await apiService.patch<Subscription>(
           `/admin/subscriptions/${subscriptionId}/change-plan`,
           { planId: newPlanId }
         )
