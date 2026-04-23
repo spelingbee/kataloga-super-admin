@@ -96,6 +96,18 @@
               <span class="plan-card__limit-value">{{ plan.maxSites }}</span>
             </div>
             <div class="plan-card__limit">
+              <span class="plan-card__limit-label">Max Locations:</span>
+              <span class="plan-card__limit-value">{{ plan.maxLocations }}</span>
+            </div>
+            <div class="plan-card__limit">
+              <span class="plan-card__limit-label">Max Categories:</span>
+              <span class="plan-card__limit-value">{{ plan.maxCategories }}</span>
+            </div>
+            <div class="plan-card__limit">
+              <span class="plan-card__limit-label">Max Menu Items:</span>
+              <span class="plan-card__limit-value">{{ plan.maxMenuItems }}</span>
+            </div>
+            <div class="plan-card__limit">
               <span class="plan-card__limit-label">Trial Days:</span>
               <span class="plan-card__limit-value">{{ plan.trialDays }}</span>
             </div>

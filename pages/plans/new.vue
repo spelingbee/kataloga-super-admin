@@ -60,6 +60,11 @@ async function handleSubmit(data: {
   features: string[]
   trialDays: number
   isActive: boolean
+  maxLocations: number
+  billingCycle: string
+  displayName?: string
+  maxCategories: number
+  maxMenuItems: number
 }): Promise<void> {
   loading.value = true
   error.value = null

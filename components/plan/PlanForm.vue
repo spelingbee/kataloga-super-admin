@@ -18,6 +18,21 @@
         <span v-if="errors.name" class="plan-form__error">{{ errors.name }}</span>
       </div>
 
+      <!-- Display Name -->
+      <div class="plan-form__field">
+        <label class="plan-form__label" for="display-name">
+          Display Name
+        </label>
+        <input
+          id="display-name"
+          v-model="formData.displayName"
+          type="text"
+          class="plan-form__input"
+          placeholder="e.g., Professional"
+        />
+        <span class="plan-form__hint">Public name shown to users</span>
+      </div>
+
       <!-- Price -->
       <div class="plan-form__field">
         <label class="plan-form__label" for="plan-price">
@@ -38,6 +53,22 @@
           />
         </div>
         <span v-if="errors.price" class="plan-form__error">{{ errors.price }}</span>
+      </div>
+
+      <!-- Billing Cycle -->
+      <div class="plan-form__field">
+        <label class="plan-form__label" for="billing-cycle">
+          Billing Cycle <span class="plan-form__required">*</span>
+        </label>
+        <select
+          id="billing-cycle"
+          v-model="formData.billingCycle"
+          class="plan-form__input"
+          required
+        >
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
       </div>
 
       <!-- Max Users and Max Sites -->
@@ -74,6 +105,51 @@
             required
           />
           <span v-if="errors.maxSites" class="plan-form__error">{{ errors.maxSites }}</span>
+        </div>
+      </div>
+
+      <!-- Max Locations, Categories, and Menu Items -->
+      <div class="plan-form__row">
+        <div class="plan-form__field">
+          <label class="plan-form__label" for="max-locations">
+            Max Locations <span class="plan-form__required">*</span>
+          </label>
+          <input
+            id="max-locations"
+            v-model.number="formData.maxLocations"
+            type="number"
+            min="1"
+            class="plan-form__input"
+            required
+          />
+        </div>
+
+        <div class="plan-form__field">
+          <label class="plan-form__label" for="max-categories">
+            Max Categories <span class="plan-form__required">*</span>
+          </label>
+          <input
+            id="max-categories"
+            v-model.number="formData.maxCategories"
+            type="number"
+            min="1"
+            class="plan-form__input"
+            required
+          />
+        </div>
+
+        <div class="plan-form__field">
+          <label class="plan-form__label" for="max-menu-items">
+            Max Menu Items <span class="plan-form__required">*</span>
+          </label>
+          <input
+            id="max-menu-items"
+            v-model.number="formData.maxMenuItems"
+            type="number"
+            min="1"
+            class="plan-form__input"
+            required
+          />
         </div>
       </div>
 
@@ -183,6 +259,11 @@ interface Emits {
     features: string[]
     trialDays: number
     isActive: boolean
+    maxLocations: number
+    billingCycle: string
+    displayName?: string
+    maxCategories: number
+    maxMenuItems: number
   }): void
   (e: 'cancel'): void
 }
@@ -204,6 +285,11 @@ const formData = ref({
   features: props.plan?.features?.length ? [...props.plan.features] : [''],
   trialDays: props.plan?.trialDays ?? 14,
   isActive: props.plan?.isActive ?? true,
+  maxLocations: props.plan?.maxLocations ?? 1,
+  billingCycle: props.plan?.billingCycle ?? 'monthly',
+  displayName: props.plan?.displayName || '',
+  maxCategories: props.plan?.maxCategories ?? 10,
+  maxMenuItems: props.plan?.maxMenuItems ?? 50,
 })
 
 const errors = ref<Record<string, string>>({})
@@ -221,6 +307,11 @@ watch(
         features: newPlan.features?.length ? [...newPlan.features] : [''],
         trialDays: newPlan.trialDays,
         isActive: newPlan.isActive,
+        maxLocations: newPlan.maxLocations,
+        billingCycle: newPlan.billingCycle,
+        displayName: newPlan.displayName || '',
+        maxCategories: newPlan.maxCategories,
+        maxMenuItems: newPlan.maxMenuItems,
       }
     }
   }
@@ -282,6 +373,11 @@ function handleSubmit(): void {
     features: validFeatures,
     trialDays: formData.value.trialDays,
     isActive: formData.value.isActive,
+    maxLocations: formData.value.maxLocations,
+    billingCycle: formData.value.billingCycle,
+    displayName: formData.value.displayName.trim() || undefined,
+    maxCategories: formData.value.maxCategories,
+    maxMenuItems: formData.value.maxMenuItems,
   })
 }
 </script>

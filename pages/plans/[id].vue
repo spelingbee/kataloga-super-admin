@@ -73,10 +73,18 @@
             <span class="plan-details-page__info-value">{{ plan.name }}</span>
           </div>
           <div class="plan-details-page__info-item">
+            <span class="plan-details-page__info-label">Display Name</span>
+            <span class="plan-details-page__info-value">{{ plan.displayName || '—' }}</span>
+          </div>
+          <div class="plan-details-page__info-item">
             <span class="plan-details-page__info-label">Price</span>
             <span class="plan-details-page__info-value plan-details-page__info-value--price">
               ${{ plan.price.toFixed(2) }}/month
             </span>
+          </div>
+          <div class="plan-details-page__info-item">
+            <span class="plan-details-page__info-label">Billing Cycle</span>
+            <span class="plan-details-page__info-value">{{ plan.billingCycle }}</span>
           </div>
           <div class="plan-details-page__info-item">
             <span class="plan-details-page__info-label">Max Users</span>
@@ -85,6 +93,18 @@
           <div class="plan-details-page__info-item">
             <span class="plan-details-page__info-label">Max Sites</span>
             <span class="plan-details-page__info-value">{{ plan.maxSites }}</span>
+          </div>
+          <div class="plan-details-page__info-item">
+            <span class="plan-details-page__info-label">Max Locations</span>
+            <span class="plan-details-page__info-value">{{ plan.maxLocations }}</span>
+          </div>
+          <div class="plan-details-page__info-item">
+            <span class="plan-details-page__info-label">Max Categories</span>
+            <span class="plan-details-page__info-value">{{ plan.maxCategories }}</span>
+          </div>
+          <div class="plan-details-page__info-item">
+            <span class="plan-details-page__info-label">Max Menu Items</span>
+            <span class="plan-details-page__info-value">{{ plan.maxMenuItems }}</span>
           </div>
           <div class="plan-details-page__info-item">
             <span class="plan-details-page__info-label">Trial Days</span>
@@ -197,6 +217,11 @@ async function handleUpdate(data: {
   features: string[]
   trialDays: number
   isActive: boolean
+  maxLocations: number
+  billingCycle: string
+  displayName?: string
+  maxCategories: number
+  maxMenuItems: number
 }): Promise<void> {
   try {
     await planStore.updatePlan(planId.value, data)

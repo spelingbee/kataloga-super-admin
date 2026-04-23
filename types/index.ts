@@ -62,6 +62,11 @@ export type PlanFeatures = string[]
 
 export type Plan = Omit<PlanResponseDto, 'features'> & {
   features: PlanFeatures
+  maxLocations: number
+  billingCycle: string
+  displayName?: string
+  maxCategories: number
+  maxMenuItems: number
 }
 
 export interface PlanFilters {
