@@ -207,6 +207,26 @@
         <span v-if="errors.features" class="plan-form__error">{{ errors.features }}</span>
       </div>
 
+      <!-- Structured Features -->
+      <div class="plan-form__field">
+        <label class="plan-form__label">Structured Features (Permissions)</label>
+        <div class="plan-form__feature-grid">
+          <label
+            v-for="key in FEATURE_KEYS"
+            :key="key"
+            class="plan-form__checkbox-label"
+          >
+            <input
+              type="checkbox"
+              :checked="isFeatureEnabled(key)"
+              @change="toggleFeature(key)"
+              class="plan-form__checkbox"
+            />
+            <span class="plan-form__feature-name">{{ formatFeatureKey(key) }}</span>
+          </label>
+        </div>
+      </div>
+
       <!-- Is Active -->
       <div class="plan-form__field">
         <label class="plan-form__checkbox-label">
@@ -268,6 +288,23 @@ interface Emits {
   (e: 'cancel'): void
 }
 
+const FEATURE_KEYS = [
+  'SALES_ANALYTICS',
+  'ADVANCED_REPORTING',
+  'API_ACCESS',
+  'CUSTOM_BRANDING',
+  'MULTI_LOCATION',
+  'AUDIT_TRAIL',
+  'DATA_EXPORT',
+  'MULTI_USER',
+  'PRIORITY_SUPPORT',
+  'BASIC_MENU_MANAGEMENT',
+  'CATEGORY_MANAGEMENT',
+  'DISH_AVAILABILITY',
+  'IMAGE_UPLOAD',
+  'PRODUCT_VARIANTS',
+] as const
+
 const props = withDefaults(defineProps<Props>(), {
   plan: null,
   loading: false,
@@ -290,6 +327,7 @@ const formData = ref({
   displayName: props.plan?.displayName || '',
   maxCategories: props.plan?.maxCategories ?? 10,
   maxMenuItems: props.plan?.maxMenuItems ?? 50,
+  planFeatures: props.plan?.planFeatures?.length ? [...props.plan.planFeatures] : [],
 })
 
 const errors = ref<Record<string, string>>({})
@@ -312,10 +350,38 @@ watch(
         displayName: newPlan.displayName || '',
         maxCategories: newPlan.maxCategories,
         maxMenuItems: newPlan.maxMenuItems,
+        planFeatures: newPlan.planFeatures?.length ? [...newPlan.planFeatures] : [],
       }
     }
   }
 )
+
+function isFeatureEnabled(featureKey: string): boolean {
+  return formData.value.planFeatures.some(
+    (pf: any) => pf.featureKey === featureKey && pf.isEnabled
+  )
+}
+
+function toggleFeature(featureKey: string): void {
+  const index = formData.value.planFeatures.findIndex(
+    (pf: any) => pf.featureKey === featureKey
+  )
+  if (index !== -1) {
+    formData.value.planFeatures[index].isEnabled = !formData.value.planFeatures[index].isEnabled
+  } else {
+    formData.value.planFeatures.push({
+      featureKey,
+      isEnabled: true,
+    })
+  }
+}
+
+function formatFeatureKey(key: string): string {
+  return key
+    .split('_')
+    .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+    .join(' ')
+}
 
 function addFeature(): void {
   formData.value.features.push('')
@@ -378,6 +444,7 @@ function handleSubmit(): void {
     displayName: formData.value.displayName.trim() || undefined,
     maxCategories: formData.value.maxCategories,
     maxMenuItems: formData.value.maxMenuItems,
+    planFeatures: formData.value.planFeatures,
   })
 }
 </script>
@@ -479,6 +546,20 @@ function handleSubmit(): void {
   flex-direction: column;
   gap: $spacing-sm;
   margin-bottom: $spacing-sm;
+}
+
+.plan-form__feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: $spacing-md;
+  background: $bg-secondary;
+  padding: $spacing-md;
+  border-radius: $radius-md;
+}
+
+.plan-form__feature-name {
+  font-size: 0.8125rem;
+  color: $text-secondary;
 }
 
 .plan-form__feature-item {

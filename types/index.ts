@@ -67,6 +67,7 @@ export type Plan = Omit<PlanResponseDto, 'features'> & {
   displayName?: string
   maxCategories: number
   maxMenuItems: number
+  planFeatures?: Array<{ featureKey: string; isEnabled: boolean }>
 }
 
 export interface PlanFilters {
